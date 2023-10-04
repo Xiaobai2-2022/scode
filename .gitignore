@@ -1,0 +1,3 @@
+bin/*.d
+bin/*.o
+bin/scode_test
