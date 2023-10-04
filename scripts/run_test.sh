@@ -1,7 +1,7 @@
 #######################################
 # Auto Testing Software for scode     #
 # By Zhifan (Xiaobai) Li              #
-# Version 0.1.0                       #
+# Version 0.1.1                       #
 #######################################
 
 #######################################
@@ -73,9 +73,15 @@ fi
 # Wait for user input
 read -p "Press Enter to continue..."
 
+# Clear the console screen
+clear
+
 # Prompt user for testing method
 echo -ne "${YELLOW}Proceed with automatic testing(y/N):${NC} " 
 read test_with_auto
+
+# Clear the console screen
+clear
 
 if [ -d "$test_out_act_folder" ]; then
     rm -r "$test_out_act_folder"
@@ -85,11 +91,28 @@ mkdir $test_out_act_folder
 # Test with auto if yes is inputed
 if [ "${test_with_auto,,}" = "y" ]; then 
 
-    echo -e "${GREEN}Proceed with auto testing.${NC}\n\n\n" 
+    echo -e "${GREEN}Proceed with auto testing.${NC}"
+
+    # Wait for user input
+    read -p "Press Enter to continue..."
+
+    # Clear the console screen
+    clear
 
     if [ ! -n "$(find "$test_in_folder" -maxdepth 1 -type f -name '*.in')" ]; then
         echo -e "${RED}Error 921: \n${YELLOW}A test Error is found, can not find any test files that ends with \"*.in\". \n${RED}Testing terminated...${NC}"
+
+        # Wait for user input
+        read -p "Press Enter to continue..."
+
+        # Clear the console screen
+        clear
+
         make clean
+
+        # Clear the console screen
+        clear
+        
         exit 1
     fi
 
@@ -120,13 +143,23 @@ if [ "${test_with_auto,,}" = "y" ]; then
 # Test with manual setup
 else
 
-    echo -e "${GREEN}Proceed with manual testing.${NC}" 
+    echo -e "${GREEN}Proceed with manual testing:${YELLOW}\n" 
     ./"$compiled_result"
 
 fi
 
+echo -e "${NC}"
+
+# Wait for user input
+read -p "Press Enter to continue..."
+
+# Clear the console screen
+clear
+
 # Delete the compiled result at the end
 echo -e "${GREEN}Testing Done, terminates.${NC}"
 
-
 make clean
+
+# Clear the console screen
+clear
