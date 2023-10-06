@@ -35,7 +35,7 @@ compiled_result="$compiled/scode_test"
 compile_err_file="$compiled/cp_res.txt"
 test_folder="../tests"
 test_in_folder="$test_folder/inputs"
-test_out_folder="$test_folder/outputs"
+test_out_folder="$test_folder/outputs-expected"
 test_out_act_folder="$test_folder/outputs-actual"
 manual_test_out="$test_folder/manual_outputs"
 
@@ -59,14 +59,22 @@ fi
 
 make
 
-# Clear the console screen
-clear
-
 # Check for any compilation errors complain if found then terminate
 if [ $? -eq 0 ]; then
+    
+    # Clear the console screen
+    clear
+
     echo -e "${GREEN}Compile Finished...${NC}"
 else
     echo -e "${RED}Error 902: \n${YELLOW}A build Error is found, there is an error in compilation, see \"..\\\\compiled\\\\cp_res.txt\" for more info. \n${RED}Testing terminated...${NC}"
+    
+    # Wait for user input
+    read -p "Press Enter to continue..."
+
+    # Clear the console screen
+    clear
+
     exit 1
 fi
 
@@ -131,24 +139,22 @@ if [ "${test_with_auto,,}" = "y" ]; then
         # Comparing the two .out files
         echo -e "${GREEN}Comparing $f_out_name in outputs and outputs-actual...${NC}"
         if cmp -s "$test_out_act_folder/$f_out_name" "$test_out_folder/$f_out_name"; then
-            echo -e "${GREEN}f_name passed!${NC}\n"
+            echo -e "${GREEN}Test ${f_name} passed!${NC}\n"
         else
             echo -e "${RED}Error 922: \n${YELLOW}A test Error is found, test \"$f_name\" failed. \n${RED}Testing will continue...${NC}\n"
         fi
         
     done
 
-    echo -e "\n\n"
-
 # Test with manual setup
 else
 
-    echo -e "${GREEN}Proceed with manual testing:${YELLOW}\n" 
+    echo -e "${GREEN}Proceed with manual testing:${YELLOW}" 
     ./"$compiled_result"
+    
+    echo -e "${NC}"
 
 fi
-
-echo -e "${NC}"
 
 # Wait for user input
 read -p "Press Enter to continue..."
