@@ -17,11 +17,7 @@ class Word {
 
     public:
 
-    friend std::ostream &operator<<(std::ostream &, const Word &);                            // Output operator
-    // friend Word &operator+(const Word &, const Word &);                                     // Addition operator
-    // friend Word &operator-(const Word &, const Word &);                                     // Subtraction operator
-    // friend std::pair<const Word &, const Word &> &operator*(const Word &, const Word &);    // Multiplication operator
-    // friend std::pair<const Word &, const Word &> &operator/(const Word &, const Word &);    // Division operator
+    friend std::ostream &operator<<(std::ostream &, const Word &);                              // Output operator
 
 };
 
