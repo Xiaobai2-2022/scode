@@ -5,8 +5,17 @@
 
 class Gen_Code {
 
+    // R Type Instructions
     public:
-        static Word ADD(int, int, int);
+        static Word add(int, int, int);
+
+    // I Type Instructions
+    public:
+        static Word addi(int, int, int);
+
+    // B Type Instructions
+    public:
+        static Word beq(int, int, int);
 
 };
 
