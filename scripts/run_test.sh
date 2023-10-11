@@ -1,7 +1,7 @@
 #######################################
 # Auto Testing Software for scode     #
 # By Zhifan (Xiaobai) Li              #
-# Version 0.1.1                       #
+# Version 0.2.2                       #
 #######################################
 
 #######################################
@@ -26,6 +26,7 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
 NC='\033[0m'
 
 # File Defined Here
@@ -37,6 +38,7 @@ test_folder="../tests"
 test_in_folder="$test_folder/inputs"
 test_out_folder="$test_folder/outputs-expected"
 test_out_act_folder="$test_folder/outputs-actual"
+test_val_act_folder="$test_folder/valgrind-actual"
 manual_test_out="$test_folder/manual_outputs"
 
 #######################################
@@ -96,6 +98,11 @@ if [ -d "$test_out_act_folder" ]; then
 fi
 mkdir $test_out_act_folder
 
+if [ -d "$test_out_act_folder" ]; then
+    rm -r "$test_out_act_folder"
+fi
+mkdir $test_out_act_folder
+
 # Test with auto if yes is inputed
 if [ "${test_with_auto,,}" = "y" ]; then 
 
@@ -131,19 +138,40 @@ if [ "${test_with_auto,,}" = "y" ]; then
         f_name="${filename%.*}"
         f_in_name="$f_name.in"
         f_out_name="$f_name.out"
+        f_val_name="$f_name.val"
 
+        # Generate the .val file for valgrind test result
         # Generate the .out file
-        echo -e "${GREEN}Testing $f_in_name, Generating $f_out_name...${NC}"
-        ./"$compiled_result" --quite < "$input_file" > "$test_out_act_folder/$f_out_name"
+        echo -e "${YELLOW}Testing $f_in_name:${CYAN}"
+        echo -e "Generating $f_val_name..."
+        echo -e "Generating $f_out_name...${NC}"
+
+        valgrind --leak-check=full --error-exitcode=1 --log-file="$test_val_act_folder/$f_val_name" "$compiled_result" < "$input_file" > "$test_out_act_folder/$f_out_name"
+
+        # Check for any compilation errors complain if found then terminate
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}Valgrind test ${f_name} passed!${NC}"
+        else
+            echo -e ""
+            echo -e "${RED}Error 922:"
+            echo -e "${YELLOW}A valgrind error is found, test \"$f_name\" failed, check log file $test_val_act_folder/$f_val_name for more information."
+            echo -e "${RED}Testing will continue...${NC}"
+            echo -e ""
+        fi
 
         # Comparing the two .out files
-        echo -e "${GREEN}Comparing $f_out_name in outputs and outputs-actual...${NC}"
+        echo -e "${CYAN}Comparing $f_out_name in outputs and outputs-actual...${NC}"
         if cmp -s "$test_out_act_folder/$f_out_name" "$test_out_folder/$f_out_name"; then
-            echo -e "${GREEN}Test ${f_name} passed!${NC}\n"
+            echo -e "${GREEN}Test ${f_name} passed!${NC}"
+            echo -e ""
         else
-            echo -e "${RED}Error 922: \n${YELLOW}A test Error is found, test \"$f_name\" failed. \n${RED}Testing will continue...${NC}\n"
+            echo -e ""
+            echo -e "${RED}Error 923:"
+            echo -e "${YELLOW}A test error is found, test \"$f_name\" failed. Check log file $test_out_act_folder/$f_out_name for more information."
+            echo -e "${RED}Testing will continue...${NC}"
+            echo -e ""
         fi
-        
+
     done
 
 # Test with manual setup
