@@ -17,7 +17,7 @@ class Word {
 
     public:
 
-    friend std::ostream &operator<<(std::ostream &, const Word &);                              // Output operator
+    friend std::ostream &operator<<(std::ostream &, const Word &);              // Output operator
 
 };
 
