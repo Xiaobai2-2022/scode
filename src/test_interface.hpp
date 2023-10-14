@@ -4,4 +4,7 @@
 #include <iostream>
 #include <vector>
 
+#include "generate_code.hpp"
+#include "word.hpp"
+
 #endif
