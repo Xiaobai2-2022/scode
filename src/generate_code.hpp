@@ -7,15 +7,15 @@ class Gen_Code {
 
     // R Type Instructions
     public:
-        static Word add(int, int, int);
+        static Word add(unsigned int, unsigned int, unsigned int);
 
     // I Type Instructions
     public:
-        static Word addi(int, int, int);
+        static Word addi(unsigned int, unsigned int, unsigned int);
 
     // B Type Instructions
     public:
-        static Word beq(int, int, int);
+        static Word beq(unsigned int, unsigned int, unsigned int);
 
 };
 

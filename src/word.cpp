@@ -50,6 +50,16 @@ Word::Word(std::string s_val_) {
 // Deconstructor, do nothing
 Word::~Word(){}
 
+// Equal comparison operator
+bool Word::operator==(const Word &other) {
+    return this->value == other.value;
+}
+
+// Not equal comparison operator
+bool Word::operator!=(const Word &other) {
+    return this->value != other.value;
+}
+
 // Output operator
 std::ostream &operator<<(std::ostream &os, const Word &c) {
 

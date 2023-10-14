@@ -14,10 +14,13 @@ class Word {
         Word(unsigned int);     // unsigned int constructor, sets the value to the input
         Word(std::string);      // string constructor, sets the value to the input
         ~Word();                // Deconstructor, do nothing
+        
+    public:
+        bool operator==(const Word &);                                              // Equal comparison operator
+        bool operator!=(const Word &);                                              // Not equal comparison operator
 
     public:
-
-    friend std::ostream &operator<<(std::ostream &, const Word &);              // Output operator
+        friend std::ostream &operator<<(std::ostream &, const Word &);              // Output operator
 
 };
 
