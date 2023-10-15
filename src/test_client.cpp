@@ -19,7 +19,7 @@ void run_word_test() {
 
     /**
      * Test Methods (Not case sensitive)
-     *          * E - Create a default constructor test for Word, then print out the result
+     * E - Create a default constructor test for Word, then print out the result
      * I - Create a signed int test for Word, then print out the result
      * S - Create a string test for Word, then print out the result
      * U - Create an unsigned int test for Word, then print out the result
