@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 
+#include "error_output.hpp"
 #include "generate_code.hpp"    
 #include "utility.hpp"
 

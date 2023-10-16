@@ -70,7 +70,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                     fout << generate_output.first << std::endl;
                 } else {
                     std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-                    std::cout << "Invalid register on line " << count << "." << std::endl;
+                    Error_Out::out_error(generate_output.second, count, "");
                     return false;
                 }
                 break;
@@ -81,7 +81,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
 
         } else {
             std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-            std::cout << "Instruction: " << inst << " not found on line " << count << "." << std::endl;
+            Error_Out::out_error(101, count, inst);
             return false;
         }
 

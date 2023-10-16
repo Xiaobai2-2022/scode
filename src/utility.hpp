@@ -1,8 +1,12 @@
 #ifndef _UTILITY_HPP_
 #define _UTILITY_HPP_
 
+#include <cmath>
+#include <climits>
 #include <map>
 #include <string>
+
+#include "word.hpp"
 
 class Utility {
 
@@ -16,9 +20,11 @@ class Utility {
         // Check if the string has the starting substring of the other string
         static bool is_start_with(std::string, std::string);
         
-    // public:
-    //     // Calculate the nth power of a value
-    //     static unsigned int pow(unsigned int, unsigned int);
+    public:
+        // Calculate the power of an integer value
+        static int pow(int, unsigned int);
+        // Convert the number into given length word
+        static Word change_length(int, int);
 
 };
 

@@ -72,3 +72,40 @@ bool Utility::is_start_with(std::string first_, std::string second_) {
     return first_.find(second_) == 0;
 
 }
+
+// Calculate the power of an integer value
+int Utility::pow(int value_, unsigned int power_) {
+
+    if(power_ == 0) return 1;
+
+    int res{value_};
+    for(unsigned int i{1}; i < power_; i++) {
+        res *= value_;
+    }
+    return res;
+
+}
+
+// Convert the value into given length word
+Word Utility::change_length(int value_, int length_) {
+
+    if(value_ >= 0) {
+        // Check if value is in range, if not, return the most significant value posible + 1
+        if(value_ >= Utility::pow(2, length_)) {
+            return Word{Utility::pow(2, length_)};
+        }
+        return Word{value_};
+    }
+
+    // Check if the negative value is in range
+    if(abs(value_) > Utility::pow(2, length_)) {
+        return Word{Utility::pow(2, length_)};
+    }
+
+    unsigned int u_value{static_cast<unsigned int>(value_)};
+    u_value = u_value << (32 - length_);
+    u_value = u_value >> (32 - length_);
+
+    return Word{u_value};
+
+}
