@@ -47,9 +47,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
 
         int rd, rs1, rs2;
 
-        Word error_code{};
-        Word out;
-
+        std::pair<Word, int> generate_output;
 
         // Construct the string stream to access all elements on the line
         std::stringstream ss_line(cur_line);
@@ -67,13 +65,14 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
             case 0: // case add
                 // Input rd, rs1, rs2 and generate code to rd, rs1, rs2
                 ss_line >> rd >> rs1 >> rs2;
-                out = Gen_Code::add(rd, rs1, rs2);
-                if(out == error_code) {
+                generate_output = Gen_Code::add(rd, rs1, rs2);
+                if(generate_output.second == 0) {
+                    fout << generate_output.first << std::endl;
+                } else {
                     std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
                     std::cout << "Invalid register on line " << count << "." << std::endl;
                     return false;
                 }
-                fout << Gen_Code::add(rd, rs1, rs2) << std::endl;
                 break;
                 
             default:

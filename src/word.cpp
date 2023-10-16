@@ -60,6 +60,26 @@ bool Word::operator!=(const Word &other) {
     return this->value != other.value;
 }
 
+// Less than comparison operator
+bool Word::operator<(const Word &other) {
+    return this->value < other.value;
+}
+
+// Greater than comparison operator
+bool Word::operator>(const Word &other) {
+    return this->value > other.value;
+}
+
+// Less than equal comparison operator
+bool Word::operator<=(const Word &other) {
+    return this->value <= other.value;
+}
+
+// Greater than equal comparison operator
+bool Word::operator>=(const Word &other) {
+    return this->value >= other.value;
+}
+
 // Output operator
 std::ostream &operator<<(std::ostream &os, const Word &c) {
 

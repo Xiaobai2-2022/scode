@@ -19,6 +19,10 @@ class Word {
     public:
         bool operator==(const Word &);                                              // Equal comparison operator
         bool operator!=(const Word &);                                              // Not equal comparison operator
+        bool operator<(const Word &);                                               // Less than comparison operator
+        bool operator>(const Word &);                                               // Greater than comparison operator
+        bool operator<=(const Word &);                                              // Less than equal comparison operator
+        bool operator>=(const Word &);                                              // Greater than equal comparison operator
 
     public:
         friend std::ostream &operator<<(std::ostream &, const Word &);              // Output operator

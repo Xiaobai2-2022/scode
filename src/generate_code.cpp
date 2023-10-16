@@ -5,12 +5,12 @@
 // If there is an error, the command will return 0;
 
 // R-type Instruction add: rd = rs1 + rs2
-Word Gen_Code::add(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+std::pair<Word, int> Gen_Code::add(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
 
     // Check if all values are in range
-    if(!Utility::is_in_range(rd_, 1, 31)) return Word{};
-    if(!Utility::is_in_range(rs1_, 0, 31)) return Word{};
-    if(!Utility::is_in_range(rs2_, 0, 31)) return Word{};
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 1};
 
     unsigned int funct7 = 0x00;
     unsigned int funct3 = 0x0;
@@ -24,6 +24,10 @@ Word Gen_Code::add(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
         rd_ * 0b10000000 +
         opcode;
 
-    return Word{result};
+    return std::pair<Word, int>{Word{result}, 0};
 
 }
+
+// Word Gen_Code::beq(unsigned int rs1_, unsigned int rs2_, Word imm) {
+
+// }

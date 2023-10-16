@@ -1,6 +1,5 @@
 #include "utility.hpp"
 
-
 const std::map<std::string, int> Utility::rv_inst = {
 
     // RV32I Base Integer Instructions
