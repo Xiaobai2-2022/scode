@@ -9,3 +9,12 @@ Invalid rd on line 3.
 Error constructing rv assembly 0 to binary.
 Instruction "ado" not found on line 4.
 
+Error constructing rv assembly 0 to binary.
+Instruction "ado" not found on line 3.
+Error constructing rv assembly 0 to binary.
+Invalid rd on line 5.
+Error constructing rv assembly 0 to binary.
+Invalid rs2 on line 7.
+Error constructing rv assembly 0 to binary.
+Invalid rs1 on line 9.
+

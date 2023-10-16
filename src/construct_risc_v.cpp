@@ -5,6 +5,8 @@
 //     of_name_ is the output file name
 bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
 
+    bool no_error{true};
+
     // For error checking usage
     unsigned long count{1};
 
@@ -69,9 +71,10 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 if(generate_output.second == 0) {
                     fout << generate_output.first << std::endl;
                 } else {
+                    fout << "!!! Error line !!!" << std::endl;
                     std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
                     Error_Out::out_error(generate_output.second, count, "");
-                    return false;
+                    no_error = false;
                 }
                 break;
                 
@@ -80,13 +83,14 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
             }
 
         } else {
+            fout << "!!! Error line !!!" << std::endl;
             std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
             Error_Out::out_error(101, count, inst);
-            return false;
+            no_error = false;
         }
 
     }
 
-    return true;
+    return no_error;
 
 }

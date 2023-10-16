@@ -7,3 +7,4 @@ tests/valgrind-actual/*
 tests/files/scode_binary_file_0.scb
 tests/files/scode_binary_file_1.scb
 tests/files/scode_binary_file_2.scb
+tests/files/scode_binary_file_3.scb
