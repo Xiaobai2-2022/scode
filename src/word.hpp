@@ -2,6 +2,7 @@
 #define _CODE_HPP_
 
 #include <iostream>
+#include <string>
 
 class Word {
 
