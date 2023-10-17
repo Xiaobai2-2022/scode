@@ -80,6 +80,26 @@ bool Word::operator>=(const Word &other) {
     return this->value >= other.value;
 }
 
+// Addition operator
+Word Word::operator+(const Word &other) {
+    return Word{this->value + other.value};
+}
+
+// Subtraction operator
+Word Word::operator-(const Word &other) {
+    return Word{this->value - other.value};
+}
+
+// Left shift operator
+Word Word::operator<<(const Word &other) {
+    return Word{this->value << other.value};
+}
+
+// Right shift operator
+Word Word::operator>>(const Word &other) {
+    return Word{this->value >> other.value};
+}
+
 // Output operator
 std::ostream &operator<<(std::ostream &os, const Word &c) {
 

@@ -30,6 +30,11 @@ std::pair<Word, int> Gen_Code::add(unsigned int rd_, unsigned int rs1_, unsigned
 
 }
 
+// R-type Instruction add: rd = rs1 + rs2
+static std::pair<Word, int> addi(unsigned int, unsigned int, unsigned int) {
+
+}
+
 // // B-type Instruction beq: if(rs1 == rs2) PC += imm
 // std::pair<Word, int> Gen_Code::beq(unsigned int rs1_, unsigned int rs2_, Word imm) {
 

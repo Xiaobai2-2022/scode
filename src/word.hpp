@@ -24,6 +24,12 @@ class Word {
         bool operator<=(const Word &);                                              // Less than equal comparison operator
         bool operator>=(const Word &);                                              // Greater than equal comparison operator
 
+    public:    
+        Word operator+(const Word &);                                               // Addition operator
+        Word operator-(const Word &);                                               // Subtraction operator
+        Word operator<<(const Word &);                                              // Left shift operator
+        Word operator>>(const Word &);                                              // Right shift operator
+
     public:
         friend std::ostream &operator<<(std::ostream &, const Word &);              // Output operator
 
