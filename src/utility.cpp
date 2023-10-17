@@ -91,14 +91,14 @@ Word Utility::change_length(int value_, int length_) {
 
     if(value_ >= 0) {
         // Check if value is in range, if not, return the most significant value posible + 1
-        if(value_ >= Utility::pow(2, length_)) {
+        if(value_ >= Utility::pow(2, length_ - 1)) {
             return Word{Utility::pow(2, length_)};
         }
         return Word{value_};
     }
 
-    // Check if the negative value is in range
-    if(abs(value_) > Utility::pow(2, length_)) {
+    // Check if the negative value is in rangeu c
+    if(abs(value_) > Utility::pow(2, length_ - 1)) {
         return Word{Utility::pow(2, length_)};
     }
 
