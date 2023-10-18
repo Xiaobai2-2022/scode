@@ -12,7 +12,7 @@ class Gen_Code {
 
     // I Type Instructions
     public:
-        static std::pair<Word, int> addi(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> addi(unsigned int, unsigned int, Word);
 
     // B Type Instructions
     public:

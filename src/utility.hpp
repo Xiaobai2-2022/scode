@@ -24,7 +24,7 @@ class Utility {
         // Calculate the power of an integer value
         static int pow(int, unsigned int);
         // Convert the number into given length word
-        static Word change_length(int, int);
+        static Word change_length(int, unsigned int);
 
 };
 

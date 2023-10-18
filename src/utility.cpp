@@ -87,7 +87,7 @@ int Utility::pow(int value_, unsigned int power_) {
 }
 
 // Convert the value into given length word
-Word Utility::change_length(int value_, int length_) {
+Word Utility::change_length(int value_, unsigned int length_) {
 
     if(value_ >= 0) {
         // Check if value is in range, if not, return the most significant value posible + 1

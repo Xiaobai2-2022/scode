@@ -100,6 +100,18 @@ Word Word::operator>>(const Word &other) {
     return Word{this->value >> other.value};
 }
 
+// Plus equal operator
+Word &Word::operator+=(const Word &other) {
+    this->value += other.value;
+    return *this;
+}
+
+// Minus equal operator
+Word &Word::operator-=(const Word &other) {
+    this->value -= other.value;
+    return *this;
+}
+
 // Output operator
 std::ostream &operator<<(std::ostream &os, const Word &c) {
 
