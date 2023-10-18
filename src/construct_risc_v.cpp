@@ -68,28 +68,40 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
             switch (inst_code) {
             case 0: // case add
                 // Input rd, rs1, rs2 and generate code
-                ss_line >> rd >> rs1 >> rs2;
-                generate_output = Gen_Code::add(rd, rs1, rs2);
-                if(generate_output.second == 0) {
-                    fout << generate_output.first << std::endl;
+                if(ss_line >> rd >> rs1 >> rs2) {
+                    generate_output = Gen_Code::add(rd, rs1, rs2);
+                    if(generate_output.second == 0) {
+                        fout << generate_output.first << std::endl;
+                    } else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        Error_Out::out_error(generate_output.second, count, "");
+                        no_error = false;
+                    }
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
                     std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-                    Error_Out::out_error(generate_output.second, count, "");
+                    Error_Out::out_error(102, count, "Command \"add\" should have format: \"add rd rs1 rs2\".");
                     no_error = false;
                 }
                 break;
 
             case 10: // case addi
                 // Input rd, rs1, imm and generate code
-                ss_line >> rd >> rs1 >> imm;
-                generate_output = Gen_Code::addi(rd, rs1, Utility::change_length(imm, 12));
-                if(generate_output.second == 0) {
+                if(ss_line >> rd >> rs1 >> imm) {
+                    generate_output = Gen_Code::addi(rd, rs1, Utility::change_length(imm, 12));
+                    if(generate_output.second == 0) {
                     fout << generate_output.first << std::endl;
-                } else {
+                    } else {
                     fout << "!!! Error line !!!" << std::endl;
                     std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
                     Error_Out::out_error(generate_output.second, count, "");
+                    no_error = false;
+                    }
+                } else {
+                    fout << "!!! Error line !!!" << std::endl;
+                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    Error_Out::out_error(102, count, "Command \"addi\" should have format: \"addi rd rs1 imm\".");
                     no_error = false;
                 }
                 break;
