@@ -118,6 +118,11 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
+                } else {
+                    fout << "!!! Error line !!!" << std::endl;
+                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    Error_Out::out_error(102, count, "Command \"beq\" should have format: \"beq rs1 rs2 imm\".");
+                    no_error = false;
                 }
                 
             default:

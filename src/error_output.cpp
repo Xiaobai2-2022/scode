@@ -16,6 +16,9 @@ void Error_Out::out_error(int error_code_, int line_number_, std::string error_i
     case 4:
         std::cout << "Invalid immediate value on line " << line_number_ << "." << std::endl;
         break;
+    case 5:
+        std::cout << "Immediate value for branch command on line " << line_number_ << " needs to be a multiple of two." << std::endl;
+        break;
     case 101:
         std::cout << "Instruction \"" << error_information_ << "\" not found on line " << line_number_ << "." << std::endl;
         break;
