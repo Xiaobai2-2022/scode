@@ -77,7 +77,6 @@ void run_generate_code_test() {
     unsigned int rd;                    // rd
     unsigned int rs1;                   // rs1
     unsigned int rs2;                   // rs2
-    int imm;                            // imm
 
     std::cin >> type;
 
