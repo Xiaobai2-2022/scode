@@ -91,12 +91,12 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 if(ss_line >> rd >> rs1 >> imm) {
                     generate_output = Gen_Code::addi(rd, rs1, Utility::change_length(imm, 12));
                     if(generate_output.second == 0) {
-                    fout << generate_output.first << std::endl;
+                        fout << generate_output.first << std::endl;
                     } else {
-                    fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-                    Error_Out::out_error(generate_output.second, count, "");
-                    no_error = false;
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        Error_Out::out_error(generate_output.second, count, "");
+                        no_error = false;
                     }
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
@@ -105,6 +105,20 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                     no_error = false;
                 }
                 break;
+
+            case 27: // case beq
+                // Input rs1_, rs2, imm and generate code
+                if(ss_line >> rs1 >> rs2 >> imm) {
+                    generate_output = Gen_Code::beq(rs1, rs2, Utility::change_length(imm, 12));
+                    if(generate_output.second == 0) {
+                        fout << generate_output.first << std::endl;
+                    } else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        Error_Out::out_error(generate_output.second, count, "");
+                        no_error = false;
+                    }
+                }
                 
             default:
                 break;

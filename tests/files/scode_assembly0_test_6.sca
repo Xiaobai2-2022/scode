@@ -1,0 +1,6 @@
+Scode Assembly 0: For test purpose only; Valid Case beq tests
+addi 1 0 0
+addi 2 0 2
+beq 1 2 8
+addi 1 1 1
+beq 0 0 -12

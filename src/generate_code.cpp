@@ -13,9 +13,9 @@ std::pair<Word, int> Gen_Code::add(unsigned int rd_, unsigned int rs1_, unsigned
     if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
 
     // Define constant values
-    unsigned int const funct7 = 0x00;
-    unsigned int const funct3 = 0x0;
-    unsigned int const opcode = 0b0110011;
+    const unsigned int funct7 = 0x00;
+    const unsigned int funct3 = 0x0;
+    const unsigned int opcode = 0b0110011;
 
     // Calculate result
     Word result{};
@@ -27,15 +27,6 @@ std::pair<Word, int> Gen_Code::add(unsigned int rd_, unsigned int rs1_, unsigned
         (Word{rd_} << 7) +
         (Word{opcode});
 
-    // // Calculate result
-    // unsigned int result = 
-    //     funct7 * 0b10000000000000000000000000 +
-    //     rs2_ * 0b100000000000000000000 +
-    //     rs1_ * 0b1000000000000000 +
-    //     funct3 * 0b1000000000000 +
-    //     rd_ * 0b10000000 +
-    //     opcode;
-
     return std::pair<Word, int>{result, 0};
 
 }
@@ -46,15 +37,16 @@ std::pair<Word, int> Gen_Code::addi(unsigned int rd_, unsigned int rs1_, Word im
     // Check if all registers are in range
     if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
     if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if the immediate value is in range
     if((imm >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
 
     // Define constant values
-    unsigned int const funct3 = 0x0;
-    unsigned int const opcode = 0b0010011;
+    const unsigned int funct3 = 0x0;
+    const unsigned int opcode = 0b0010011;
 
     Word result{};
     result +=
-        (Word{imm} << 20) +
+        (imm << 20) +
         (Word{rs1_} << 15) +
         (Word{funct3} << 12) +
         (Word{rd_} << 7) +
@@ -64,7 +56,36 @@ std::pair<Word, int> Gen_Code::addi(unsigned int rd_, unsigned int rs1_, Word im
 
 }
 
-// // B-type Instruction beq: if(rs1 == rs2) PC += imm
-// std::pair<Word, int> Gen_Code::beq(unsigned int rs1_, unsigned int rs2_, Word imm) {
+// B-type Instruction beq: if(rs1 == rs2) PC += imm
+std::pair<Word, int> Gen_Code::beq(unsigned int rs1_, unsigned int rs2_, Word imm) {
 
-// }
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if the immediate value is in range
+    if((imm >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Shift immediate value by 1 bit
+    imm <<= 1;
+
+    // Check if the immediate value a multiply of 4, since the jump should be a multiply of 4
+    if((imm % 4) != Word{0}) return std::pair<Word, int>{Word{}, 5};
+
+    // Define constant values
+    const unsigned int funct3 = 0x0;
+    const unsigned int opcode = 0b1100011;
+    
+    Word result{};
+    result +=
+        (imm.limit(12, 12) << 31) +
+        (imm.limit(10, 5) << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (imm.limit(4, 1) << 8) +
+        (imm.limit(11, 11) << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
