@@ -25,6 +25,8 @@ class Utility {
         static int pow(int, unsigned int);
         // Convert the number into given length word
         static Word change_length(int, unsigned int);
+        // Convert the unsigned number into given length word
+        static Word change_length_unsigned(int, unsigned int);
 
 };
 

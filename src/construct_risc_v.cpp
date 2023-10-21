@@ -66,7 +66,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
             int inst_code = it->second;
 
             switch (inst_code) {
-            case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: // case R Type Instructions
+            case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: // Case R Type Instructions
                 // Input rd, rs1, rs2 and generate code
                 if(ss_line >> rd >> rs1 >> rs2) {
                     switch (inst_code) {
@@ -117,10 +117,39 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 }
                 break;
 
-            case 10: // case addi
+            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: // Case I type instructions (1st part)
                 // Input rd, rs1, imm and generate code
                 if(ss_line >> rd >> rs1 >> imm) {
-                    generate_output = Gen_Code::ADDI(rd, rs1, Utility::change_length(imm, 12));
+                    switch (inst_code) {
+                    case 10: // case addi
+                        generate_output = Gen_Code::ADDI(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    case 11: // case xori
+                        generate_output = Gen_Code::XORI(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    case 12: // case ori
+                        generate_output = Gen_Code::ORI(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    case 13: // case andi
+                        generate_output = Gen_Code::ANDI(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    case 14: // case slli
+                        generate_output = Gen_Code::SLLI(rd, rs1, Utility::change_length_unsigned(imm, 5));
+                        break;
+                    case 15: // case srli
+                        generate_output = Gen_Code::SRLI(rd, rs1, Utility::change_length_unsigned(imm, 5));
+                        break;
+                    case 16: // case srai
+                        generate_output = Gen_Code::SRAI(rd, rs1, Utility::change_length_unsigned(imm, 5));
+                        break;
+                    case 17: // case slti
+                        generate_output = Gen_Code::SLTI(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    case 18: // case sltiu
+                        generate_output = Gen_Code::SLTIU(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    }
+                    
                     if(generate_output.second == 0) {
                         fout << generate_output.first << std::endl;
                     } else {
@@ -132,7 +161,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
                     std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-                    Error_Out::out_error(102, count, "Command \"addi\" should have format: \"addi rd rs1 imm\".");
+                    Error_Out::out_error(102, count, "I Type Instruction should have format: \"cmd rd rs1 imm\".");
                     no_error = false;
                 }
                 break;

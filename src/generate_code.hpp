@@ -22,6 +22,14 @@ class Gen_Code {
     // I Type Instructions
     public:
         static std::pair<Word, int> ADDI(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> XORI(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> ORI(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> ANDI(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> SLLI(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> SRLI(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> SRAI(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> SLTI(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> SLTIU(unsigned int, unsigned int, Word);
 
     // B Type Instructions
     public:

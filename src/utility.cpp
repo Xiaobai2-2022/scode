@@ -109,3 +109,18 @@ Word Utility::change_length(int value_, unsigned int length_) {
     return Word{u_value};
 
 }
+
+// Convert the value into given length word
+Word Utility::change_length_unsigned(int value_, unsigned int length_) {
+
+    if(value_ >= 0) {
+        // Check if value is in range, if not, return the most significant value posible + 1
+        if(value_ >= Utility::pow(2, length_)) {
+            return Word{Utility::pow(2, length_)};
+        }
+        return Word{value_};
+    }
+
+    return Word{Utility::pow(2, length_)};
+
+}
