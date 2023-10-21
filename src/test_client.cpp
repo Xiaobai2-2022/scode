@@ -96,7 +96,7 @@ void run_generate_code_test() {
         case '+':
             // Read input registers
             std::cin >> rd >> rs1 >> rs2;
-            cur_gen_out = Gen_Code::add(rd, rs1, rs2);
+            cur_gen_out = Gen_Code::ADD(rd, rs1, rs2);
             list_words.emplace_back(cur_gen_out.first);
             // Check if command is valid
             if(cur_gen_out.second == 0) {

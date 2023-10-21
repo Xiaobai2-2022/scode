@@ -5,7 +5,7 @@
 // If there is an error, the command will return 0;
 
 // R-type Instruction add: rd = rs1 + rs2
-std::pair<Word, int> Gen_Code::add(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+std::pair<Word, int> Gen_Code::ADD(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
 
     // Check if all registers are in range
     if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
@@ -31,8 +31,251 @@ std::pair<Word, int> Gen_Code::add(unsigned int rd_, unsigned int rs1_, unsigned
 
 }
 
+// R-type Instruction sub: rd = rs1 - rs2
+std::pair<Word, int> Gen_Code::SUB(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
+
+    // Define constant values
+    const unsigned int funct7 = 0x20;
+    const unsigned int funct3 = 0x0;
+    const unsigned int opcode = 0b0110011;
+
+    // Calculate result
+    Word result{};
+    result += 
+        (Word{funct7} << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// R-type Instruction xor: rd = rs1 ^ rs2
+std::pair<Word, int> Gen_Code::XOR(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
+
+    // Define constant values
+    const unsigned int funct7 = 0x00;
+    const unsigned int funct3 = 0x4;
+    const unsigned int opcode = 0b0110011;
+
+    // Calculate result
+    Word result{};
+    result += 
+        (Word{funct7} << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// R-type Instruction or: rd = rs1 | rs2
+std::pair<Word, int> Gen_Code::OR(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
+
+    // Define constant values
+    const unsigned int funct7 = 0x00;
+    const unsigned int funct3 = 0x6;
+    const unsigned int opcode = 0b0110011;
+
+    // Calculate result
+    Word result{};
+    result += 
+        (Word{funct7} << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// R-type Instruction and: rd = rs1 & rs2
+std::pair<Word, int> Gen_Code::AND(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
+
+    // Define constant values
+    const unsigned int funct7 = 0x00;
+    const unsigned int funct3 = 0x7;
+    const unsigned int opcode = 0b0110011;
+
+    // Calculate result
+    Word result{};
+    result += 
+        (Word{funct7} << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// R-type Instruction sll: rd = rs1 << rs2
+std::pair<Word, int> Gen_Code::SLL(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
+
+    // Define constant values
+    const unsigned int funct7 = 0x00;
+    const unsigned int funct3 = 0x1;
+    const unsigned int opcode = 0b0110011;
+
+    // Calculate result
+    Word result{};
+    result += 
+        (Word{funct7} << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// R-type Instruction srl: rd = rs1 >> rs2
+std::pair<Word, int> Gen_Code::SRL(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
+
+    // Define constant values
+    const unsigned int funct7 = 0x00;
+    const unsigned int funct3 = 0x5;
+    const unsigned int opcode = 0b0110011;
+
+    // Calculate result
+    Word result{};
+    result += 
+        (Word{funct7} << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// R-type Instruction sra: rd = rs1 >> rs2
+std::pair<Word, int> Gen_Code::SRA(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
+
+    // Define constant values
+    const unsigned int funct7 = 0x20;
+    const unsigned int funct3 = 0x5;
+    const unsigned int opcode = 0b0110011;
+
+    // Calculate result
+    Word result{};
+    result += 
+        (Word{funct7} << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// R-type Instruction slt: rd = (rs1 < rs2) ? 1 : 0
+std::pair<Word, int> Gen_Code::SLT(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
+
+    // Define constant values
+    const unsigned int funct7 = 0x00;
+    const unsigned int funct3 = 0x2;
+    const unsigned int opcode = 0b0110011;
+
+    // Calculate result
+    Word result{};
+    result += 
+        (Word{funct7} << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// R-type Instruction sltu: rd = (rs1 < rs2) ? 1 : 0
+std::pair<Word, int> Gen_Code::SLTU(unsigned int rd_, unsigned int rs1_, unsigned int rs2_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
+
+    // Define constant values
+    const unsigned int funct7 = 0x00;
+    const unsigned int funct3 = 0x3;
+    const unsigned int opcode = 0b0110011;
+
+    // Calculate result
+    Word result{};
+    result += 
+        (Word{funct7} << 25) +
+        (Word{rs2_} << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
 // I-type Instruction addi: rd = rs1 + imm
-std::pair<Word, int> Gen_Code::addi(unsigned int rd_, unsigned int rs1_, Word imm) {
+std::pair<Word, int> Gen_Code::ADDI(unsigned int rd_, unsigned int rs1_, Word imm) {
 
     // Check if all registers are in range
     if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
@@ -57,7 +300,7 @@ std::pair<Word, int> Gen_Code::addi(unsigned int rd_, unsigned int rs1_, Word im
 }
 
 // B-type Instruction beq: if(rs1 == rs2) PC += imm
-std::pair<Word, int> Gen_Code::beq(unsigned int rs1_, unsigned int rs2_, Word imm) {
+std::pair<Word, int> Gen_Code::BEQ(unsigned int rs1_, unsigned int rs2_, Word imm) {
 
     // Check if all registers are in range
     if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 1};

@@ -8,15 +8,24 @@ class Gen_Code {
 
     // R Type Instructions
     public:
-        static std::pair<Word, int> add(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> ADD(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> SUB(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> XOR(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> OR(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> AND(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> SLL(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> SRL(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> SRA(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> SLT(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> SLTU(unsigned int, unsigned int, unsigned int);
 
     // I Type Instructions
     public:
-        static std::pair<Word, int> addi(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> ADDI(unsigned int, unsigned int, Word);
 
     // B Type Instructions
     public:
-        static std::pair<Word, int> beq(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> BEQ(unsigned int, unsigned int, Word);
 
 };
 

@@ -66,10 +66,41 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
             int inst_code = it->second;
 
             switch (inst_code) {
-            case 0: // case add
+            case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: // case R Type Instructions
                 // Input rd, rs1, rs2 and generate code
                 if(ss_line >> rd >> rs1 >> rs2) {
-                    generate_output = Gen_Code::add(rd, rs1, rs2);
+                    switch (inst_code) {
+                    case 0: // case add
+                        generate_output = Gen_Code::ADD(rd, rs1, rs2);
+                        break;
+                    case 1: // case sub
+                        generate_output = Gen_Code::SUB(rd, rs1, rs2);
+                        break;
+                    case 2: // case xor
+                        generate_output = Gen_Code::XOR(rd, rs1, rs2);
+                        break;
+                    case 3: // case or
+                        generate_output = Gen_Code::OR(rd, rs1, rs2);
+                        break;
+                    case 4: // case and
+                        generate_output = Gen_Code::AND(rd, rs1, rs2);
+                        break;
+                    case 5: // case sll
+                        generate_output = Gen_Code::SLL(rd, rs1, rs2);
+                        break;
+                    case 6: // case srl
+                        generate_output = Gen_Code::SRL(rd, rs1, rs2);
+                        break;
+                    case 7: // case sra
+                        generate_output = Gen_Code::SRA(rd, rs1, rs2);
+                        break;
+                    case 8: // case slt
+                        generate_output = Gen_Code::SLT(rd, rs1, rs2);
+                        break;
+                    case 9: // case sltu
+                        generate_output = Gen_Code::SLTU(rd, rs1, rs2);
+                        break;
+                    }
                     if(generate_output.second == 0) {
                         fout << generate_output.first << std::endl;
                     } else {
@@ -81,7 +112,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
                     std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-                    Error_Out::out_error(102, count, "Command \"add\" should have format: \"add rd rs1 rs2\".");
+                    Error_Out::out_error(102, count, "R Type Instruction should have format: \"cmd rd rs1 rs2\".");
                     no_error = false;
                 }
                 break;
@@ -89,7 +120,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
             case 10: // case addi
                 // Input rd, rs1, imm and generate code
                 if(ss_line >> rd >> rs1 >> imm) {
-                    generate_output = Gen_Code::addi(rd, rs1, Utility::change_length(imm, 12));
+                    generate_output = Gen_Code::ADDI(rd, rs1, Utility::change_length(imm, 12));
                     if(generate_output.second == 0) {
                         fout << generate_output.first << std::endl;
                     } else {
@@ -109,7 +140,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
             case 27: // case beq
                 // Input rs1_, rs2, imm and generate code
                 if(ss_line >> rs1 >> rs2 >> imm) {
-                    generate_output = Gen_Code::beq(rs1, rs2, Utility::change_length(imm, 12));
+                    generate_output = Gen_Code::BEQ(rs1, rs2, Utility::change_length(imm, 12));
                     if(generate_output.second == 0) {
                         fout << generate_output.first << std::endl;
                     } else {
