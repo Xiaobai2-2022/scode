@@ -712,8 +712,8 @@ std::pair<Word, int> Gen_Code::SW(unsigned int rs1_, unsigned int rs2_, Word imm
 std::pair<Word, int> Gen_Code::BEQ(unsigned int rs1_, unsigned int rs2_, Word imm_) {
 
     // Check if all registers are in range
-    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 1};
-    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
     // Check if the immediate value is in range
     if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
 
@@ -746,8 +746,8 @@ std::pair<Word, int> Gen_Code::BEQ(unsigned int rs1_, unsigned int rs2_, Word im
 std::pair<Word, int> Gen_Code::BNE(unsigned int rs1_, unsigned int rs2_, Word imm_) {
 
     // Check if all registers are in range
-    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 1};
-    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
     // Check if the immediate value is in range
     if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
 
@@ -780,8 +780,8 @@ std::pair<Word, int> Gen_Code::BNE(unsigned int rs1_, unsigned int rs2_, Word im
 std::pair<Word, int> Gen_Code::BLT(unsigned int rs1_, unsigned int rs2_, Word imm_) {
 
     // Check if all registers are in range
-    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 1};
-    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
     // Check if the immediate value is in range
     if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
 
@@ -814,8 +814,8 @@ std::pair<Word, int> Gen_Code::BLT(unsigned int rs1_, unsigned int rs2_, Word im
 std::pair<Word, int> Gen_Code::BGE(unsigned int rs1_, unsigned int rs2_, Word imm_) {
 
     // Check if all registers are in range
-    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 1};
-    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
     // Check if the immediate value is in range
     if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
 
@@ -848,8 +848,8 @@ std::pair<Word, int> Gen_Code::BGE(unsigned int rs1_, unsigned int rs2_, Word im
 std::pair<Word, int> Gen_Code::BLTU(unsigned int rs1_, unsigned int rs2_, Word imm_) {
 
     // Check if all registers are in range
-    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 1};
-    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
     // Check if the immediate value is in range
     if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
 
@@ -882,8 +882,8 @@ std::pair<Word, int> Gen_Code::BLTU(unsigned int rs1_, unsigned int rs2_, Word i
 std::pair<Word, int> Gen_Code::BGEU(unsigned int rs1_, unsigned int rs2_, Word imm_) {
 
     // Check if all registers are in range
-    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 1};
-    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    if(!Utility::is_in_range(rs2_, 0, 31)) return std::pair<Word, int>{Word{}, 3};
     // Check if the immediate value is in range
     if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
 
@@ -908,6 +908,103 @@ std::pair<Word, int> Gen_Code::BGEU(unsigned int rs1_, unsigned int rs2_, Word i
         (imm_.limit(11, 11) << 7) +
         (Word{opcode});
 
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// J-type Instruction jal: rd = PC + 4; PC += imm
+std::pair<Word, int> Gen_Code::JAL(unsigned int rd_, Word imm_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    // Check if the immediate value is in range
+    if((imm_ >> 20) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Shift immediate value by 1 bit
+    imm_ <<= 1;
+
+    // Check if the immediate value a multiply of 4, since the jump should be a multiply of 4
+    if((imm_ % 4) != Word{0}) return std::pair<Word, int>{Word{}, 5};
+
+    // Define constant values
+    const unsigned int opcode = 0b1101111;
+    
+    Word result{};
+    result +=
+        (imm_.limit(20, 20) << 31) +
+        (imm_.limit(10, 1) << 21) +
+        (imm_.limit(11, 11) << 20) +
+        (imm_.limit(19, 12) << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// I-type Instruction jalr: rd = PC + 4; PC = rs1 + imm
+std::pair<Word, int> Gen_Code::JALR(unsigned int rd_, unsigned int rs1_, Word imm_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if the immediate value is in range
+    if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Define constant values
+    const unsigned int funct3 = 0x0;
+    const unsigned int opcode = 0b1100111;
+
+    Word result{};
+    result +=
+        (imm_ << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+    
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// U-type Instruction lui: rd = imm << 12
+std::pair<Word, int> Gen_Code::LUI(unsigned int rd_, Word imm_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    // Check if the immediate value is in range
+    if((imm_ >> 20) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Define constant values
+    const unsigned int opcode = 0b0110111;
+
+    Word result{};
+    result +=
+        (imm_ << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+    
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// U-type Instruction auipc: rd = imm << 12
+std::pair<Word, int> Gen_Code::AUIPC(unsigned int rd_, Word imm_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    // Check if the immediate value is in range
+    if((imm_ >> 20) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Define constant values
+    const unsigned int opcode = 0b0010111;
+
+    Word result{};
+    result +=
+        (imm_ << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+    
     return std::pair<Word, int>{result, 0};
 
 }

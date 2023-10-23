@@ -120,6 +120,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
 
             case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: // Case I type instructions (1st part)
             case 19: case 20: case 21: case 22: case 23: // Case I type instructions (2nd part)
+            case 34: // Case I type instructions (3rd part)
                 // Input rd, rs1, imm and generate code
                 if(ss_line >> rd >> rs1 >> imm) {
                     switch (inst_code) {
@@ -166,6 +167,8 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                     case 23: // case lhu
                         generate_output = Gen_Code::LHU(rd, rs1, Utility::change_length(imm, 12));
                         break;
+                    case 34: // case jalr
+                        generate_output = Gen_Code::JALR(rd, rs1, Utility::change_length(imm, 12));
                     }
                     
                     if(generate_output.second == 0) {
@@ -216,7 +219,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 break;
 
             case 27: case 28: case 29: case 30: case 31: case 32: // Case B type instructions
-                // Input rs1_, rs2, imm and generate code
+                // Input rs1, rs2, imm and generate code
                 if(ss_line >> rs1 >> rs2 >> imm) {
                     switch (inst_code) {
                     case 27: // case beq
@@ -238,6 +241,31 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                         generate_output = Gen_Code::BGEU(rs1, rs2, Utility::change_length(imm, 12));
                         break;
                     }
+
+                    if(generate_output.second == 0) {
+                        fout << generate_output.first << std::endl;
+                    } else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        Error_Out::out_error(generate_output.second, count, "");
+                        no_error = false;
+                    }
+                } else {
+                    fout << "!!! Error line !!!" << std::endl;
+                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    Error_Out::out_error(102, count, "B Type Instruction should have format: \"cmd rs1 rs2 imm\".");
+                    no_error = false;
+                }
+                break;
+
+            case 33: // Case J type instructions
+                // Input rd, imm and generate code
+                if(ss_line >> rd >> imm) {
+                    switch (inst_code) {
+                    case 33: // case jal
+                        generate_output = Gen_Code::JAL(rd, Utility::change_length(imm, 20));
+                        break;
+                    }
                     
                     if(generate_output.second == 0) {
                         fout << generate_output.first << std::endl;
@@ -250,9 +278,38 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
                     std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-                    Error_Out::out_error(102, count, "Command \"beq\" should have format: \"beq rs1 rs2 imm\".");
+                    Error_Out::out_error(102, count, "J Type Instruction should have format: \"cmd rd imm\".");
                     no_error = false;
                 }
+                break;
+
+            case 35: case 36: // Case U type instructions
+                // Input rd, imm and generate code
+                if(ss_line >> rd >> imm) {
+                    switch (inst_code) {
+                    case 35: // case lui
+                        generate_output = Gen_Code::LUI(rd, Utility::change_length(imm, 20));
+                        break;
+                    case 36: // case auipc
+                        generate_output = Gen_Code::AUIPC(rd, Utility::change_length(imm, 20));
+                        break;
+                    }
+                    
+                    if(generate_output.second == 0) {
+                        fout << generate_output.first << std::endl;
+                    } else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        Error_Out::out_error(generate_output.second, count, "");
+                        no_error = false;
+                    }
+                } else {
+                    fout << "!!! Error line !!!" << std::endl;
+                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    Error_Out::out_error(102, count, "J Type Instruction should have format: \"cmd rd imm\".");
+                    no_error = false;
+                }
+                break;
                 
             default:
                 break;

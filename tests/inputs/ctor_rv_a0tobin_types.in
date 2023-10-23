@@ -3,3 +3,6 @@ c b ../tests/files/scode_assembly0_test_i_0.sca ../tests/files/scode_binary_file
 c b ../tests/files/scode_assembly0_test_i_1.sca ../tests/files/scode_binary_file_i_1.scg
 c b ../tests/files/scode_assembly0_test_s.sca ../tests/files/scode_binary_file_s.scg
 c b ../tests/files/scode_assembly0_test_b.sca ../tests/files/scode_binary_file_b.scg
+c b ../tests/files/scode_assembly0_test_j.sca ../tests/files/scode_binary_file_j.scg
+c b ../tests/files/scode_assembly0_test_i_2.sca ../tests/files/scode_binary_file_i_2.scg
+c b ../tests/files/scode_assembly0_test_u.sca ../tests/files/scode_binary_file_u.scg

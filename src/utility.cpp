@@ -44,6 +44,13 @@ const std::map<std::string, int> Utility::rv_inst = {
     {"jal", 33},
     {"jalr", 34},
 
+    {"lui", 35},
+    {"auipc", 36},
+    
+    // {"ecall", 37},
+
+    // {"ebreak", 38},
+
     // RV32M Multiply Extension
     {"mul", 50},
     {"mulh", 51},
