@@ -101,6 +101,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                         generate_output = Gen_Code::SLTU(rd, rs1, rs2);
                         break;
                     }
+
                     if(generate_output.second == 0) {
                         fout << generate_output.first << std::endl;
                     } else {
@@ -214,10 +215,30 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 }
                 break;
 
-            case 27: // case beq
+            case 27: case 28: case 29: case 30: case 31: case 32: // Case B type instructions
                 // Input rs1_, rs2, imm and generate code
                 if(ss_line >> rs1 >> rs2 >> imm) {
-                    generate_output = Gen_Code::BEQ(rs1, rs2, Utility::change_length(imm, 12));
+                    switch (inst_code) {
+                    case 27: // case beq
+                        generate_output = Gen_Code::BEQ(rs1, rs2, Utility::change_length(imm, 12));
+                        break;
+                    case 28: // case bne
+                        generate_output = Gen_Code::BNE(rs1, rs2, Utility::change_length(imm, 12));
+                        break;
+                    case 29: // case blt
+                        generate_output = Gen_Code::BLT(rs1, rs2, Utility::change_length(imm, 12));
+                        break;
+                    case 30: // case bge
+                        generate_output = Gen_Code::BGE(rs1, rs2, Utility::change_length(imm, 12));
+                        break;
+                    case 31: // case bltu
+                        generate_output = Gen_Code::BLTU(rs1, rs2, Utility::change_length(imm, 12));
+                        break;
+                    case 32: // case bgeu
+                        generate_output = Gen_Code::BGEU(rs1, rs2, Utility::change_length(imm, 12));
+                        break;
+                    }
+                    
                     if(generate_output.second == 0) {
                         fout << generate_output.first << std::endl;
                     } else {

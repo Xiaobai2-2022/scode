@@ -46,6 +46,11 @@ class Gen_Code {
     // B Type Instructions
     public:
         static std::pair<Word, int> BEQ(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> BNE(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> BLT(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> BGE(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> BLTU(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> BGEU(unsigned int, unsigned int, Word);
 
 };
 
