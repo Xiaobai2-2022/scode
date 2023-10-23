@@ -310,6 +310,52 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                     no_error = false;
                 }
                 break;
+
+            case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57: // Case R (RV32M) type instructions
+                // Input rd, rs1, rs2 and generate code
+                if(ss_line >> rd >> rs1 >> rs2) {
+                    switch (inst_code) {
+                    case 50: // case mul
+                        generate_output = Gen_Code::MUL(rd, rs1, rs2);
+                        break;
+                    case 51: // case mulh
+                        generate_output = Gen_Code::MULH(rd, rs1, rs2);
+                        break;
+                    case 52: // case mulsu
+                        generate_output = Gen_Code::MULSU(rd, rs1, rs2);
+                        break;
+                    case 53: // case mulu
+                        generate_output = Gen_Code::MULU(rd, rs1, rs2);
+                        break;
+                    case 54: // case div
+                        generate_output = Gen_Code::DIV(rd, rs1, rs2);
+                        break;
+                    case 55: // case divu
+                        generate_output = Gen_Code::DIVU(rd, rs1, rs2);
+                        break;
+                    case 56: // case rem
+                        generate_output = Gen_Code::REM(rd, rs1, rs2);
+                        break;
+                    case 57: // case remu
+                        generate_output = Gen_Code::REMU(rd, rs1, rs2);
+                        break;
+                    }
+                    
+                    if(generate_output.second == 0) {
+                        fout << generate_output.first << std::endl;
+                    } else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        Error_Out::out_error(generate_output.second, count, "");
+                        no_error = false;
+                    }
+                } else {
+                    fout << "!!! Error line !!!" << std::endl;
+                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    Error_Out::out_error(102, count, "R (RV32M) Type Instruction should have format: \"cmd rd rs1 rs2\".");
+                    no_error = false;
+                }
+                break;
                 
             default:
                 break;

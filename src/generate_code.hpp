@@ -63,6 +63,17 @@ class Gen_Code {
         static std::pair<Word, int> LUI(unsigned int, Word);
         static std::pair<Word, int> AUIPC(unsigned int, Word);
 
+    // R (M) Type Instructions (RV32M Multiply Extension)
+    public:
+        static std::pair<Word, int> MUL(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> MULH(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> MULSU(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> MULU(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> DIV(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> DIVU(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> REM(unsigned int, unsigned int, unsigned int);
+        static std::pair<Word, int> REMU(unsigned int, unsigned int, unsigned int);
+
 };
 
 #endif

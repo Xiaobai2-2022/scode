@@ -1,0 +1,9 @@
+Scode Assembly 0: For test purpose only; Valid Case all M Type Instructions opcode 011 0011
+mul 1 2 3
+mulh 1 2 3
+mulsu 1 2 3
+mulu 1 2 3
+div 1 2 3
+divu 1 2 3
+rem 1 2 3
+remu 1 2 3
