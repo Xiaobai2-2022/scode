@@ -117,8 +117,8 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 }
                 break;
 
-            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18:
-            case 19: case 20: case 21: case 22: case 23: // Case I type instructions (1st part)
+            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: // Case I type instructions (1st part)
+            case 19: case 20: case 21: case 22: case 23: // Case I type instructions (2nd part)
                 // Input rd, rs1, imm and generate code
                 if(ss_line >> rd >> rs1 >> imm) {
                     switch (inst_code) {
@@ -179,6 +179,37 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                     fout << "!!! Error line !!!" << std::endl;
                     std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
                     Error_Out::out_error(102, count, "I Type Instruction should have format: \"cmd rd rs1 imm\".");
+                    no_error = false;
+                }
+                break;
+
+            case 24: case 25: case 26: // Case S type instructions
+                // Input rd, rs1, imm and generate code
+                if(ss_line >> rs1 >> rs2 >> imm) {
+                    switch (inst_code) {
+                    case 24: // case sb
+                        generate_output = Gen_Code::SB(rs1, rs2, Utility::change_length(imm, 12));
+                        break;
+                    case 25: // case sh
+                        generate_output = Gen_Code::SH(rs1, rs2, Utility::change_length(imm, 12));
+                        break;
+                    case 26: // case sw
+                        generate_output = Gen_Code::SW(rs1, rs2, Utility::change_length(imm, 12));
+                        break;
+                    }
+                    
+                    if(generate_output.second == 0) {
+                        fout << generate_output.first << std::endl;
+                    } else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        Error_Out::out_error(generate_output.second, count, "");
+                        no_error = false;
+                    }
+                } else {
+                    fout << "!!! Error line !!!" << std::endl;
+                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    Error_Out::out_error(102, count, "S Type Instruction should have format: \"cmd rs1 rs2 imm\".");
                     no_error = false;
                 }
                 break;
