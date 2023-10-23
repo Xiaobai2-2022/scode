@@ -117,7 +117,8 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 }
                 break;
 
-            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: // Case I type instructions (1st part)
+            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18:
+            case 19: case 20: case 21: case 22: case 23: // Case I type instructions (1st part)
                 // Input rd, rs1, imm and generate code
                 if(ss_line >> rd >> rs1 >> imm) {
                     switch (inst_code) {
@@ -147,6 +148,22 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                         break;
                     case 18: // case sltiu
                         generate_output = Gen_Code::SLTIU(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    
+                    case 19: // case lb
+                        generate_output = Gen_Code::LB(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    case 20: // case lh
+                        generate_output = Gen_Code::LH(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    case 21: // case lw
+                        generate_output = Gen_Code::LW(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    case 22: // case lbu
+                        generate_output = Gen_Code::LBU(rd, rs1, Utility::change_length(imm, 12));
+                        break;
+                    case 23: // case lhu
+                        generate_output = Gen_Code::LHU(rd, rs1, Utility::change_length(imm, 12));
                         break;
                     }
                     

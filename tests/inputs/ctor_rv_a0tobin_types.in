@@ -1,2 +1,3 @@
 c b ../tests/files/scode_assembly0_test_r.sca ../tests/files/scode_binary_file_r.scg
+c b ../tests/files/scode_assembly0_test_i_0.sca ../tests/files/scode_binary_file_i_0.scg
 c b ../tests/files/scode_assembly0_test_i_1.sca ../tests/files/scode_binary_file_i_1.scg

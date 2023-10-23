@@ -31,6 +31,12 @@ class Gen_Code {
         static std::pair<Word, int> SLTI(unsigned int, unsigned int, Word);
         static std::pair<Word, int> SLTIU(unsigned int, unsigned int, Word);
 
+        static std::pair<Word, int> LB(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> LH(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> LW(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> LBU(unsigned int, unsigned int, Word);
+        static std::pair<Word, int> LHU(unsigned int, unsigned int, Word);
+
     // B Type Instructions
     public:
         static std::pair<Word, int> BEQ(unsigned int, unsigned int, Word);

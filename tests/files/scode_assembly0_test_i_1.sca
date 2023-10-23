@@ -1,10 +1,6 @@
-Scode Assembly 0: For test purpose only; Valid Case all I Type Instructions
-addi 1 2 16
-xori 1 2 16
-ori 1 2 16
-andi 1 2 16
-slli 1 2 16
-srli 1 2 16
-srai 1 2 16
-slti 1 2 16
-sltiu 1 2 16
+Scode Assembly 0: For test purpose only; Valid Case all I Type Instructions opcode 000 0011
+lb 1 2 16
+lh 1 2 16
+lw 1 2 16
+lbu 1 2 16
+lhu 1 2 16

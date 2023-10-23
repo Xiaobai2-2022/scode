@@ -505,6 +505,131 @@ std::pair<Word, int> Gen_Code::SLTIU(unsigned int rd_, unsigned int rs1_, Word i
 
 }
 
+// I-type Instruction lb: rd = M[rs + imm][0 : 7]
+std::pair<Word, int> Gen_Code::LB(unsigned int rd_, unsigned int rs1_, Word imm_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if the immediate value is in range
+    if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Define constant values
+    const unsigned int funct3 = 0x0;
+    const unsigned int opcode = 0b0000011;
+
+    Word result{};
+    result +=
+        (imm_ << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+    
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// I-type Instruction lh: rd = M[rs + imm][0 : 15]
+std::pair<Word, int> Gen_Code::LH(unsigned int rd_, unsigned int rs1_, Word imm_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if the immediate value is in range
+    if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Define constant values
+    const unsigned int funct3 = 0x1;
+    const unsigned int opcode = 0b0000011;
+
+    Word result{};
+    result +=
+        (imm_ << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+    
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// I-type Instruction lw: rd = M[rs + imm][0 : 31]
+std::pair<Word, int> Gen_Code::LW(unsigned int rd_, unsigned int rs1_, Word imm_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if the immediate value is in range
+    if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Define constant values
+    const unsigned int funct3 = 0x2;
+    const unsigned int opcode = 0b0000011;
+
+    Word result{};
+    result +=
+        (imm_ << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+    
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// I-type Instruction lbu: rd = M[rs + imm][0 : 7]
+std::pair<Word, int> Gen_Code::LBU(unsigned int rd_, unsigned int rs1_, Word imm_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if the immediate value is in range
+    if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Define constant values
+    const unsigned int funct3 = 0x4;
+    const unsigned int opcode = 0b0000011;
+
+    Word result{};
+    result +=
+        (imm_ << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+    
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// I-type Instruction lhu: rhu = M[rs + imm][0 : 15]
+std::pair<Word, int> Gen_Code::LHU(unsigned int rd_, unsigned int rs1_, Word imm_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if the immediate value is in range
+    if((imm_ >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Define constant values
+    const unsigned int funct3 = 0x5;
+    const unsigned int opcode = 0b0000011;
+
+    Word result{};
+    result +=
+        (imm_ << 20) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+    
+    return std::pair<Word, int>{result, 0};
+
+}
+
 // B-type Instruction beq: if(rs1 == rs2) PC += imm
 std::pair<Word, int> Gen_Code::BEQ(unsigned int rs1_, unsigned int rs2_, Word imm_) {
 
