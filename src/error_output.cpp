@@ -23,8 +23,16 @@ void Error_Out::out_error(int error_code_, int line_number_, std::string error_i
         std::cout << "Instruction \"" << error_information_ << "\" not found on line " << line_number_ << "." << std::endl;
         break;
     case 102:
-        std::cout << "Error in instruction formating on line" << line_number_ << ": " << error_information_ << std::endl;
+        std::cout << "Error in instruction formating on line " << line_number_ << ": " << error_information_ << std::endl;
         break;
+    case 201:
+        std::cout << "Duplicated definition for label: " << error_information_ << " on line " << line_number_ << "." << std::endl;
+        break;
+    case 202:
+        std::cout << "Illegal label: " << error_information_ << " on line " << line_number_ << "." << std::endl;
+        break;
+    case 203:
+        std::cout << "Label: " << error_information_ << " is used but never decleared on line " << line_number_ << "." << std::endl;
     
     default:
         break;

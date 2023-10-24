@@ -202,6 +202,7 @@ void run_ctor_rv_test() {
     /**
      * Test Methods (Not case sensitive)
      * 
+     * 0 - 1 to 0 tests
      * B - 0 to bin tests
      *     
      */
@@ -211,6 +212,21 @@ void run_ctor_rv_test() {
         std::cin >> s_if >> s_of;
         // Check if the operation is completed correctly
         if(Ctor_RV::rv_assembly0_to_bin(s_if, s_of)) {
+            // Print the entire out file
+            std::ifstream fin(s_of);
+            std::string cur_line;
+            while(std::getline(fin, cur_line)) {
+                std::cout << cur_line << std::endl;
+            }
+        }
+        std::cout << std::endl;
+        break;
+    
+    case '0':
+        // Read file names
+        std::cin >> s_if >> s_of;
+        // Check if the operation is completed correctly
+        if(Ctor_RV::rv_assembly1_to_assembly0(s_if, s_of)) {
             // Print the entire out file
             std::ifstream fin(s_of);
             std::string cur_line;

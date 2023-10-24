@@ -3,8 +3,8 @@
 
 #include <cmath>
 #include <climits>
-#include <map>
 #include <string>
+#include <unordered_map>
 
 #include "word.hpp"
 
@@ -12,7 +12,7 @@ class Utility {
 
     public:
         // Maps instructions to an integer for switch purpose
-        static const std::map<std::string, int> rv_inst;
+        static const std::unordered_map<std::string, int> inst;
 
     public:
         // Check if the the value is in range of the other two values

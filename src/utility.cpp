@@ -1,6 +1,6 @@
 #include "utility.hpp"
 
-const std::map<std::string, int> Utility::rv_inst = {
+const std::unordered_map<std::string, int> Utility::inst = {
 
     // RV32I Base Integer Instructions
     {"add", 0},
@@ -59,7 +59,13 @@ const std::map<std::string, int> Utility::rv_inst = {
     {"div", 54},
     {"divu", 55},
     {"rem", 56},
-    {"remu", 57}
+    {"remu", 57},
+
+
+
+    // Assembly Codes
+    {"#", 1000},
+    {"define", 1001}
 
 };
 

@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <unordered_map>
 
 #include "error_output.hpp"
 #include "generate_code.hpp"    
@@ -11,8 +12,10 @@
 class Ctor_RV {
 
     public:
-        // Constructs Risc-V assembly command to binary code by reading file and output
+        // Constructs Risc-V assembly command 0 to binary code by reading file and output
         static bool rv_assembly0_to_bin(std::string, std::string);
+        // Constructs Risc-V assembly command 1 to assembly command 0 by reading file and output
+        static bool rv_assembly1_to_assembly0(std::string, std::string);
 
 };
 

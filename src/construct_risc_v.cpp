@@ -1,6 +1,6 @@
 #include "construct_risc_v.hpp"
 
-// Constructs Risc-V assembly command to binary code by reading file and output
+// Constructs Risc-V assembly 0 command to binary code by reading file and output
 //     if_name_ is the input file name
 //     of_name_ is the output file name
 bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
@@ -50,19 +50,18 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
         int rd, rs1, rs2;       // reg inputs
         int imm;                // immediate
 
-
         std::pair<Word, int> generate_output;
 
         // Construct the string stream to access all elements on the line
-        std::stringstream ss_line(cur_line);
+        std::stringstream ss_line{cur_line};
         
         // Read the instruction
         ss_line >> inst;
 
         // Attempt to find the instruction in map
-        auto it = Utility::rv_inst.find(inst);
+        auto it = Utility::inst.find(inst);
 
-        if(it != Utility::rv_inst.end()) {
+        if(it != Utility::inst.end()) {
             int inst_code = it->second;
 
             switch (inst_code) {
@@ -364,6 +363,251 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
         } else {
             fout << "!!! Error line !!!" << std::endl;
             std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+            Error_Out::out_error(101, count, inst);
+            no_error = false;
+        }
+
+    }
+
+    return no_error;
+
+}
+
+// Constructs Risc-V assembly 1 command to Risc-V assembly 1 command by reading file and output
+//     if_name_ is the input file name
+//     of_name_ is the output file name
+bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name_, std::string of_name_) {
+
+    bool no_error{true};
+
+    // For error checking usage
+    unsigned long count{1};
+
+    // symbol table
+    std::unordered_map<std::string, long> symbol_table;
+
+    // Attempt to open input and output file
+    std::ifstream fin(if_name_);
+    std::ofstream fout(of_name_);
+    
+    // Check if the input file failed to open
+    if(!fin.is_open()) {
+        std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+        std::cout << "Error opening the input file: " << if_name_ << "." << std::endl;
+        return false;
+    }
+    // Check if the output file failed to open
+    if(!fout.is_open()) {
+        std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+        std::cout << "Error opening the output file: " << of_name_ << "." << std::endl;
+        return false;
+    }
+
+    std::string cur_line;
+    std::getline(fin, cur_line);
+
+    // Check if the risc-v assembly file is of the correct type
+    if(!Utility::is_start_with(cur_line, "Scode Assembly 1")) {
+        std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+        std::cout << "Input file has the wrong type: " << if_name_ << "." << std::endl;
+        return false;
+    }
+
+    /***************
+     * First Pass  *
+     ***************/
+
+    long pc{0};    // pc value
+
+    // Access all element of the file
+    while(std::getline(fin, cur_line)) {
+
+        count++;
+
+        std::string inst;
+        
+        std::string symbol;     // symbol in the table
+
+        std::pair<Word, int> generate_output;
+
+        // Construct the string stream to access all elements on the line
+        std::stringstream ss_line{cur_line};
+        
+        // Read the instruction
+        ss_line >> inst;
+
+        // Attempt to find the instruction in map
+        auto it = Utility::inst.find(inst);
+
+        if(it != Utility::inst.end()) {
+            int inst_code = it->second;
+
+            switch (inst_code) {
+            case 1000: // case comment
+                /* Does nothing */
+                break;
+            case 1001: // case define
+                // Input symbol and compute symbol table
+                if(ss_line >> symbol) {
+                    // Search for the instructions in the symbol table
+                    auto itr1 = symbol_table.find(symbol);
+                    if(itr1 != symbol_table.end()) {
+                        std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+                        Error_Out::out_error(201, count, symbol);
+                        no_error = false;
+                    } else {
+                        // Search for the instruction in the instruction table
+                        auto itr2 = Utility::inst.find(symbol);
+                        if(itr2 != Utility::inst.end()) {
+                            std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+                            Error_Out::out_error(202, count, symbol);
+                            no_error = false;
+                        } else {
+                            symbol_table.insert({symbol, pc});
+                        }
+                    }
+                } else {
+                    std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+                    Error_Out::out_error(102, count, "Define Instruction should have format: \"define symbol\".");
+                    no_error = false;
+                }
+                break;
+                
+            default: // case all other commands, add pc counter by 4.
+                pc += 4;
+                break;
+            }
+        } else {
+            fout << "!!! Error line !!!" << std::endl;
+            std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+            Error_Out::out_error(101, count, inst);
+            no_error = false;
+        }
+
+    }
+
+    if(!no_error) {
+        return no_error;
+    }
+
+    /***************
+     * Second Pass  *
+     ***************/
+
+    // Output the scode header
+    fout << "Scode Assembly 0, Generated By Ctor_RV." << std::endl;
+
+    count = 1;
+    pc = 0;
+
+    // Clear and reset the file pointer to the begining
+    fin.clear();
+    fin.seekg(0, std::ios::beg);
+    std::getline(fin, cur_line);
+
+    // Access all element of the file
+    while(std::getline(fin, cur_line)) {
+
+        count++;
+
+        std::string inst;
+
+        int rd, rs1, rs2;       // reg inputs
+        int imm;                // immediate
+        std::string symbol;     // symbol in the table
+
+        // Construct the string stream to access all elements on the line
+        std::stringstream ss_line{cur_line};
+        
+        // Read the instruction
+        ss_line >> inst;
+
+        // Attempt to find the instruction in map
+        auto it = Utility::inst.find(inst);
+
+        if(it != Utility::inst.end()) {
+            int inst_code = it->second;
+
+            switch (inst_code) {
+            case 1000: // Case comment
+                /* Does nothing */
+                break;
+            case 1001: // Case define
+                /* Does nothing */
+                break;
+                
+            case 27: case 28: case 29: case 30: case 31: case 32: // Case B type instructions
+                // Input rs1, rs2, imm and generate code
+                if(ss_line >> rs1 >> rs2 >> imm) {
+                    /* Do nothing for the compiled code */
+                } else {
+                    // Reset the string stream
+                    ss_line.clear();
+                    ss_line.str(cur_line);
+                    ss_line >> inst;
+                    if(ss_line >> rs1 >> rs2 >> symbol) {
+                        // Attempt to find symbol in symbol table
+                        auto itr = symbol_table.find(symbol);
+                        if(itr != symbol_table.end()) {
+                            long cur_pc = pc + 4;
+                            cur_pc = itr->second - cur_pc;
+                            cur_pc /= 2;
+                            fout << it->first << " " << rs1 << " " << rs2 << " " << cur_pc << std::endl;
+                        } else {
+                            fout << "!!! Error line !!!" << std::endl;
+                            std::cout << "Error constructing rv assembly 1 to rv assembly 0." << std::endl;
+                            Error_Out::out_error(102, count, "B Type Instruction should have format: \"cmd rs1 rs2 label\".");
+                        }
+                    } else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 1 to rv assembly 0." << std::endl;
+                        Error_Out::out_error(203, count, symbol);
+                        no_error = false;
+                    }
+                }
+                pc += 4;
+                break;
+            
+            case 33: // Case J type instructions
+                // Input rs1, rs2, imm and generate code
+                if(ss_line >> rd >> imm) {
+                    /* Do nothing for the compiled code */
+                } else {
+                    // Reset the string stream
+                    ss_line.clear();
+                    ss_line.str(cur_line);
+                    ss_line >> inst;
+                    if(ss_line >> rd >> symbol) {
+                        // Attempt to find symbol in symbol table
+                        auto itr = symbol_table.find(symbol);
+                        if(itr != symbol_table.end()) {
+                            long cur_pc = pc + 4;
+                            cur_pc = itr->second - cur_pc;
+                            cur_pc /= 2;
+                            fout << it->first << " " << rd << " " << cur_pc << std::endl;
+                        } else {
+                            fout << "!!! Error line !!!" << std::endl;
+                            std::cout << "Error constructing rv assembly 1 to rv assembly 0." << std::endl;
+                            Error_Out::out_error(102, count, "J Type Instruction should have format: \"cmd rs1 label\".");
+                        }
+                    } else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 1 to rv assembly 0." << std::endl;
+                        Error_Out::out_error(203, count, symbol);
+                        no_error = false;
+                    }
+                }
+                pc += 4;
+                break;
+                
+            default: // case all other commands, add pc counter by 4.
+                fout << cur_line << std::endl;
+                pc += 4;
+                break;
+            }
+        } else {
+            fout << "!!! Error line !!!" << std::endl;
+            std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
             Error_Out::out_error(101, count, inst);
             no_error = false;
         }
