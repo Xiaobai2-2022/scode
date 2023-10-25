@@ -174,9 +174,9 @@ Word Word::limit(unsigned int left_, unsigned int right_) {
 }
 
 // Output operator
-std::ostream &operator<<(std::ostream &os, const Word &c) {
+std::ostream &operator<<(std::ostream &os, const Word &w) {
 
-    unsigned int u_i_val{c.value};
+    unsigned int u_i_val{w.value};
     std::string s_val{""};
 
     // Convert to string

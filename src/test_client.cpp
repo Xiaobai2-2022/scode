@@ -4,6 +4,7 @@ void run_word_test();
 void run_generate_code_test();
 void run_utility_test();
 void run_ctor_rv_test();
+void run_reg_test();
 int main();
 
 // Execute the Word tests
@@ -243,6 +244,49 @@ void run_ctor_rv_test() {
 
 }
 
+void run_reg_test() {
+
+    char type{'\0'};                    // input
+    unsigned long index;                // index of the reg
+    int val;                            // value to be update
+
+    Reg r{};
+
+    std::cin >> type;
+
+    /**
+     * Test Methods (Not case sensitive)
+     * 
+     * P - print the reg
+     * Q - quit
+     * R - read the reg
+     * W - write to the reg
+     *     
+     */
+    while(type != 'q') {
+
+        switch (type) {
+        case 'p': case 'P':
+            std::cout << r;
+            break;
+        case 'r': case 'R':
+            std::cin >> index;
+            std::cout << r.read_cell(index) << std::endl;
+            break;
+        case 'w': case 'W':
+            std::cin >> index >> val;
+            std::cout << r.write_cell(index, Word{val}) << std::endl;
+        case 'q': case 'Q': default:
+            type = 'q';
+            break;
+        }
+
+        std::cin >> type;
+
+    }
+
+}
+
 int main() {
 
     char in;
@@ -252,6 +296,7 @@ int main() {
      * 
      * C - Construct Risc V Codes
      * G - Generate Code tests
+     * R - Register tests
      * Q - Quit
      * U - Utility tests
      * W - Word tests
@@ -266,6 +311,10 @@ int main() {
 
         case 'g': case 'G':
             run_generate_code_test();
+            break;
+
+        case 'r': case 'R':
+            run_reg_test();
             break;
 
         case 'q': case 'Q':
