@@ -6,29 +6,29 @@
 #include "memory_cell.hpp"
 #include "word.hpp"
 
-class Mem_Cell {
+class Mem_Node {
 
     private:
         Cell value;
-        Mem_Cell *next;
-        Mem_Cell *prev;
+        Mem_Node *next;
+        Mem_Node *prev;
 
     public:
-        Mem_Cell(Word);                                 // Constructor, set the value to the word given
-        ~Mem_Cell();                                    // Destructor, removes this value from the chain
+        Mem_Node(Cell);                                 // Constructor, set the value to the word given
+        ~Mem_Node();                                    // Destructor, removes this value from the chain
 
     public:
-        void attach_to_back(Mem_Cell *);
-        void attach_to_front(Mem_Cell *);
+        void attach_to_back(Mem_Node *);
+        void attach_to_front(Mem_Node *);
 
 };
 
 class Memory {
 
     private:
-        Mem_Cell *head;
-        Mem_Cell *tail;
-        std::map<unsigned long, Mem_Cell*> mem;
+        Mem_Node *head;
+        Mem_Node *tail;
+        std::map<unsigned long, Mem_Node*> mem;
 
     public:
         Memory();                                       // Constructor, constructs a empty memory
@@ -37,6 +37,23 @@ class Memory {
     public:
         void add(unsigned long, Word);
         Word remove(unsigned long);
+
+    public:
+        class Bidirectional_Iterator {                              // Bidirectional Iterator for memory
+
+            Mem_Node *cur;
+            Bidirectional_Iterator(Mem_Node *);
+
+            public:
+                Bidirectional_Iterator &operator++();
+                Bidirectional_Iterator &operator--();
+                bool operator!=(const Bidirectional_Iterator &);
+                Cell &operator*();
+                friend Memory;
+
+        };
+        Bidirectional_Iterator begin();
+        Bidirectional_Iterator end();
 
 };
 
