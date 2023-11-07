@@ -8,6 +8,8 @@
 
 #include "word.hpp"
 
+class Utility;
+
 class Utility {
 
     public:

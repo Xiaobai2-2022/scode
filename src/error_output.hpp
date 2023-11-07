@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+class Error_Out;
+
 class Error_Out {
 
     public:

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+class Word;
+
 class Word {
 
     private:

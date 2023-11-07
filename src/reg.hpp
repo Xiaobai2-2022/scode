@@ -5,6 +5,8 @@
 
 #include "memory_cell.hpp"
 
+class Reg;
+
 class Reg {
 
     public:

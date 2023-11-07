@@ -92,7 +92,7 @@ int Utility::pow(int value_, unsigned int power_) {
     if(power_ == 0) return 1;
 
     int res{value_};
-    for(unsigned int i{1}; i < power_; i++) {
+    for(unsigned int i{1}; i < power_; ++i) {
         res *= value_;
     }
     return res;

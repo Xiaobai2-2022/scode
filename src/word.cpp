@@ -23,7 +23,7 @@ Word::Word(std::string s_val_) {
 
         
         // loop through the string for '0' (double), '1' (double and add 1), otherwise error and set value to 0
-        for(std::size_t i{0}; i < length; i++) {
+        for(std::size_t i{0}; i < length; ++i) {
             char cur{s_val_.at(i)};
             if(cur == '0') {
                 this->value *= 2;
@@ -180,7 +180,7 @@ std::ostream &operator<<(std::ostream &os, const Word &w) {
     std::string s_val{""};
 
     // Convert to string
-    for(int i{0}; i < 32; i++) {
+    for(int i{0}; i < 32; ++i) {
 
         if(u_i_val % 2 == 0) {
             s_val = "0" + s_val;

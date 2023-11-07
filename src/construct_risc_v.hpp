@@ -9,6 +9,8 @@
 #include "generate_code.hpp"    
 #include "utility.hpp"
 
+class Ctor_RV;
+
 class Ctor_RV {
 
     public:

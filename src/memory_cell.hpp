@@ -7,6 +7,8 @@
 
 #include "word.hpp"
 
+class Cell;
+
 class Cell {
 
     private:

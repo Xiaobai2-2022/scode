@@ -3,8 +3,8 @@
 // Default constructor, set all reg to zero
 Reg::Reg() {
 
-    // set all cell to zero
-    for(unsigned long i{0}; i < NUM_CELL; i++) {
+    // Set all cell to zero
+    for(unsigned long i{0}; i < NUM_CELL; ++i) {
         reg_cells[i] = Cell(true, i);
     }
 

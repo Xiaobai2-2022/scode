@@ -4,6 +4,8 @@
 #include "word.hpp"
 #include "utility.hpp"
 
+class Gen_Code;
+
 class Gen_Code {
 
     // R Type Instructions
