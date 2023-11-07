@@ -5,6 +5,7 @@ void run_generate_code_test();
 void run_utility_test();
 void run_ctor_rv_test();
 void run_reg_test();
+void run_mem_test();
 int main();
 
 // Execute the Word tests
@@ -287,6 +288,54 @@ void run_reg_test() {
 
 }
 
+void run_mem_test() {
+
+    char type{'\0'};                    // input
+    unsigned long index;                // index of the memory
+    int val;                            // value
+    Cell temp;                          // temporary cell
+
+    std::cin >> type;
+
+    Memory m{};
+
+    /**
+     * Test Methods (Not case sensitive)
+     * 
+     * A - add an id and value to memory
+     * P - print the mem
+     * R - remove an id from memory
+     *     
+     */
+    while(type != 'q') {
+
+        switch (type) {
+        case 'a': case 'A':
+            std::cin >> index >> val;
+            temp = Cell{false, index, Word{val}};
+            m.add(temp);
+            break;
+        case 'p': case 'P':
+            for(auto it{m.begin()}; it != m.end(); ++it) {
+                std::cout << (*it);
+            }
+            std::cout << std::endl;
+            break;
+        case 'r': case 'R':
+            std::cin >> index;
+            m.remove(index);
+            break;
+        case 'q': case 'Q': default:
+            type = 'q';
+            break;
+        }
+
+        std::cin >> type;
+
+    }
+
+}
+
 int main() {
 
     char in;
@@ -296,6 +345,7 @@ int main() {
      * 
      * C - Construct Risc V Codes
      * G - Generate Code tests
+     * M - Memory tests
      * R - Register tests
      * Q - Quit
      * U - Utility tests
@@ -311,6 +361,10 @@ int main() {
 
         case 'g': case 'G':
             run_generate_code_test();
+            break;
+
+        case 'm': case 'M':
+            run_mem_test();
             break;
 
         case 'r': case 'R':
