@@ -303,6 +303,8 @@ void run_mem_test() {
      * Test Methods (Not case sensitive)
      * 
      * A - add an id and value to memory
+     * C - clears the memory
+     * I - insert an id and value to memory from back
      * P - print the mem
      * R - remove an id from memory
      *     
@@ -314,6 +316,14 @@ void run_mem_test() {
             std::cin >> index >> val;
             temp = Cell{false, index, Word{val}};
             m.add(temp);
+            break;
+        case 'c': case 'C':
+            m.clear();
+            break;
+        case 'i': case 'I':
+            std::cin >> index >> val;
+            temp = Cell{false, index, Word{val}};
+            m.add_to_back(temp);
             break;
         case 'p': case 'P':
             for(auto it{m.begin()}; it != m.end(); ++it) {

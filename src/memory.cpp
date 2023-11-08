@@ -28,11 +28,7 @@ Memory::Memory() : head{nullptr}, tail{nullptr} {}
 // Destructor, deletes all nodes
 Memory::~Memory() {
 
-     // All nodes exists in the map, can be directly deleted
-     for(auto it : this->mem) {
-          delete it.second;
-     }
-     this->mem.clear();
+     this->clear();
 
 }
 
@@ -57,11 +53,11 @@ void Memory::add(Cell val_) {
 
      // Loop through all elements to see where to insert this object
      for(auto it{this->begin()}; it != this->end(); ++it) {
-          // Insert it
+          // Insert if id is lesser
           if(id < (*it).cell_id()) {
                // Check if this is the first element
                if(it == this->begin()) {
-                    // Attach new node <=> cur, change head to the new node
+                    // Attach new node <=> head, change head to the new node
                     node->attach_to_back(this->head);
                     this->head->attach_to_front(node);
                     this->head = node;
@@ -78,10 +74,58 @@ void Memory::add(Cell val_) {
           }
      }
 
-     // If not found insert at end
+     // If not found insert at end tail <=> new node
      this->tail->attach_to_back(node);
      node->attach_to_front(this->tail);
      this->tail = node;
+
+}
+
+void Memory::add_to_back(Cell val_) {
+
+     ulong id = val_.cell_id();
+     Mem_Node *node = new Mem_Node(val_);
+
+     // If the list is empty, directly input the node
+     if(!this->head) {
+          this->head = node;
+          this->tail = node;
+          this->mem.emplace(std::pair<ulong, Mem_Node *>{id, node});
+          return;
+     }
+
+     // If id already exists in the memory, delete it; otherwise do nothing
+     this->remove(id);
+
+     this->mem.emplace(std::pair<ulong, Mem_Node*>{id, node});
+
+     // Loop through all elements to see where to insert this object (reversely)
+     for(auto it{this->rbegin()}; it != this->rend(); --it) {
+          // Insert if id is greater
+          if(id > (*it).cell_id()) {
+               // Check if this is the last element
+               if(it == this->rbegin()) {
+                    // Attach tail <=> new node, change tail to the new node
+                    this->tail->attach_to_back(node);
+                    node->attach_to_front(this->tail);
+                    this->tail = node;
+                    return;
+               }
+
+               // Attach cur <=> new node <=> next
+               node->attach_to_back(it.cur->next);
+               it.cur->next->attach_to_front(node);
+               it.cur->attach_to_back(node);
+               node->attach_to_front(it.cur);
+               return;
+
+          }
+     }
+
+     // If not found insert in front new node <=> head
+     node->attach_to_back(this->head);
+     this->head->attach_to_front(node);
+     this->head = node;
 
 }
 
@@ -112,6 +156,19 @@ void Memory::remove(ulong id_) {
 
      }
      
+}
+
+void Memory::clear() {
+     
+     // All nodes exists in the map, can be directly deleted
+     for(auto it : this->mem) {
+          delete it.second;
+     }
+     this->mem.clear();
+
+     this->head = nullptr;
+     this->tail = nullptr;
+
 }
 
 // The iterator constructor
