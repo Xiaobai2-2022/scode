@@ -16,13 +16,14 @@ Word Port::read_cell(ulong index_) {
 }
 
 // Set the value of the cell to new value, return the original value of the cell
-Word Port::write_cell(ulong index_, Word val_) {
-    if(index_ == 0) {
-        return this->port_cells[index_].read();
-    }
-    Word temp = this->port_cells[index_].read();
-    this->port_cells[index_].write(val_);
+Word Port::write_cell(Cell val_) {
+
+    ulong index = val_.cell_id();
+
+    Word temp = this->port_cells[index].read();
+    this->port_cells[index] = val_;
     return temp;
+
 }
 
 // Output operator
