@@ -90,9 +90,15 @@ In order to use STests, you must have your folders layout as follows:
 ```
 
 The commands for running STests are `bash run_test.sh` or simply `./run_test.sh`. However, you must give permission for using `./`. The command to give permission is `chmod +x run_test.sh`. Note that you have to `cd` into `scripts` to test.
+
 To run STests, you would need to put all your source files (C++) into the `src` folder. As well as your Makefile into the `scripts` folder.
+
 You have the option to change the Makefile for your program to compile different files. The default C++ version is C++11 for the tests; you also have the option to change that in the Makefile.
+
 The compiled files, including `*.o`, '*.d', and the executable file, will be generated automatically into the `bin` folder. These files will be deleted automatically after tests are completed.
+
 It is optional to use automatic test suites where you put `*.in` files in the `tests/inputs` folder, as well as the `*.out` files in the `tests/outputs-expected` folder.
+
 If you use the automatic test suites, the result `*.out` file will be generated in the `tests/outputs-actual` folder. `*.val` files will be generated in the `tests/valgrind-actual` folder. These files are generated for you to verify program correctness and test for memory leaks, respectively.
+
 Note that the script would compare the difference between files in the `tests/outputs-expected` folder and the `tests/outputs-actual` folder. Valgrind errors will also be explicitly displayed so that it is helpful to debug with STests.
