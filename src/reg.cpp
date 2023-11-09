@@ -16,12 +16,15 @@ Word Reg::read_cell(ulong index_) {
 }
 
 // Set the value of the cell to new value, return the original value of the cell
-Word Reg::write_cell(ulong index_, Word val_) {
-    if(index_ == 0) {
-        return this->reg_cells[index_].read();
+Word Reg::write_cell(Cell val_) {
+
+    ulong index = val_.cell_id();
+
+    if(index == 0) {
+        return this->reg_cells[index].read();
     }
-    Word temp = this->reg_cells[index_].read();
-    this->reg_cells[index_].write(val_);
+    Word temp = this->reg_cells[index].read();
+    this->reg_cells[index] = val_;
     return temp;
 }
 

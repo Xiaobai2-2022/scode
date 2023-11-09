@@ -20,7 +20,7 @@ class Reg {
 
     public:
         Word read_cell(ulong);
-        Word write_cell(ulong, Word);
+        Word write_cell(Cell);
 
     friend std::ostream &operator<<(std::ostream &, const Reg &);
 
