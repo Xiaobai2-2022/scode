@@ -67,6 +67,23 @@ class Memory {
         Bidirectional_Iterator rbegin();
         Bidirectional_Iterator rend();
 
+        class Const_Iterator {
+
+            Mem_Node *cur;
+            explicit Const_Iterator(Mem_Node *);
+
+            public:
+                bool operator!=(const Const_Iterator &);
+                Cell operator*() const;
+                Const_Iterator &operator++();
+                Const_Iterator operator++(int);
+
+                friend Memory;
+
+        };
+        Const_Iterator cbegin() const;
+        Const_Iterator cend() const;
+
 };
 
 #endif

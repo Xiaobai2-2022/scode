@@ -191,13 +191,13 @@ Cell Memory::Bidirectional_Iterator::operator*() {
 
 // Goto the next element ++it
 Memory::Bidirectional_Iterator &Memory::Bidirectional_Iterator::operator++() {
-     cur = cur->next;
+     this->cur = this->cur->next;
      return *this;
 }
 
 // Goto the previous element --it
 Memory::Bidirectional_Iterator &Memory::Bidirectional_Iterator::operator--() {
-     cur = cur->prev;
+     this->cur = this->cur->prev;
      return *this;
 }
 
@@ -233,4 +233,40 @@ Memory::Bidirectional_Iterator Memory::rbegin() {
 // Get the iterator pointing to the end of list in reverse
 Memory::Bidirectional_Iterator Memory::rend() {
      return Bidirectional_Iterator{nullptr};
+}
+
+// The iterator constructor
+Memory::Const_Iterator::Const_Iterator(Mem_Node *cur_) : cur{cur_} {}
+
+// Not equal operator for iterator, returns if the two iterator are the same
+bool Memory::Const_Iterator::operator!=(const Const_Iterator &other) {
+     return cur != other.cur;
+}
+
+// Returns the current containing cell
+Cell Memory::Const_Iterator::operator*() const {
+     return cur->value;
+}
+
+// Goto the next element ++it
+Memory::Const_Iterator &Memory::Const_Iterator::operator++() {
+     this->cur = this->cur->next;
+     return *this;
+}
+
+// Goto the next element it++
+Memory::Const_Iterator Memory::Const_Iterator::operator++(int) {
+     Const_Iterator temp = *this;
+     ++(*this);
+     return temp;
+}
+
+// Get the constant iterator pointing to the first element
+Memory::Const_Iterator Memory::cbegin() const {
+     return Const_Iterator{head};
+}
+
+// Get the constant iterator pointing to the end of list
+Memory::Const_Iterator Memory::cend() const {
+     return Const_Iterator{nullptr};
 }
