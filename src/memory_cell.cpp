@@ -9,6 +9,9 @@ Cell::Cell(unsigned int type_ , ulong id_) : type{type_}, id{id_}, value{Word{}}
 // unsigned int, unsigned long, Word constructor, set the state for the cell
 Cell::Cell(unsigned int type_, ulong id_, Word val_) : type{type_}, id{id_}, value{val_} {};
 
+// Returns the type of the cell
+unsigned int Cell::get_type() { return this->type; }
+
 // Returns the id of the cell
 ulong Cell::cell_id() { return this->id; };
 

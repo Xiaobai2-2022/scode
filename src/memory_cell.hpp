@@ -22,6 +22,7 @@ class Cell {
         Cell(unsigned int, ulong, Word);    // bool, unsigned long, Word constructor, set the state for the cell
 
     public:
+        unsigned int get_type();
         ulong cell_id();
         Word read();
         Word write(Word);
