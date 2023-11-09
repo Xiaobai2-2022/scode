@@ -6,8 +6,6 @@
 #include "memory_cell.hpp"
 #include "word.hpp"
 
-#define ulong unsigned int
-
 class Mem_Node;
 class Memory;
 

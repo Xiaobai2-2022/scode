@@ -12,18 +12,17 @@ class Cell;
 class Cell {
 
     private:
-        bool is_reg;
-        unsigned long id;
+        unsigned int type;
+        ulong id;
         Word value;
 
     public:
-        Cell();                             // Default constructor
-        Cell(bool, unsigned long);          // bool, unsigned long constructor, set the initial state for the cell
-        Cell(bool, unsigned long, Word);    // bool, unsigned long, Word constructor, set the state for the cell
+        Cell();                     // Default constructor
+        Cell(unsigned int, ulong);          // bool, unsigned long constructor, set the initial state for the cell
+        Cell(unsigned int, ulong, Word);    // bool, unsigned long, Word constructor, set the state for the cell
 
     public:
-        bool cell_is_reg();
-        unsigned long cell_id();
+        ulong cell_id();
         Word read();
         Word write(Word);
 

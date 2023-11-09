@@ -61,9 +61,10 @@ const std::unordered_map<std::string, int> Utility::inst = {
     {"rem", 56},
     {"remu", 57},
 
-    // Miscellaneous Extension
+    // SCode Extension
     {"end", 900},
-
+    {"input", 901},
+    {"output", 902},
 
     // Assembly Codes
     {"#", 1000},

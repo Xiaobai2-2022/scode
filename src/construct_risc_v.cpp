@@ -8,7 +8,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
     bool no_error{true};
 
     // For error checking usage
-    unsigned long count{1};
+    ulong count{1};
 
     // Attempt to open input and output file
     std::ifstream fin(if_name_);
@@ -386,7 +386,7 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name_, std::string of_nam
     bool no_error{true};
 
     // For error checking usage
-    unsigned long count{1};
+    ulong count{1};
 
     // symbol table
     std::unordered_map<std::string, long> symbol_table;

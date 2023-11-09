@@ -9,8 +9,9 @@
 
 #include "construct_risc_v.hpp"
 #include "generate_code.hpp"
-#include "memory.hpp"
 #include "memory_cell.hpp"
+#include "memory.hpp"
+#include "port.hpp"
 #include "reg.hpp"
 #include "utility.hpp"
 #include "word.hpp"

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#define ulong unsigned long
+
 class Word;
 
 class Word {

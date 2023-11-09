@@ -6,6 +6,7 @@ void run_utility_test();
 void run_ctor_rv_test();
 void run_reg_test();
 void run_mem_test();
+void run_port_test();
 int main();
 
 // Execute the Word tests
@@ -268,7 +269,7 @@ void run_reg_test() {
 
         switch (type) {
         case 'p': case 'P':
-            std::cout << r;
+            std::cout << r << std::endl;
             break;
         case 'r': case 'R':
             std::cin >> index;
@@ -314,7 +315,7 @@ void run_mem_test() {
         switch (type) {
         case 'a': case 'A':
             std::cin >> index >> val;
-            temp = Cell{false, index, Word{val}};
+            temp = Cell{0, index, Word{val}};
             m.add(temp);
             break;
         case 'c': case 'C':
@@ -322,7 +323,7 @@ void run_mem_test() {
             break;
         case 'i': case 'I':
             std::cin >> index >> val;
-            temp = Cell{false, index, Word{val}};
+            temp = Cell{0, index, Word{val}};
             m.add_to_back(temp);
             break;
         case 'p': case 'P':
@@ -346,6 +347,49 @@ void run_mem_test() {
 
 }
 
+void run_port_test() {
+
+    char type{'\0'};                    // input
+    unsigned long index;                // index of the port
+    int val;                            // value to be update
+
+    Port p{};
+
+    std::cin >> type;
+
+    /**
+     * Test Methods (Not case sensitive)
+     * 
+     * P - print the port
+     * Q - quit
+     * R - read the port
+     * W - write to the port
+     *     
+     */
+    while(type != 'q') {
+
+        switch (type) {
+        case 'p': case 'P':
+            std::cout << p << std::endl;
+            break;
+        case 'r': case 'R':
+            std::cin >> index;
+            std::cout << p.read_cell(index) << std::endl;
+            break;
+        case 'w': case 'W':
+            std::cin >> index >> val;
+            std::cout << p.write_cell(index, Word{val}) << std::endl;
+        case 'q': case 'Q': default:
+            type = 'q';
+            break;
+        }
+
+        std::cin >> type;
+
+    }
+
+}
+
 int main() {
 
     char in;
@@ -356,6 +400,7 @@ int main() {
      * C - Construct Risc V Codes
      * G - Generate Code tests
      * M - Memory tests
+     * P - Port tests
      * R - Register tests
      * Q - Quit
      * U - Utility tests
@@ -379,6 +424,10 @@ int main() {
 
         case 'r': case 'R':
             run_reg_test();
+            break;
+
+        case 'p': case 'P':
+            run_port_test();
             break;
 
         case 'q': case 'Q':

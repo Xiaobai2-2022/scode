@@ -10,17 +10,17 @@ class Reg;
 class Reg {
 
     public:
-        static const unsigned long NUM_CELL = 32;
+        static const ulong NUM_CELL = 32;
 
     private:
-        Cell reg_cells[32];
+        Cell reg_cells[NUM_CELL];
 
     public:
-        Reg();          // Default constructor, set all reg to zero
+        Reg();          // Default constructor, set all registers to zero
 
     public:
-        Word read_cell(unsigned long);
-        Word write_cell(unsigned long, Word);
+        Word read_cell(ulong);
+        Word write_cell(ulong, Word);
 
     friend std::ostream &operator<<(std::ostream &, const Reg &);
 

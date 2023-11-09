@@ -76,9 +76,11 @@ class Gen_Code {
         static std::pair<Word, int> REM(unsigned int, unsigned int, unsigned int);
         static std::pair<Word, int> REMU(unsigned int, unsigned int, unsigned int);
 
-    // Miscellaneous Instructions
+    // SCode Extension
     public:
         static std::pair<Word, int> END();
+        static std::pair<Word, int> INPUT(unsigned int, unsigned int = 0);
+        static std::pair<Word, int> OUTPUT(unsigned int, unsigned int = 1);
 
 };
 

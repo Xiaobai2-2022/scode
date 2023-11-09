@@ -3,8 +3,9 @@
 
 #include <iostream>
 
-#include "memory.hpp"
 #include "memory_cell.hpp"
+#include "memory.hpp"
+#include "port.hpp"
 #include "reg.hpp"
 
 class State;
@@ -15,9 +16,10 @@ class State {
         ulong PC;
         Reg registers;
         Memory memories;
+        Port ports;
     
     public:
-        State();                // Default constructor, set all value in register to zero and initialize an empty memory
+        State();                // Default constructor, set all value in register and ports to zero and initialize an empty memory
 
     public:
         void force_value_in_to_state(Cell);                                     // For test purpose only, force data into state

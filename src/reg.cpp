@@ -4,19 +4,19 @@
 Reg::Reg() {
 
     // Set all cell to zero
-    for(unsigned long i{0}; i < NUM_CELL; ++i) {
-        reg_cells[i] = Cell(true, i);
+    for(ulong i{0}; i < NUM_CELL; ++i) {
+        reg_cells[i] = Cell{1, i};
     }
 
 }
 
 // Returns the value in the cell
-Word Reg::read_cell(unsigned long index_) {
+Word Reg::read_cell(ulong index_) {
     return this->reg_cells[index_].read();
 }
 
 // Set the value of the cell to new value, return the original value of the cell
-Word Reg::write_cell(unsigned long index_, Word val_) {
+Word Reg::write_cell(ulong index_, Word val_) {
     if(index_ == 0) {
         return this->reg_cells[index_].read();
     }
