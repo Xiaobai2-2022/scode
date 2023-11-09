@@ -15,7 +15,7 @@ class State {
     private:
         ulong PC;
         Reg registers;
-        Memory memories;
+        Memory memory;
         Port ports;
     
     public:
@@ -25,7 +25,7 @@ class State {
         void force_value_in_to_state(Cell);                                     // For test purpose only, force data into state
 
     public:
-        State interperate_command();                                            // Interperate the current PC command, and call the correct function to generate new state
+        // State interperate_command();                                            // Interperate the current PC command, and call the correct function to generate new state
         
     friend std::ostream &operator<<(std::ostream &, const State &);
 

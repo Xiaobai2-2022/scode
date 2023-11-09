@@ -7,6 +7,7 @@ void run_ctor_rv_test();
 void run_reg_test();
 void run_mem_test();
 void run_port_test();
+void run_state_test();
 int main();
 
 // Execute the Word tests
@@ -277,7 +278,7 @@ void run_reg_test() {
             break;
         case 'w': case 'W':
             std::cin >> index >> val;
-            std::cout << r.write_cell(index, Word{val}) << std::endl;
+            std::cout << r.write_cell(Cell{1, index, Word{val}}) << std::endl;
         case 'q': case 'Q': default:
             type = 'q';
             break;
@@ -378,7 +379,47 @@ void run_port_test() {
             break;
         case 'w': case 'W':
             std::cin >> index >> val;
-            std::cout << p.write_cell(index, Word{val}) << std::endl;
+            std::cout << p.write_cell(Cell{2, index, Word{val}}) << std::endl;
+        case 'q': case 'Q': default:
+            type = 'q';
+            break;
+        }
+
+        std::cin >> type;
+
+    }
+
+}
+
+void run_state_test() {
+
+    char type{'\0'};                    // input
+    unsigned int type_id;                  // type
+    unsigned long index;                // index
+    int val;                            // value to be update
+
+    State s{};
+
+    std::cin >> type;
+
+    /**
+     * Test Methods (Not case sensitive)
+     * 
+     * F - force into the state
+     * P - print the state
+     * Q - quit
+     *     
+     */
+    while(type != 'q') {
+
+        switch (type) {
+        case 'f': case 'F':
+            std::cin >> type_id >> index >> val;
+            s.force_value_in_to_state(Cell{type_id, index, Word{val}});
+            break;
+        case 'p': case 'P':
+            std::cout << s << std::endl;
+            break;
         case 'q': case 'Q': default:
             type = 'q';
             break;
@@ -402,6 +443,7 @@ int main() {
      * M - Memory tests
      * P - Port tests
      * R - Register tests
+     * S - State tests
      * Q - Quit
      * U - Utility tests
      * W - Word tests
@@ -424,6 +466,10 @@ int main() {
 
         case 'r': case 'R':
             run_reg_test();
+            break;
+        
+        case 's': case 'S':
+            run_state_test();
             break;
 
         case 'p': case 'P':

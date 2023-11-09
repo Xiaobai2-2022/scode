@@ -13,6 +13,7 @@
 #include "memory.hpp"
 #include "port.hpp"
 #include "reg.hpp"
+#include "state.hpp"
 #include "utility.hpp"
 #include "word.hpp"
 
