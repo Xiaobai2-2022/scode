@@ -1,7 +1,7 @@
 #######################################
 # Auto Testing Software for scode     #
 # By Zhifan (Xiaobai) Li              #
-# Version 0.2.2                       #
+# Version 0.2.3                       #
 #######################################
 
 #######################################
@@ -106,6 +106,11 @@ mkdir $test_out_act_folder
 # Test with auto if yes is inputed
 if [ "${test_with_auto,,}" = "y" ]; then 
 
+    # Create a variable to check if all tests passed
+    test_pass=true
+    count_test=0
+    count_passed=0
+
     echo -e "${GREEN}Proceed with auto testing.${NC}"
 
     # Wait for user input
@@ -133,6 +138,12 @@ if [ "${test_with_auto,,}" = "y" ]; then
 
     for input_file in "$test_in_folder"/*.in; do
 
+        # Create a variable to check if the current tests passed
+        cur_test_pass=true
+        
+        # Increment test count
+        ((++count_test))
+
         # Extract file without the .in extension
         filename=$(basename "$input_file")
         f_name="${filename%.*}"
@@ -152,6 +163,7 @@ if [ "${test_with_auto,,}" = "y" ]; then
         if [ $? -eq 0 ]; then
             echo -e "${GREEN}Valgrind test ${f_name} passed!${NC}"
         else
+            cur_test_pass=false
             echo -e ""
             echo -e "${RED}Error 922:"
             echo -e "${YELLOW}A valgrind error is found, test \"$f_name\" failed, check log file $test_val_act_folder/$f_val_name for more information."
@@ -165,12 +177,21 @@ if [ "${test_with_auto,,}" = "y" ]; then
             echo -e "${GREEN}Test ${f_name} passed!${NC}"
             echo -e ""
         else
+            cur_test_pass=false
             echo -e ""
             echo -e "${RED}Error 923:"
             echo -e "${YELLOW}A test error is found, test \"$f_name\" failed. Check log file $test_out_act_folder/$f_out_name for more information."
             echo -e "${RED}Testing will continue...${NC}"
             echo -e ""
         fi
+
+        # Check if the current test passed
+        if [ "$cur_test_pass" = true ]; then
+            ((++count_passed))
+        else
+            test_pass=false
+        fi
+
 
     done
 
@@ -184,14 +205,27 @@ else
 
 fi
 
+# if test pass, proceed to print all tests passed
+if [ "$test_pass" = true ]; then
+    
+    # Clear the console screen
+    clear
+
+    echo -e "${GREEN}$count_passed out of $count_test test(s) passed.${NC}"
+    echo -e "${GREEN}All tests passed...${NC}"
+    echo -e ""
+
+else
+
+    count_failed=$(expr $count_test - $count_passed)
+    echo -e "${RED}$count_passed out of $count_test test(s) passed.${NC}"
+    echo -e "${RED}$count_failed test(s) failed.${NC}"
+    echo -e ""
+
+fi
+
 # Wait for user input
 read -p "Press Enter to continue..."
-
-# Clear the console screen
-clear
-
-# Delete the compiled result at the end
-echo -e "${GREEN}Testing Done, terminates.${NC}"
 
 make clean
 
