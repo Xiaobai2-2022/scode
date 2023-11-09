@@ -76,6 +76,10 @@ class Gen_Code {
         static std::pair<Word, int> REM(unsigned int, unsigned int, unsigned int);
         static std::pair<Word, int> REMU(unsigned int, unsigned int, unsigned int);
 
+    // Miscellaneous Instructions
+    public:
+        static std::pair<Word, int> END();
+
 };
 
 #endif

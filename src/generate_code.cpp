@@ -1222,3 +1222,17 @@ std::pair<Word, int> Gen_Code::REMU(unsigned int rd_, unsigned int rs1_, unsigne
     return std::pair<Word, int>{result, 0};
 
 }
+
+// Miscellaneous Instruction end ends the program
+std::pair<Word, int> Gen_Code::END() {
+
+    // Define constant values
+    const unsigned int opcode = 0b1111111;
+
+    Word result{};
+    result +=
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}

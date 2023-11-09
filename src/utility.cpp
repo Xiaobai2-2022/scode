@@ -61,6 +61,7 @@ const std::unordered_map<std::string, int> Utility::inst = {
     {"rem", 56},
     {"remu", 57},
 
+    {"end", 999},
 
 
     // Assembly Codes

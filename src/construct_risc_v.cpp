@@ -355,6 +355,11 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                     no_error = false;
                 }
                 break;
+            
+            case 999:
+                generate_output = Gen_Code::END();
+                fout << generate_output.first << std::endl;
+                break;
                 
             default:
                 break;

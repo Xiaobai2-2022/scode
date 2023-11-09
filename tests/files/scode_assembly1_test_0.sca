@@ -14,3 +14,5 @@ addi 16 16 1
 jal 1 label_start
 # define the end of the loop
 define label_end
+# terminate the program
+end
