@@ -10,7 +10,7 @@ The compiler software, Scode is designed to compile to RISC-V code.
 ## Scode Assembler
 #### The Scode Assembler assembles code from RISC-V assembly-like code into RISV-V binary code.
 An example of this code would be:
-```
+```s
 Scode Assembly 1: For test purpose only; Valid Case label and comments
 # for loop using x16 as i, x17 as n
 # initialize i to 0
@@ -61,3 +61,38 @@ This section introduces the purpose of each file that exists in the repository, 
   - [x] Error Indicators (`error_output.hpp`)
 
 Note that the testing `test_client.cpp` is the only non-header file and contains main, since `test_interface.hpp` is used to include all header used in the project.
+
+---
+## Scode Testing (STests)
+#### STests are designed for suite testing for Scode/RISC-V/C++ development.
+##### Prerequisites
+1. STests are shell scripts, meaning that they are designed to run under Linux environments.[^1]
+2. STests require Makefile; thus, Makefile must be installed in your Linux distribution.
+3. STests test for memory leaks in C++ with Valgrind; thus, Valgrind must be installed in your Linux distribution.
+
+[^1]: Note that the development of Scode is down under WSL2 (Windows Subsystem for Linux) with Ubuntu.
+
+##### How to use STests
+In order to use STests, you must have your folders layout as follows:
+```bash
+.
+├── bin
+├── scripts
+│   ├── makefile
+│   └── run_test.sh
+├── src
+└── tests
+    ├── files
+    ├── inputs
+    ├── outputs-actual
+    ├── outputs-expected
+    └── valgrind-actual
+```
+
+The commands for running STests are `bash run_test.sh` or simply `./run_test.sh`. However, you must give permission for using `./`. The command to give permission is `chmod +x run_test.sh`. Note that you have to `cd` into `scripts` to test.
+To run STests, you would need to put all your source files (C++) into the `src` folder. As well as your Makefile into the `scripts` folder.
+You have the option to change the Makefile for your program to compile different files. The default C++ version is C++11 for the tests; you also have the option to change that in the Makefile.
+The compiled files, including `*.o`, '*.d', and the executable file, will be generated automatically into the `bin` folder. These files will be deleted automatically after tests are completed.
+It is optional to use automatic test suites where you put `*.in` files in the `tests/inputs` folder, as well as the `*.out` files in the `tests/outputs-expected` folder.
+If you use the automatic test suites, the result `*.out` file will be generated in the `tests/outputs-actual` folder. `*.val` files will be generated in the `tests/valgrind-actual` folder. These files are generated for you to verify program correctness and test for memory leaks, respectively.
+Note that the script would compare the difference between files in the `tests/outputs-expected` folder and the `tests/outputs-actual` folder. Valgrind errors will also be explicitly displayed so that it is helpful to debug with STests.
