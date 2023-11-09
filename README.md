@@ -38,7 +38,7 @@ end
 ##### SVM structure
 SVM is a state machine, where each state consists of three parts:
 1. Base Registers: SVM is designed to have 32 base registers, which are numbered 0 to 31; each register serves a different purpose.
-2. Memories: SVM is designed to have $2^34$ bits of memory. To optimize the virtual machine (not allocating the entire memory at once), the memory is represented by a doubly-linked list with a hashmap to all the instructions for jump use.
+2. Memories: SVM is designed to have $2^{34}$ bits of memory. To optimize the virtual machine (not allocating the entire memory at once), the memory is represented by a doubly-linked list with a hashmap to all the instructions for jump use.
 3. State Machine: SVM will run state to state; each instruction will have an input state and an output state, where we can print the state machines to see how the program is run.
 
 ---
