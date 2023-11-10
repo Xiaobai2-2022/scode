@@ -496,7 +496,7 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name_, std::string of_nam
     }
 
     /***************
-     * Second Pass  *
+     * Second Pass *
      ***************/
 
     // Output the scode header
