@@ -19,6 +19,12 @@ void Error_Out::out_error(int error_code_, int line_number_, std::string error_i
     case 5:
         std::cout << "Immediate value for branch or jump command on line " << line_number_ << " needs to be a multiple of two." << std::endl;
         break;
+    case 6:
+        std::cout << "Invalid pi on line " << line_number_ << "." << std::endl;
+        break;
+    case 7:
+        std::cout << "Invalid po on line " << line_number_ << "." << std::endl;
+        break;
     case 101:
         std::cout << "Instruction \"" << error_information_ << "\" not found on line " << line_number_ << "." << std::endl;
         break;

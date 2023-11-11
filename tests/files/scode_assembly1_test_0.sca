@@ -8,6 +8,8 @@ addi 17 0 10
 define label_start
 # if i >= n jump to end of the loop
 bge 16 17 label_end
+# print i
+output 0 16
 # increment i by 1
 addi 16 16 1
 # jump to start of the loop

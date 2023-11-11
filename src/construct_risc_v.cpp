@@ -49,6 +49,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
 
         int rd, rs1, rs2;       // reg inputs
         int imm;                // immediate
+        int pi, po;             // io ports
 
         std::pair<Word, int> generate_output;
 
@@ -359,6 +360,48 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
             case 900:
                 generate_output = Gen_Code::END();
                 fout << generate_output.first << std::endl;
+                break;
+
+            case 901:
+                // Input pi, rd and generate code
+                if(ss_line >> pi >> rd) {
+                    generate_output = Gen_Code::INPUT(pi, rd);
+
+                    if(generate_output.second == 0) {
+                        fout << generate_output.first << std::endl;
+                    }else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        Error_Out::out_error(generate_output.second, count, "");
+                        no_error = false;
+                    }
+                }else {
+                    fout << "!!! Error line !!!" << std::endl;
+                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    Error_Out::out_error(102, count, "Input (SCode) Instruction should have format: \"input pi rd\".");
+                    no_error = false;
+                }
+                break;
+
+            case 902:
+                // Input po, rs1 and generate code
+                if(ss_line >> po >> rs1) {
+                    generate_output = Gen_Code::OUTPUT(po, rs1);
+
+                    if(generate_output.second == 0) {
+                        fout << generate_output.first << std::endl;
+                    }else {
+                        fout << "!!! Error line !!!" << std::endl;
+                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        Error_Out::out_error(generate_output.second, count, "");
+                        no_error = false;
+                    }
+                }else {
+                    fout << "!!! Error line !!!" << std::endl;
+                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    Error_Out::out_error(102, count, "Output (SCode) Instruction should have format: \"output po, rs1\".");
+                    no_error = false;
+                }
                 break;
                 
             default:

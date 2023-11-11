@@ -1223,7 +1223,7 @@ std::pair<Word, int> Gen_Code::REMU(unsigned int rd_, unsigned int rs1_, unsigne
 
 }
 
-// Miscellaneous Instruction end ends the program
+// SCode Instruction end ends the program
 std::pair<Word, int> Gen_Code::END() {
 
     // Define constant values
@@ -1231,6 +1231,56 @@ std::pair<Word, int> Gen_Code::END() {
 
     Word result{};
     result +=
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// Scode Instruction input rd = pi
+std::pair<Word, int> Gen_Code::INPUT(unsigned int pi_, unsigned int rd_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    // Check if all ports are in range
+    if(!Utility::is_in_range(pi_, 0, 7)) return std::pair<Word, int>{Word{}, 6};
+
+    // Define constant values
+    const unsigned int funct7 = 0x00;
+    const unsigned int funct3 = 0x0;
+    const unsigned int opcode = 0b1111110;
+
+    Word result{};
+    result +=
+        (Word{funct7} << 25) +
+        (Word{pi_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd_} << 7) +
+        (Word{opcode});
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
+// Scode Instruction output po = rs1
+std::pair<Word, int> Gen_Code::OUTPUT(unsigned int po_, unsigned int rs1_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rs1_, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if all ports are in range
+    if(!Utility::is_in_range(po_, 0, 7)) return std::pair<Word, int>{Word{}, 7};
+
+    // Define constant values
+    const unsigned int funct7 = 0x20;
+    const unsigned int funct3 = 0x0;
+    const unsigned int opcode = 0b1111110;
+
+    Word result{};
+    result +=
+        (Word{funct7} << 25) +
+        (Word{rs1_} << 15) +
+        (Word{funct3} << 12) +
+        (Word{po_} << 7) +
         (Word{opcode});
 
     return std::pair<Word, int>{result, 0};
