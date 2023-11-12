@@ -4,7 +4,7 @@
 ```mermaid
 flowchart TB
 
-    A[Scode code]-->|Scode Compiler| B{RISC-V Assembly Code}
+    A[Scode Source Code]-->|Scode Compiler| B{RISC-V Assembly Code}
     J(Utility)-->B
     A-->|Error| D
     B-->|Scode Assembler| C{RISC-V Binary Code}
