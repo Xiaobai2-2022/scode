@@ -3,18 +3,18 @@
 ## SCode is the set of software used to compile down to Risc-V binary code
 ```mermaid
 flowchart TB
-
-    A[SCode Source Code]-->|SCode Compiler| B{RISC-V Assembly Code}
+    A[Scode code]-->|Scode Compiler| B{RISC-V Assembly Code}
+    J-->A
     J(Utility)-->B
     A-->|Error| D
-    B-->|SCode Assembler| C{RISC-V Binary Code}
+    B-->|Scode Assembler| C{RISC-V Binary Code}
     J-->C
     B-->|Error| D[Error Handler]
     C-->|State Generator| E{Initial State}
     J(Utility)-->E
     C-->|Error| D
     subgraph State Machine
-        E-->|State Interpreter| F[SCode Virtual Machine]
+        E-->|State Interpreter| F[Scode Virtual Machine]
         E-->G(Registers)
         E-->H(Memory)
         E-->I(Ports)
