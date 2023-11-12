@@ -421,7 +421,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
 
 }
 
-// Constructs Risc-V assembly 1 command to Risc-V assembly 1 command by reading file and output
+// Constructs Risc-V assembly 1 command to Risc-V assembly 0 command by reading file and output
 //     if_name_ is the input file name
 //     of_name_ is the output file name
 bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name_, std::string of_name_) {
@@ -665,3 +665,7 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name_, std::string of_nam
     return no_error;
 
 }
+
+// Constructs binary code to State by reading file and export into State
+//     if_name_ is the input file name
+//     state_ is to modify the state

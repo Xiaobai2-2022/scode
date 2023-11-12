@@ -415,7 +415,7 @@ void run_state_test() {
         switch (type) {
         case 'f': case 'F':
             std::cin >> type_id >> index >> val;
-            s.force_value_in_to_state(Cell{type_id, index, Word{val}});
+            s.set_value_in_to_state(Cell{type_id, index, Word{val}});
             break;
         case 'p': case 'P':
             std::cout << s << std::endl;
