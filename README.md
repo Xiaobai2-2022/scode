@@ -143,7 +143,7 @@ This section introduces the purpose of each file that exists in the repository, 
   - [x] Memories (`memory.hpp`)
   - [x] Ports (`ports.hpp`)
 - [ ] Scode Virtual Machine
-  - [ ] State Structure (`state.hpp`)
+  - [x] State Structure (`state.hpp`)
   - [ ] State Generator (`generate_state.hpp`)
   - [ ] State Interpreter (`state_interpreter.hpp`)
 - [x] Error Handling
