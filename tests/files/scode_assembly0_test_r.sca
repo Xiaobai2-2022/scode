@@ -1,4 +1,4 @@
-Scode Assembly 0: For test purpose only; Valid Case all R Type Instructions opcode 011 0011
+SCode Assembly 0: For test purpose only; Valid Case all R Type Instructions opcode 011 0011
 add 1 2 3
 sub 1 2 3
 xor 1 2 3

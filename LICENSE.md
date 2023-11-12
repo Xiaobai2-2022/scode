@@ -1,4 +1,4 @@
-Scode License
+SCode License
 
 Copyright (c) 2023 Zhifan (Xiaobai2) Li
 

@@ -1237,7 +1237,7 @@ std::pair<Word, int> Gen_Code::END() {
 
 }
 
-// Scode Instruction input rd = pi
+// SCode Instruction input rd = pi
 std::pair<Word, int> Gen_Code::INPUT(unsigned int pi_, unsigned int rd_) {
 
     // Check if all registers are in range
@@ -1262,7 +1262,7 @@ std::pair<Word, int> Gen_Code::INPUT(unsigned int pi_, unsigned int rd_) {
 
 }
 
-// Scode Instruction output po = rs1
+// SCode Instruction output po = rs1
 std::pair<Word, int> Gen_Code::OUTPUT(unsigned int po_, unsigned int rs1_) {
 
     // Check if all registers are in range

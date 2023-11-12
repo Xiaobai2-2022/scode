@@ -1,4 +1,4 @@
-Scode Assembly 0: For test purpose only; Valid Case all I Type Instructions opcode 001 0011
+SCode Assembly 0: For test purpose only; Valid Case all I Type Instructions opcode 001 0011
 addi 1 2 16
 xori 1 2 16
 ori 1 2 16

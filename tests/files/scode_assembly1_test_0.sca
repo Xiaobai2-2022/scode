@@ -1,4 +1,4 @@
-Scode Assembly 1: For test purpose only; Valid Case label and comments
+SCode Assembly 1: For test purpose only; Valid Case label and comments
 # for loop using x16 as i, x17 as n
 # initialize i to 0
 addi 16 0 0

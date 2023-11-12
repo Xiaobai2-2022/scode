@@ -1,4 +1,4 @@
-Scode Assembly 0: For test purpose only; Valid Case all M Type Instructions opcode 011 0011
+SCode Assembly 0: For test purpose only; Valid Case all M Type Instructions opcode 011 0011
 mul 1 2 3
 mulh 1 2 3
 mulsu 1 2 3

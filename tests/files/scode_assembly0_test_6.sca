@@ -1,4 +1,4 @@
-Scode Assembly 0: For test purpose only; Valid Case beq tests
+SCode Assembly 0: For test purpose only; Valid Case beq tests
 addi 1 0 0
 addi 2 0 2
 beq 1 2 8

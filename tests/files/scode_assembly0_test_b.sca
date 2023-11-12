@@ -1,4 +1,4 @@
-Scode Assembly 0: For test purpose only; Valid Case all B Type Instructions opcode 110 0011
+SCode Assembly 0: For test purpose only; Valid Case all B Type Instructions opcode 110 0011
 beq 1 2 -1022
 bne 1 2 -1022
 blt 1 2 -1022
