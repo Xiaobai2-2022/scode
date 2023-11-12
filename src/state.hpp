@@ -22,10 +22,12 @@ class State {
         State();                // Default constructor, set all value in register and ports to zero and initialize an empty memory
 
     public:
-        void force_value_in_to_state(Cell);                                     // For test purpose only, force data into state
+        void set_value_in_to_state(Cell);                                   // Force data into state
+        void set_pc(ulong);                                                 // Force PC value
 
     public:
-        // State interperate_command();                                            // Interperate the current PC command, and call the correct function to generate new state
+        Word get_value_in_state(unsigned int, ulong);                       // Read data from state
+        ulong get_pc();                                                     // Read PC value
         
     friend std::ostream &operator<<(std::ostream &, const State &);
 

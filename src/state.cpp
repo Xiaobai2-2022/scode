@@ -3,17 +3,39 @@
 // Default constructor, set all value in register and ports to zero and initialize an empty memory
 State::State() : PC{}, registers{Reg{}}, memory{Memory{}}, ports{Port{}} {}
 
-// For test purpose only, force data into state
-void State::force_value_in_to_state(Cell val_) {
+// Force data into state
+void State::set_value_in_to_state(Cell val_) {
 
-    if(val_.get_type() == 0) {
+    if(val_.get_type() == MEMORY) {
         this->memory.add_to_back(val_);
-    } else if(val_.get_type() == 1) {
+    } else if(val_.get_type() == REGISTER) {
         this->registers.write_cell(val_);
     } else {
         this->ports.write_cell(val_);
     }
 
+}
+
+// Force PC value
+void State::set_pc(ulong pc_) {
+    this->PC = pc_;
+}
+
+// Read data from state
+Word State::get_value_in_state(unsigned int type_, ulong id_) {
+
+    if(type_ == MEMORY) {
+        return this->memory.read(id_).read();
+    } else if(type_ == REGISTER) {
+        return this->registers.read_cell(id_);
+    } else {
+        return this->ports.read_cell(id_);
+    }
+
+}
+
+ulong State::get_pc() {
+    return this->PC;
 }
 
 // Output operator

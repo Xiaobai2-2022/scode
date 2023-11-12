@@ -43,6 +43,7 @@ class Memory {
         void add(Cell);                                 // Add from front (for adding in between)
         void add_to_back(Cell);                         // Add to back (for adding code, or stack memory)
         void remove(ulong);
+        Cell read(ulong);
         void clear();                                   // Clears the entire memory
 
     public:

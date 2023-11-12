@@ -7,6 +7,10 @@
 
 #include "word.hpp"
 
+#define MEMORY 0
+#define REGISTER 1
+#define PORT 2
+
 class Cell;
 
 class Cell {

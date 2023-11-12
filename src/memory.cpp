@@ -158,6 +158,16 @@ void Memory::remove(ulong id_) {
      
 }
 
+Cell Memory::read(ulong id_) {
+
+     // If id does not exists in the memory, return zero cell with the id
+     auto it = this->mem.find(id_);
+     if(it == this->mem.end()) return Cell{MEMORY, id_};
+
+     return it->second->value;
+
+}
+
 void Memory::clear() {
      
      // All nodes exists in the map, can be directly deleted
