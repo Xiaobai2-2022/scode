@@ -6,8 +6,7 @@
 #include <unordered_map>
 
 #include "error_output.hpp"
-#include "generate_code.hpp" 
-#include "state.hpp"   
+#include "generate_code.hpp"
 #include "utility.hpp"
 
 class Ctor_RV;

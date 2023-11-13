@@ -5,8 +5,11 @@ Reg::Reg() {
 
     // Set all cell to zero
     for(ulong i{0}; i < NUM_CELL; ++i) {
-        reg_cells[i] = Cell{1, i};
+        this->reg_cells[i] = Cell{1, i};
     }
+
+    // Points to the top of the stack, which is 0x03fffffffc
+    this->reg_cells[STACK_PTR].write(Word{0xffffffff});
 
 }
 
@@ -20,7 +23,7 @@ Word Reg::write_cell(Cell val_) {
 
     ulong index = val_.cell_id();
 
-    if(index == 0) {
+    if(index == ZERO) {
         return this->reg_cells[index].read();
     }
     Word temp = this->reg_cells[index].read();

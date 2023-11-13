@@ -144,8 +144,8 @@ This section introduces the purpose of each file that exists in the repository, 
   - [x] Ports (`ports.hpp`)
 - [ ] SCode Virtual Machine
   - [x] State Structure (`state.hpp`)
-  - [ ] State Generator (`generate_state.hpp`)
-  - [ ] State Interpreter (`state_interpreter.hpp`)
+  - [ ] State Generator (`construct_state.hpp`)
+  - [ ] State Interpreter (`generate_state.hpp`)
 - [x] Error Handling
   - [x] Error Indicators (`error_output.hpp`)
 - [x] Miscellaneous

@@ -31,7 +31,7 @@ std::ostream &operator<<(std::ostream &os, const Cell &c) {
     if(c.type == REGISTER) {
         os << "Reg(" << "0x" << std::setfill('0') << std::setw(2) << std::hex << c.id << "): ";
     } else if(c.type == MEMORY) {
-        os << "Mem(" << "0x" << std::setfill('0') << std::setw(8) << std::hex << c.id << "): ";
+        os << "Mem(" << "0x" << std::setfill('0') << std::setw(9) << std::hex << c.id << "): ";
     } else {
         os << "Port(" << "0x" << std::setfill('0') << std::setw(1) << std::hex << c.id << "): ";
     }
