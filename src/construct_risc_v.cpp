@@ -363,6 +363,11 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 break;
 
             case 901:
+                generate_output = Gen_Code::NOP();
+                fout << generate_output.first << std::endl;
+                break;
+
+            case 902:
                 // Input pi, rd and generate code
                 if(ss_line >> pi >> rd) {
                     generate_output = Gen_Code::INPUT(pi, rd);
@@ -383,7 +388,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
                 }
                 break;
 
-            case 902:
+            case 903:
                 // Input po, rs1 and generate code
                 if(ss_line >> po >> rs1) {
                     generate_output = Gen_Code::OUTPUT(po, rs1);

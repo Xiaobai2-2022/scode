@@ -79,6 +79,7 @@ class Gen_Code {
     // SCode Extension
     public:
         static std::pair<Word, int> END();
+        static std::pair<Word, int> NOP();
         static std::pair<Word, int> INPUT(unsigned int, unsigned int = 0);
         static std::pair<Word, int> OUTPUT(unsigned int, unsigned int = 1);
 

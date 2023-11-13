@@ -63,8 +63,9 @@ const std::unordered_map<std::string, int> Utility::inst = {
 
     // SCode Extension
     {"end", 900},
-    {"input", 901},
-    {"output", 902},
+    {"nop", 901},
+    {"input", 902},
+    {"output", 903},
 
     // Assembly Codes
     {"#", 1000},

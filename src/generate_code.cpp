@@ -1237,6 +1237,15 @@ std::pair<Word, int> Gen_Code::END() {
 
 }
 
+// SCode Instruction nop No operation
+std::pair<Word, int> Gen_Code::NOP() {
+
+    Word result{};
+
+    return std::pair<Word, int>{result, 0};
+
+}
+
 // SCode Instruction input rd = pi
 std::pair<Word, int> Gen_Code::INPUT(unsigned int pi_, unsigned int rd_) {
 
