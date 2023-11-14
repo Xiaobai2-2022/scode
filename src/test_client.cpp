@@ -395,9 +395,10 @@ void run_port_test() {
 void run_state_test() {
 
     char type{'\0'};                    // input
-    unsigned int type_id;                  // type
+    unsigned int type_id;               // type
     unsigned long index;                // index
     int val;                            // value to be update
+    std::string s_val;                  // string value
 
     State s{};
 
@@ -406,20 +407,33 @@ void run_state_test() {
     /**
      * Test Methods (Not case sensitive)
      * 
+     * C - resets the state
      * F - force into the state
      * P - print the state
      * Q - quit
+     * S - force string into the memory
+     * U - update to next state
      *     
      */
     while(type != 'q') {
 
         switch (type) {
+        case 'c': case 'C':
+            s.init();
+            break;
         case 'f': case 'F':
             std::cin >> type_id >> index >> val;
             s.set_value_in_to_state(Cell{type_id, index, Word{val}});
             break;
         case 'p': case 'P':
             std::cout << s << std::endl;
+            break;
+        case 's': case 'S':
+            std::cin >> index >> s_val;
+            s.set_value_in_to_state(Cell{MEMORY, index, s_val});
+            break;
+        case 'u': case 'U':
+            std::cout << Gen_State::update_state(s) << std::endl;
             break;
         case 'q': case 'Q': default:
             type = 'q';

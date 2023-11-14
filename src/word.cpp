@@ -76,11 +76,16 @@ Word &Word::operator=(Word &&other_) {
 }
 
 // Deconstructor, do nothing
-Word::~Word(){}
+Word::~Word() {}
 
 // Equal comparison operator
 bool Word::operator==(const Word &other_) {
     return this->value == other_.value;
+}
+
+// Equal comparison operator
+bool Word::operator==(unsigned int value_) {
+    return this->value == value_;
 }
 
 // Not equal comparison operator
@@ -162,6 +167,9 @@ Word &Word::operator>>=(unsigned int val_) {
     this->value >>= val_;
     return *this;
 }
+
+// Returns the value from word
+unsigned int Word::get_value() { return this->value; }
 
 // Limit the word in range of the two unsigned int, left is greater than right
 Word Word::limit(unsigned int left_, unsigned int right_) {

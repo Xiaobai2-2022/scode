@@ -38,6 +38,21 @@ ulong State::get_pc() {
     return this->PC;
 }
 
+// Increment PC by 4
+State &State::operator++() {
+    this->PC += 4;
+    return *this;
+}
+
+// Resets the state
+void State::init() {
+
+    this->memory.clear();
+    this->registers = Reg{};
+    this->ports = Port{};
+
+}
+
 // Output operator
 std::ostream &operator<<(std::ostream &os, const State &s) {
 

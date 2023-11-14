@@ -647,7 +647,7 @@ std::pair<Word, int> Gen_Code::SB(unsigned int rs1_, unsigned int rs2_, Word imm
         (Word{rs2_} << 20) +
         (Word{rs1_} << 15) +
         (Word{funct3} << 12) +
-        (imm_.limit(4, 0) << 7) +
+        (imm_.limit(4) << 7) +
         (Word{opcode});
     
     return std::pair<Word, int>{result, 0};
@@ -673,7 +673,7 @@ std::pair<Word, int> Gen_Code::SH(unsigned int rs1_, unsigned int rs2_, Word imm
         (Word{rs2_} << 20) +
         (Word{rs1_} << 15) +
         (Word{funct3} << 12) +
-        (imm_.limit(4, 0) << 7) +
+        (imm_.limit(4) << 7) +
         (Word{opcode});
     
     return std::pair<Word, int>{result, 0};
@@ -699,7 +699,7 @@ std::pair<Word, int> Gen_Code::SW(unsigned int rs1_, unsigned int rs2_, Word imm
         (Word{rs2_} << 20) +
         (Word{rs1_} << 15) +
         (Word{funct3} << 12) +
-        (imm_.limit(4, 0) << 7) +
+        (imm_.limit(4) << 7) +
         (Word{opcode});
     
     return std::pair<Word, int>{result, 0};

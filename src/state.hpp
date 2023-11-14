@@ -28,6 +28,10 @@ class State {
     public:
         Word get_value_in_state(unsigned int, ulong);                       // Read data from state
         ulong get_pc();                                                     // Read PC value
+
+    public:
+        State &operator++();                                                // Increment PC by 4
+        void init();                                                        // Reset the state
         
     friend std::ostream &operator<<(std::ostream &, const State &);
 

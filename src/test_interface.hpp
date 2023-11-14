@@ -10,6 +10,7 @@
 #include "construct_risc_v.hpp"
 #include "construct_state.hpp"
 #include "generate_code.hpp"
+#include "generate_state.hpp"
 #include "memory_cell.hpp"
 #include "memory.hpp"
 #include "port.hpp"

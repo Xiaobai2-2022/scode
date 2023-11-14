@@ -28,6 +28,7 @@ class Word {
         
     public:
         bool operator==(const Word &);                                              // Equal comparison operator
+        bool operator==(unsigned int);                                              // Equal comparison operator
         bool operator!=(const Word &);                                              // Not equal comparison operator
         bool operator<(const Word &);                                               // Less than comparison operator
         bool operator>(const Word &);                                               // Greater than comparison operator
@@ -47,10 +48,10 @@ class Word {
         Word &operator>>=(unsigned int);                                            // Right shift equal operator
 
     public:
-        friend std::ostream &operator<<(std::ostream &, const Word &);              // Output operator
+        unsigned int get_value();
+        Word limit(unsigned int, unsigned int = 0);                                 // Limit the word in range of the two unsigned int
 
-    public:
-        Word limit(unsigned int, unsigned int);                                     // Limit the word in range of the two unsigned int
+    friend std::ostream &operator<<(std::ostream &, const Word &);                  // Output operator
 
 };
 
