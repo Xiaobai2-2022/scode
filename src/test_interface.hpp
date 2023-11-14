@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "construct_risc_v.hpp"
+#include "construct_state.hpp"
 #include "generate_code.hpp"
 #include "memory_cell.hpp"
 #include "memory.hpp"

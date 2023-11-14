@@ -7,7 +7,9 @@
 
 #include "error_output.hpp"
 #include "generate_code.hpp"
+#include "memory_cell.hpp"
 #include "state.hpp"
+#include "utility.hpp"
 
 class Ctor_State;
 
