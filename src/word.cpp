@@ -211,6 +211,16 @@ Word Word::limit(unsigned int left_, unsigned int right_) {
 
 }
 
+// Extend the word to the full range, left is greater than right
+Word Word::extend(unsigned int left_, unsigned int right_) {
+
+    // Calculate the length of the word remaining
+    unsigned int length = left_ - right_ + 1;
+    // Bit shift to clear the left and right side and place at the correct position
+    return ((this->limit(left_, right_) << (32 - length)).SRA(32 - length));
+
+}
+
 // Output operator
 std::ostream &operator<<(std::ostream &os, const Word &w) {
 

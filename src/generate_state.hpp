@@ -26,6 +26,18 @@ class Gen_State {
         static int SRA(unsigned int, unsigned int, unsigned int, State &);
         static int SLT(unsigned int, unsigned int, unsigned int, State &);
         static int SLTU(unsigned int, unsigned int, unsigned int, State &);
+    
+    // I Type Instructions
+    public:
+        static int ADDI(unsigned int, unsigned int, Word, State &);
+        static int XORI(unsigned int, unsigned int, Word, State &);
+        static int ORI(unsigned int, unsigned int, Word, State &);
+        static int ANDI(unsigned int, unsigned int, Word, State &);
+        static int SLLI(unsigned int, unsigned int, Word, State &);
+        static int SRLI(unsigned int, unsigned int, Word, State &);
+        static int SRAI(unsigned int, unsigned int, Word, State &);
+        static int SLTI(unsigned int, unsigned int, Word, State &);
+        static int SLTIU(unsigned int, unsigned int, Word, State &);
 
 };
 

@@ -13,11 +13,11 @@ int Gen_State::update_state(State &state_) {
     // Grab the opcode from the memory
     Word opcode = mem_at_pc.limit(6);
 
-    // The function3 and function 7
+    // function3 and function 7
     Word funct3, funct7;
 
-    // The rd, rs1, rs2
-    Word rd, rs1, rs2;
+    // rd, rs1, rs2, imm
+    Word rd, rs1, rs2, imm;
         
 
     switch (opcode.get_value()) {
@@ -35,10 +35,10 @@ int Gen_State::update_state(State &state_) {
         switch (funct3.get_value()) {
         case 0x0:
             switch (funct7.get_value()) {
-            case 0x00: // add command
+            case 0x00: // add instruction
                 return Gen_State::ADD(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
-            case 0x20: // sub command
+            case 0x20: // sub instruction
                 return Gen_State::SUB(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
             default:
@@ -47,7 +47,7 @@ int Gen_State::update_state(State &state_) {
             break;
         case 0x4:
             switch (funct7.get_value()) {
-            case 0x00: // xor command
+            case 0x00: // xor instruction
                 return Gen_State::XOR(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
             default:
@@ -56,7 +56,7 @@ int Gen_State::update_state(State &state_) {
             break;
         case 0x6:
             switch (funct7.get_value()) {
-            case 0x00: // or command
+            case 0x00: // or instruction
                 return Gen_State::OR(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
             default:
@@ -65,7 +65,7 @@ int Gen_State::update_state(State &state_) {
             break;
         case 0x7:
             switch (funct7.get_value()) {
-            case 0x00: // xor command
+            case 0x00: // xor instruction
                 return Gen_State::AND(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
             default:
@@ -74,7 +74,7 @@ int Gen_State::update_state(State &state_) {
             break;
         case 0x1:
             switch (funct7.get_value()) {
-            case 0x00: // sll command
+            case 0x00: // sll instruction
                 return Gen_State::SLL(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
             default:
@@ -83,10 +83,10 @@ int Gen_State::update_state(State &state_) {
             break;
         case 0x5:
             switch (funct7.get_value()) {
-            case 0x00: // srl command
+            case 0x00: // srl instruction
                 return Gen_State::SRL(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
-            case 0x20: // sra command
+            case 0x20: // sra instruction
                 return Gen_State::SRA(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
             default:
@@ -95,7 +95,7 @@ int Gen_State::update_state(State &state_) {
             break;
         case 0x2:
             switch (funct7.get_value()) {
-            case 0x00: // slt command
+            case 0x00: // slt instruction
                 return Gen_State::SLT(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
             default:
@@ -104,7 +104,7 @@ int Gen_State::update_state(State &state_) {
             break;
         case 0x3:
             switch (funct7.get_value()) {
-            case 0x00: // sltu command
+            case 0x00: // sltu instruction
                 return Gen_State::SLTU(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
                 break;
             default:
@@ -116,7 +116,38 @@ int Gen_State::update_state(State &state_) {
             return -1;
         }
         break;
+
+
+
+    case 0b0010011: // Case I-type instruction with opcode 0010011
     
+        // Read the function3 from the memory
+        funct3 = mem_at_pc.limit(14, 12);
+
+        // Read the registers from the memory
+        rd = mem_at_pc.limit(11, 7);
+        rs1 = mem_at_pc.limit(19, 15);
+
+        switch (funct3.get_value()) {
+        case 0x0: // addi instruction
+            // Read the imm from the memory
+            imm = mem_at_pc.extend(31, 20);
+            return Gen_State::ADDI(rd.get_value(), rs1.get_value(), imm, state_);
+            break;
+        case 0x4: // xori instruction
+            // Read the imm from the memory
+            imm = mem_at_pc.extend(31, 20);
+            return Gen_State::XORI(rd.get_value(), rs1.get_value(), imm, state_);
+            break;
+        case 0x6: // ori instruction
+            // Read the imm from the memory
+            imm = mem_at_pc.extend(31, 20);
+            return Gen_State::ORI(rd.get_value(), rs1.get_value(), imm, state_);
+        default:
+            break;
+        }
+
+        break;
     default:
         return -1;
     }
@@ -306,6 +337,57 @@ int Gen_State::SLTU(unsigned int rd_, unsigned int rs1_, unsigned int rs2_, Stat
     Word val_rs1 = state_.get_value_in_state(REGISTER, rs1_);
     Word val_rs2 = state_.get_value_in_state(REGISTER, rs2_);
     Word val_rd = (val_rs1 < (val_rs2)) ? Word{1} : Word{0};
+
+    state_.set_value_in_to_state(Cell{REGISTER, rd_, val_rd});
+
+    return 0;
+
+}
+
+// I-type Instruction addi: rd = rs1 + imm
+int Gen_State::ADDI(unsigned int rd_, unsigned int rs1_, Word imm_, State &state_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1_, 0, 31)) return 2;
+
+    // Update the value in RD
+    Word val_rs1 = state_.get_value_in_state(REGISTER, rs1_);
+    Word val_rd = val_rs1 + imm_;
+
+    state_.set_value_in_to_state(Cell{REGISTER, rd_, val_rd});
+
+    return 0;
+
+}
+
+// I-type Instruction xori: rd = rs1 ^ imm
+int Gen_State::XORI(unsigned int rd_, unsigned int rs1_, Word imm_, State &state_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1_, 0, 31)) return 2;
+
+    // Update the value in RD
+    Word val_rs1 = state_.get_value_in_state(REGISTER, rs1_);
+    Word val_rd = val_rs1 ^ imm_;
+
+    state_.set_value_in_to_state(Cell{REGISTER, rd_, val_rd});
+
+    return 0;
+
+}
+
+// I-type Instruction ori: rd = rs1 ^ imm
+int Gen_State::ORI(unsigned int rd_, unsigned int rs1_, Word imm_, State &state_) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd_, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1_, 0, 31)) return 2;
+
+    // Update the value in RD
+    Word val_rs1 = state_.get_value_in_state(REGISTER, rs1_);
+    Word val_rd = val_rs1 | imm_;
 
     state_.set_value_in_to_state(Cell{REGISTER, rd_, val_rd});
 

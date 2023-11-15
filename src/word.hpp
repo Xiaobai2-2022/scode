@@ -58,6 +58,7 @@ class Word {
     public:
         unsigned int get_value();
         Word limit(unsigned int, unsigned int = 0);                                 // Limit the word in range of the two unsigned int
+        Word extend(unsigned int, unsigned int = 0);                                // Extend the word to the full range
 
     friend std::ostream &operator<<(std::ostream &, const Word &);                  // Output operator
 
