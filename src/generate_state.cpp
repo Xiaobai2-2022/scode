@@ -13,78 +13,113 @@ int Gen_State::update_state(State &state_) {
     // Grab the opcode from the memory
     Word opcode = mem_at_pc.limit(6);
 
-    if(opcode == 0b0110011) {
+    // The function3 and function 7
+    Word funct3, funct7;
 
-        // Read the function7 and function 3 from the memory
-        Word funct7 = mem_at_pc.limit(31, 25);
-        Word funct3 = mem_at_pc.limit(14, 12);
+    // The rd, rs1, rs2
+    Word rd, rs1, rs2;
+        
+
+    switch (opcode.get_value()) {
+    case 0b0110011: // Case S-type instruction with opcode 0110011
+    
+        // Read the function3 and function 7 from the memory
+        funct3 = mem_at_pc.limit(14, 12);
+        funct7 = mem_at_pc.limit(31, 25);
 
         // Read the registers from the memory
-        Word rd = mem_at_pc.limit(11, 7);
-        Word rs1 = mem_at_pc.limit(19, 15);
-        Word rs2 = mem_at_pc.limit(24, 20);
+        rd = mem_at_pc.limit(11, 7);
+        rs1 = mem_at_pc.limit(19, 15);
+        rs2 = mem_at_pc.limit(24, 20);
 
-        // Interperate command
-        if(funct3 == 0x0) {
-            if(funct7 == 0x00) {
+        switch (funct3.get_value()) {
+        case 0x0:
+            switch (funct7.get_value()) {
+            case 0x00: // add command
                 return Gen_State::ADD(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else if(funct7 == 0x20) {
+                break;
+            case 0x20: // sub command
                 return Gen_State::SUB(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else {
+                break;
+            default:
                 return -1;
             }
-        } else if(funct3 == 0x4) {
-            if(funct7 == 0x00) {
+            break;
+        case 0x4:
+            switch (funct7.get_value()) {
+            case 0x00: // xor command
                 return Gen_State::XOR(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else {
+                break;
+            default:
                 return -1;
             }
-        } else if(funct3 == 0x6) {
-            if(funct7 == 0x00) {
+            break;
+        case 0x6:
+            switch (funct7.get_value()) {
+            case 0x00: // or command
                 return Gen_State::OR(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else {
+                break;
+            default:
                 return -1;
             }
-        } else if(funct3 == 0x7) {
-            if(funct7 == 0x00) {
+            break;
+        case 0x7:
+            switch (funct7.get_value()) {
+            case 0x00: // xor command
                 return Gen_State::AND(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else {
+                break;
+            default:
                 return -1;
             }
-        } else if(funct3 == 0x1) {
-            if(funct7 == 0x00) {
+            break;
+        case 0x1:
+            switch (funct7.get_value()) {
+            case 0x00: // sll command
                 return Gen_State::SLL(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else {
+                break;
+            default:
                 return -1;
             }
-        } else if(funct3 == 0x5) {
-            if(funct7 == 0x00) {
+            break;
+        case 0x5:
+            switch (funct7.get_value()) {
+            case 0x00: // srl command
                 return Gen_State::SRL(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else if(funct7 == 0x20) {
+                break;
+            case 0x20: // sra command
                 return Gen_State::SRA(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else {
+                break;
+            default:
                 return -1;
             }
-        } else if(funct3 == 0x2) {
-            if(funct7 == 0x00) {
+            break;
+        case 0x2:
+            switch (funct7.get_value()) {
+            case 0x00: // slt command
                 return Gen_State::SLT(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else {
+                break;
+            default:
                 return -1;
             }
-
-        } else if(funct3 == 0x3) {
-            if(funct7 == 0x00) {
+            break;
+        case 0x3:
+            switch (funct7.get_value()) {
+            case 0x00: // sltu command
                 return Gen_State::SLTU(rd.get_value(), rs1.get_value(), rs2.get_value(), state_);
-            } else {
+                break;
+            default:
                 return -1;
             }
-        } else {
+            break;
+        
+        default:
             return -1;
         }
-
+        break;
+    
+    default:
+        return -1;
     }
-
-    return 0;
 
 }
 
