@@ -123,6 +123,36 @@ Word Word::operator-(const Word &other_) {
     return Word{this->value - other_.value};
 }
 
+// Exclusive or operator
+Word Word::operator^(const Word &other_) {
+    return Word{this->value ^ other_.value};
+}
+
+// Inclusive or operator
+Word Word::operator|(const Word &other_) {
+    return Word{this->value | other_.value};
+}
+
+// And operator
+Word Word::operator&(const Word &other_) {
+    return Word{this->value & other_.value};
+}
+
+// Shift Left operator
+Word Word::operator<<(const Word &other_) {
+    return Word{this->value << other_.value};
+}
+
+// Shift Right operator
+Word Word::operator>>(const Word &other_) {
+    return Word{this->value >> other_.value};
+}
+
+// Shift Right Arithemtic
+Word Word::SRA(const Word & other_) {
+    return Word{static_cast<int>(this->value) >> other_.value};
+}
+
 // Modulo operator
 Word Word::operator%(unsigned int val_) {
     return Word{this->value % val_};

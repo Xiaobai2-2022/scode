@@ -38,9 +38,17 @@ class Word {
     public:
         Word operator+(const Word &);                                               // Addition operator
         Word operator-(const Word &);                                               // Subtraction operator
+        Word operator^(const Word &);                                               // Exclusive or operator
+        Word operator|(const Word &);                                               // Inclusive or operator
+        Word operator&(const Word &);                                               // Inclusive or operator
+        Word operator<<(const Word &);                                              // And operator
+        Word operator>>(const Word &);                                              // Shift Right operator
+        Word SRA(const Word &);                                                     // Shift Right Arithmetic
+
+    public:
         Word operator%(unsigned int);                                               // Modulo operator
         Word operator<<(unsigned int);                                              // Left shift operator
-        Word operator>>(unsigned int);                                              // Right shift operator`
+        Word operator>>(unsigned int);                                              // Right shift operator
         Word &operator+=(const Word &);                                             // Addition equal operator
         Word &operator-=(const Word &);                                             // Subtraction equal operator
         Word &operator%=(unsigned int);                                             // Modulo equal operator

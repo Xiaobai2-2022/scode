@@ -47,10 +47,11 @@ State &State::operator++() {
 // Resets the state
 void State::init() {
 
+    this->PC = 0;
     this->memory.clear();
     this->registers = Reg{};
     this->ports = Port{};
-
+    
 }
 
 // Output operator
