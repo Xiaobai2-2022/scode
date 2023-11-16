@@ -74,9 +74,9 @@ const std::unordered_map<std::string, int> Utility::inst = {
 };
 
 // check if value is in between the lower and upper bound
-bool Utility::is_in_range(unsigned int val_, unsigned int lower_, unsigned int upper_) {
+bool Utility::is_in_range(unsigned int val, unsigned int lower, unsigned int upper) {
 
-    if(val_ >= lower_ && val_ <= upper_) {
+    if(val >= lower && val <= upper) {
         return true;
     }
     return false;
@@ -84,60 +84,60 @@ bool Utility::is_in_range(unsigned int val_, unsigned int lower_, unsigned int u
 }
 
 // Check if the string has the starting substring of the other string
-bool Utility::is_start_with(std::string first_, std::string second_) {
+bool Utility::is_start_with(std::string first, std::string second) {
 
-    return first_.find(second_) == 0;
+    return first.find(second) == 0;
 
 }
 
 // Calculate the power of an integer value
-int Utility::pow(int value_, unsigned int power_) {
+int Utility::pow(int value, unsigned int power) {
 
-    if(power_ == 0) return 1;
+    if(power == 0) return 1;
 
-    int res{value_};
-    for(unsigned int i{1}; i < power_; ++i) {
-        res *= value_;
+    int res{value};
+    for(unsigned int i{1}; i < power; ++i) {
+        res *= value;
     }
     return res;
 
 }
 
 // Convert the value into given length word
-Word Utility::change_length(int value_, unsigned int length_) {
+Word Utility::change_length(int value, unsigned int length) {
 
-    if(value_ >= 0) {
+    if(value >= 0) {
         // Check if value is in range, if not, return the most significant value posible + 1
-        if(value_ >= Utility::pow(2, length_ - 1)) {
-            return Word{Utility::pow(2, length_)};
+        if(value >= Utility::pow(2, length - 1)) {
+            return Word{Utility::pow(2, length)};
         }
-        return Word{value_};
+        return Word{value};
     }
 
     // Check if the negative value is in rangeu c
-    if(abs(value_) > Utility::pow(2, length_ - 1)) {
-        return Word{Utility::pow(2, length_)};
+    if(abs(value) > Utility::pow(2, length - 1)) {
+        return Word{Utility::pow(2, length)};
     }
 
-    unsigned int u_value{static_cast<unsigned int>(value_)};
-    u_value = u_value << (32 - length_);
-    u_value = u_value >> (32 - length_);
+    unsigned int u_value{static_cast<unsigned int>(value)};
+    u_value = u_value << (32 - length);
+    u_value = u_value >> (32 - length);
 
     return Word{u_value};
 
 }
 
 // Convert the value into given length word
-Word Utility::change_length_unsigned(int value_, unsigned int length_) {
+Word Utility::change_length_unsigned(int value, unsigned int length) {
 
-    if(value_ >= 0) {
+    if(value >= 0) {
         // Check if value is in range, if not, return the most significant value posible + 1
-        if(value_ >= Utility::pow(2, length_)) {
-            return Word{Utility::pow(2, length_)};
+        if(value >= Utility::pow(2, length)) {
+            return Word{Utility::pow(2, length)};
         }
-        return Word{value_};
+        return Word{value};
     }
 
-    return Word{Utility::pow(2, length_)};
+    return Word{Utility::pow(2, length)};
 
 }

@@ -14,20 +14,20 @@ Reg::Reg() {
 }
 
 // Returns the value in the cell
-Word Reg::read_cell(ulong index_) {
-    return this->reg_cells[index_].read();
+Word Reg::read_cell(ulong index) {
+    return this->reg_cells[index].read();
 }
 
 // Set the value of the cell to new value, return the original value of the cell
-Word Reg::write_cell(Cell val_) {
+Word Reg::write_cell(Cell val) {
 
-    ulong index = val_.cell_id();
+    ulong index = val.cell_id();
 
     if(index == ZERO) {
         return this->reg_cells[index].read();
     }
     Word temp = this->reg_cells[index].read();
-    this->reg_cells[index] = val_;
+    this->reg_cells[index] = val;
     return temp;
 }
 

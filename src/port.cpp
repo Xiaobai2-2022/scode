@@ -11,17 +11,17 @@ Port::Port() {
 }
 
 // Returns the value in the cell
-Word Port::read_cell(ulong index_) {
-    return this->port_cells[index_].read();
+Word Port::read_cell(ulong index) {
+    return this->port_cells[index].read();
 }
 
 // Set the value of the cell to new value, return the original value of the cell
-Word Port::write_cell(Cell val_) {
+Word Port::write_cell(Cell val) {
 
-    ulong index = val_.cell_id();
+    ulong index = val.cell_id();
 
     Word temp = this->port_cells[index].read();
-    this->port_cells[index] = val_;
+    this->port_cells[index] = val;
     return temp;
 
 }

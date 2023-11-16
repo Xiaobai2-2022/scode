@@ -1,25 +1,25 @@
 #include "memory.hpp"
 
 // Constructor, set the value to the word given
-Mem_Node::Mem_Node(Cell val_) : value{val_}, next{nullptr}, prev{nullptr} {}
+Mem_Node::Mem_Node(Cell val) : value{val}, next{nullptr}, prev{nullptr} {}
 
 // Destructor, does nothing
 Mem_Node::~Mem_Node() {}
 
 // Attach an element to the front of the current
-void Mem_Node::attach_to_front(Mem_Node *n_) {
-     if(!n_) {
+void Mem_Node::attach_to_front(Mem_Node *n) {
+     if(!n) {
           this->prev = nullptr;
      }
-     this->prev = n_;
+     this->prev = n;
 }
 
 // Attach an element to the back of the current
-void Mem_Node::attach_to_back(Mem_Node *n_) {
-     if(!n_) {
+void Mem_Node::attach_to_back(Mem_Node *n) {
+     if(!n) {
           this->next = nullptr;
      }
-     this->next = n_;
+     this->next = n;
 }
 
 // Constructor, create an empty memory
@@ -33,10 +33,10 @@ Memory::~Memory() {
 }
 
 // Add a cell into memory (in between)
-void Memory::add(Cell val_) {
+void Memory::add(Cell val) {
 
-     ulong id = val_.cell_id();
-     Mem_Node *node = new Mem_Node(val_);
+     ulong id = val.cell_id();
+     Mem_Node *node = new Mem_Node(val);
 
      // If the list is empty, directly input the node
      if(!this->head) {
@@ -81,10 +81,10 @@ void Memory::add(Cell val_) {
 
 }
 
-void Memory::add_to_back(Cell val_) {
+void Memory::add_to_back(Cell val) {
 
-     ulong id = val_.cell_id();
-     Mem_Node *node = new Mem_Node(val_);
+     ulong id = val.cell_id();
+     Mem_Node *node = new Mem_Node(val);
 
      // If the list is empty, directly input the node
      if(!this->head) {
@@ -130,10 +130,10 @@ void Memory::add_to_back(Cell val_) {
 }
 
 // Remove a cell from memory
-void Memory::remove(ulong id_) {
+void Memory::remove(ulong id) {
 
      // If id already exists in the memory, delete it; otherwise do nothing
-     auto it = this->mem.find(id_);
+     auto it = this->mem.find(id);
      if(it != this->mem.end()) {
 
           Mem_Node *cur = it->second;
@@ -152,17 +152,17 @@ void Memory::remove(ulong id_) {
           // Free the memory for the current node and erase the current node from map
           delete cur;
           cur = nullptr;
-          this->mem.erase(id_);
+          this->mem.erase(id);
 
      }
      
 }
 
-Cell Memory::read(ulong id_) {
+Cell Memory::read(ulong id) {
 
      // If id does not exists in the memory, return zero cell with the id
-     auto it = this->mem.find(id_);
-     if(it == this->mem.end()) return Cell{MEMORY, id_};
+     auto it = this->mem.find(id);
+     if(it == this->mem.end()) return Cell{MEMORY, id};
 
      return it->second->value;
 
@@ -182,7 +182,7 @@ void Memory::clear() {
 }
 
 // The iterator constructor
-Memory::Bidirectional_Iterator::Bidirectional_Iterator(Mem_Node *cur_) : cur{cur_} {}
+Memory::Bidirectional_Iterator::Bidirectional_Iterator(Mem_Node *cur) : cur{cur} {}
 
 // Equal operator for iterator, returns if the two iterator are the same
 bool Memory::Bidirectional_Iterator::operator==(const Bidirectional_Iterator &other) {
@@ -246,7 +246,7 @@ Memory::Bidirectional_Iterator Memory::rend() {
 }
 
 // The iterator constructor
-Memory::Const_Iterator::Const_Iterator(Mem_Node *cur_) : cur{cur_} {}
+Memory::Const_Iterator::Const_Iterator(Mem_Node *cur) : cur{cur} {}
 
 // Not equal operator for iterator, returns if the two iterator are the same
 bool Memory::Const_Iterator::operator!=(const Const_Iterator &other) {

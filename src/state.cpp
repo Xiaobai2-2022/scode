@@ -4,14 +4,14 @@
 State::State() : PC{}, registers{Reg{}}, memory{Memory{}}, ports{Port{}} {}
 
 // Force data into state
-void State::set_value_in_to_state(Cell val_) {
+void State::set_value_in_to_state(Cell val) {
 
-    if(val_.get_type() == MEMORY) {
-        this->memory.add_to_back(val_);
-    } else if(val_.get_type() == REGISTER) {
-        this->registers.write_cell(val_);
+    if(val.get_type() == MEMORY) {
+        this->memory.add_to_back(val);
+    } else if(val.get_type() == REGISTER) {
+        this->registers.write_cell(val);
     } else {
-        this->ports.write_cell(val_);
+        this->ports.write_cell(val);
     }
 
 }
@@ -22,14 +22,14 @@ void State::set_pc(ulong pc_) {
 }
 
 // Read data from state
-Word State::get_value_in_state(unsigned int type_, ulong id_) {
+Word State::get_value_in_state(unsigned int type, ulong id) {
 
-    if(type_ == MEMORY) {
-        return this->memory.read(id_).read();
-    } else if(type_ == REGISTER) {
-        return this->registers.read_cell(id_);
+    if(type == MEMORY) {
+        return this->memory.read(id).read();
+    } else if(type == REGISTER) {
+        return this->registers.read_cell(id);
     } else {
-        return this->ports.read_cell(id_);
+        return this->ports.read_cell(id);
     }
 
 }

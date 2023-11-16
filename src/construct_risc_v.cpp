@@ -1,9 +1,9 @@
 #include "construct_risc_v.hpp"
 
 // Constructs Risc-V assembly 0 command to binary code by reading file and output
-//     if_name_ is the input file name
-//     of_name_ is the output file name
-bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
+//     if_name is the input file name
+//     of_name is the output file name
+bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
 
     bool no_error{true};
 
@@ -11,19 +11,19 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
     ulong count{1};
 
     // Attempt to open input and output file
-    std::ifstream fin(if_name_);
-    std::ofstream fout(of_name_);
+    std::ifstream fin(if_name);
+    std::ofstream fout(of_name);
     
     // Check if the input file failed to open
     if(!fin.is_open()) {
         std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-        std::cout << "Error opening the input file: " << if_name_ << "." << std::endl;
+        std::cout << "Error opening the input file: " << if_name << "." << std::endl;
         return false;
     }
     // Check if the output file failed to open
     if(!fout.is_open()) {
         std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-        std::cout << "Error opening the output file: " << of_name_ << "." << std::endl;
+        std::cout << "Error opening the output file: " << of_name << "." << std::endl;
         return false;
     }
 
@@ -33,7 +33,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
     // Check if the risc-v assembly file is of the correct type
     if(!Utility::is_start_with(cur_line, "SCode Assembly 0")) {
         std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-        std::cout << "Input file has the wrong type: " << if_name_ << "." << std::endl;
+        std::cout << "Input file has the wrong type: " << if_name << "." << std::endl;
         return false;
     }
 
@@ -427,9 +427,9 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name_, std::string of_name_) {
 }
 
 // Constructs Risc-V assembly 1 command to Risc-V assembly 0 command by reading file and output
-//     if_name_ is the input file name
-//     of_name_ is the output file name
-bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name_, std::string of_name_) {
+//     if_name is the input file name
+//     of_name is the output file name
+bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name) {
 
     bool no_error{true};
 
@@ -440,19 +440,19 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name_, std::string of_nam
     std::unordered_map<std::string, long> symbol_table;
 
     // Attempt to open input and output file
-    std::ifstream fin(if_name_);
-    std::ofstream fout(of_name_);
+    std::ifstream fin(if_name);
+    std::ofstream fout(of_name);
     
     // Check if the input file failed to open
     if(!fin.is_open()) {
         std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
-        std::cout << "Error opening the input file: " << if_name_ << "." << std::endl;
+        std::cout << "Error opening the input file: " << if_name << "." << std::endl;
         return false;
     }
     // Check if the output file failed to open
     if(!fout.is_open()) {
         std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
-        std::cout << "Error opening the output file: " << of_name_ << "." << std::endl;
+        std::cout << "Error opening the output file: " << of_name << "." << std::endl;
         return false;
     }
 
@@ -462,7 +462,7 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name_, std::string of_nam
     // Check if the risc-v assembly file is of the correct type
     if(!Utility::is_start_with(cur_line, "SCode Assembly 1")) {
         std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
-        std::cout << "Input file has the wrong type: " << if_name_ << "." << std::endl;
+        std::cout << "Input file has the wrong type: " << if_name << "." << std::endl;
         return false;
     }
 
@@ -670,7 +670,3 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name_, std::string of_nam
     return no_error;
 
 }
-
-// Constructs binary code to State by reading file and export into State
-//     if_name_ is the input file name
-//     state_ is to modify the state

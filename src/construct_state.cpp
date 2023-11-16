@@ -1,19 +1,19 @@
 #include "construct_state.hpp"
 
-bool Ctor_State::sc_bin_to_state(std::string if_name_, State &initial_state_) {
+bool Ctor_State::sc_bin_to_state(std::string if_name, State &initial_state) {
 
-    initial_state_ = State{};
+    initial_state = State{};
 
     // Address of the instruction
     ulong address{0};
 
     // Attempt to open input and output file
-    std::ifstream fin(if_name_);
+    std::ifstream fin(if_name);
     
     // Check if the input file failed to open
     if(!fin.is_open()) {
         std::cout << "Error constructing rv binary to state." << std::endl;
-        std::cout << "Error opening the input file: " << if_name_ << "." << std::endl;
+        std::cout << "Error opening the input file: " << if_name << "." << std::endl;
         return false;
     }
 
@@ -23,7 +23,7 @@ bool Ctor_State::sc_bin_to_state(std::string if_name_, State &initial_state_) {
     // Check if the risc-v assembly file is of the correct type
     if(!Utility::is_start_with(cur_line, "SCode Binary")) {
         std::cout << "Error constructing rv binary to state." << std::endl;
-        std::cout << "Input file has the wrong type: " << if_name_ << "." << std::endl;
+        std::cout << "Input file has the wrong type: " << if_name << "." << std::endl;
         return false;
     }
 
@@ -45,7 +45,7 @@ bool Ctor_State::sc_bin_to_state(std::string if_name_, State &initial_state_) {
             return false;
         }
 
-        initial_state_.set_value_in_to_state(Cell{MEMORY, address, Word{word}});
+        initial_state.set_value_in_to_state(Cell{MEMORY, address, Word{word}});
 
         address += 4;
 

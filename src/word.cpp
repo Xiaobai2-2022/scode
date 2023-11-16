@@ -4,19 +4,19 @@
 Word::Word() : value{0} {}
 
 // int constructor, sets converts the input to unsigned int
-Word::Word(int i_val_) : value{unsigned(i_val_)} {}
+Word::Word(int i_val) : value{unsigned(i_val)} {}
 
 // unsigned int constructor, sets the value to the input
-Word::Word(unsigned int u_i_val_) : value{u_i_val_} {}
+Word::Word(unsigned int u_i_val) : value{u_i_val} {}
 
 // string constructor, sets the value to the input
-Word::Word(std::string s_val_) {
+Word::Word(std::string s_val) {
 
     // set default to 0
     this->value = 0;
 
     // calculate the length
-    std::size_t length{s_val_.length()};
+    std::size_t length{s_val.length()};
 
     // check if the length is in range 
     if(length <= 32) {
@@ -24,7 +24,7 @@ Word::Word(std::string s_val_) {
         
         // loop through the string for '0' (double), '1' (double and add 1), otherwise error and set value to 0
         for(std::size_t i{0}; i < length; ++i) {
-            char cur{s_val_.at(i)};
+            char cur{s_val.at(i)};
             if(cur == '0') {
                 this->value *= 2;
             }
@@ -48,30 +48,30 @@ Word::Word(std::string s_val_) {
 }
 
 // Copy Constructor, provides deep copy
-Word::Word(const Word &other_) {
-    this->value = other_.value;
+Word::Word(const Word &other) {
+    this->value = other.value;
 }
 
 // Copy Assignment operator, provides deep copy
-Word &Word::operator=(const Word &other_) {
+Word &Word::operator=(const Word &other) {
     // self assignment guard
-    if(this == &other_) return *this;
-    this->value = other_.value;
+    if(this == &other) return *this;
+    this->value = other.value;
     return *this;
 }
 
 // Move constructor, provides shallow copy
-Word::Word(Word &&other_) {
-    this->value = other_.value;
-    other_.value = 0;
+Word::Word(Word &&other) {
+    this->value = other.value;
+    other.value = 0;
 }
 
 // Move Assignemnt operator, provides shallow copy
-Word &Word::operator=(Word &&other_) {
+Word &Word::operator=(Word &&other) {
     // self assignment guard
-    if(this == &other_) return *this;
-    this->value = other_.value;
-    other_.value = 0;
+    if(this == &other) return *this;
+    this->value = other.value;
+    other.value = 0;
     return *this;
 }
 
@@ -79,122 +79,122 @@ Word &Word::operator=(Word &&other_) {
 Word::~Word() {}
 
 // Equal comparison operator
-bool Word::operator==(const Word &other_) {
-    return this->value == other_.value;
+bool Word::operator==(const Word &other) {
+    return this->value == other.value;
 }
 
 // Equal comparison operator
-bool Word::operator==(unsigned int value_) {
-    return this->value == value_;
+bool Word::operator==(unsigned int value) {
+    return this->value == value;
 }
 
 // Not equal comparison operator
-bool Word::operator!=(const Word &other_) {
-    return this->value != other_.value;
+bool Word::operator!=(const Word &other) {
+    return this->value != other.value;
 }
 
 // Less than comparison operator
-bool Word::operator<(const Word &other_) {
-    return this->value < other_.value;
+bool Word::operator<(const Word &other) {
+    return this->value < other.value;
 }
 
 // Greater than comparison operator
-bool Word::operator>(const Word &other_) {
-    return this->value > other_.value;
+bool Word::operator>(const Word &other) {
+    return this->value > other.value;
 }
 
 // Less than equal comparison operator
-bool Word::operator<=(const Word &other_) {
-    return this->value <= other_.value;
+bool Word::operator<=(const Word &other) {
+    return this->value <= other.value;
 }
 
 // Greater than equal comparison operator
-bool Word::operator>=(const Word &other_) {
-    return this->value >= other_.value;
+bool Word::operator>=(const Word &other) {
+    return this->value >= other.value;
 }
 
 // Addition operator
-Word Word::operator+(const Word &other_) {
-    return Word{this->value + other_.value};
+Word Word::operator+(const Word &other) {
+    return Word{this->value + other.value};
 }
 
 // Subtraction operator
-Word Word::operator-(const Word &other_) {
-    return Word{this->value - other_.value};
+Word Word::operator-(const Word &other) {
+    return Word{this->value - other.value};
 }
 
 // Exclusive or operator
-Word Word::operator^(const Word &other_) {
-    return Word{this->value ^ other_.value};
+Word Word::operator^(const Word &other) {
+    return Word{this->value ^ other.value};
 }
 
 // Inclusive or operator
-Word Word::operator|(const Word &other_) {
-    return Word{this->value | other_.value};
+Word Word::operator|(const Word &other) {
+    return Word{this->value | other.value};
 }
 
 // And operator
-Word Word::operator&(const Word &other_) {
-    return Word{this->value & other_.value};
+Word Word::operator&(const Word &other) {
+    return Word{this->value & other.value};
 }
 
 // Shift Left operator
-Word Word::operator<<(const Word &other_) {
-    return Word{this->value << other_.value};
+Word Word::operator<<(const Word &other) {
+    return Word{this->value << other.value};
 }
 
 // Shift Right operator
-Word Word::operator>>(const Word &other_) {
-    return Word{this->value >> other_.value};
+Word Word::operator>>(const Word &other) {
+    return Word{this->value >> other.value};
 }
 
 // Shift Right Arithemtic
-Word Word::SRA(const Word & other_) {
-    return Word{static_cast<int>(this->value) >> other_.value};
+Word Word::SRA(const Word & other) {
+    return Word{static_cast<int>(this->value) >> other.value};
 }
 
 // Modulo operator
-Word Word::operator%(unsigned int val_) {
-    return Word{this->value % val_};
+Word Word::operator%(unsigned int val) {
+    return Word{this->value % val};
 }
 
 // Left shift operator
-Word Word::operator<<(unsigned int val_) {
-    return Word{this->value << val_};
+Word Word::operator<<(unsigned int val) {
+    return Word{this->value << val};
 }
 
 // Right shift operator
-Word Word::operator>>(unsigned int val_) {
-    return Word{this->value >> val_};
+Word Word::operator>>(unsigned int val) {
+    return Word{this->value >> val};
 }
 
 // Plus equal operator
-Word &Word::operator+=(const Word &other_) {
-    this->value += other_.value;
+Word &Word::operator+=(const Word &other) {
+    this->value += other.value;
     return *this;
 }
 
 // Minus equal operator
-Word &Word::operator-=(const Word &other_) {
-    this->value -= other_.value;
+Word &Word::operator-=(const Word &other) {
+    this->value -= other.value;
     return *this;
 }
 
 // Modulo equal operator
-Word &Word::operator%=(unsigned int val_) {
-    this->value %= val_;
+Word &Word::operator%=(unsigned int val) {
+    this->value %= val;
     return *this;
 }
 
 // Left shift equal operator
-Word &Word::operator<<=(unsigned int val_) {
-    this->value <<= val_;
+Word &Word::operator<<=(unsigned int val) {
+    this->value <<= val;
     return *this;
 }
 
 // Right shift equal operator
-Word &Word::operator>>=(unsigned int val_) {
-    this->value >>= val_;
+Word &Word::operator>>=(unsigned int val) {
+    this->value >>= val;
     return *this;
 }
 
@@ -202,22 +202,22 @@ Word &Word::operator>>=(unsigned int val_) {
 unsigned int Word::get_value() { return this->value; }
 
 // Limit the word in range of the two unsigned int, left is greater than right
-Word Word::limit(unsigned int left_, unsigned int right_) {
+Word Word::limit(unsigned int left, unsigned int right) {
 
     // Calculate the length of the word remaining
-    unsigned int length = left_ - right_ + 1;
+    unsigned int length = left - right + 1;
     // Bit shift to clear the left and right side and place at the correct position
-    return (((Word{*this} >> right_) << (32 - length)) >> (32 - length));
+    return (((Word{*this} >> right) << (32 - length)) >> (32 - length));
 
 }
 
 // Extend the word to the full range, left is greater than right
-Word Word::extend(unsigned int left_, unsigned int right_) {
+Word Word::extend(unsigned int left, unsigned int right) {
 
     // Calculate the length of the word remaining
-    unsigned int length = left_ - right_ + 1;
+    unsigned int length = left - right + 1;
     // Bit shift to clear the left and right side and place at the correct position
-    return ((this->limit(left_, right_) << (32 - length)).SRA(32 - length));
+    return ((this->limit(left, right) << (32 - length)).SRA(32 - length));
 
 }
 

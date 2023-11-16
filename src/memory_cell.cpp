@@ -4,10 +4,10 @@
 Cell::Cell() : type{0}, id{0}, value{Word{}} {};
 
 // unsigned int, unsigned long constructor, set the initial state for the cell
-Cell::Cell(unsigned int type_ , ulong id_) : type{type_}, id{id_}, value{Word{}} {};
+Cell::Cell(unsigned int type , ulong id) : type{type}, id{id}, value{Word{}} {};
 
 // unsigned int, unsigned long, Word constructor, set the state for the cell
-Cell::Cell(unsigned int type_, ulong id_, Word val_) : type{type_}, id{id_}, value{val_} {};
+Cell::Cell(unsigned int type, ulong id, Word val) : type{type}, id{id}, value{val} {};
 
 // Returns the type of the cell
 unsigned int Cell::get_type() { return this->type; }
@@ -19,9 +19,9 @@ ulong Cell::cell_id() { return this->id; };
 Word Cell::read() { return this->value; }
 
 // Set the value to new value, return the original value
-Word Cell::write(Word val_) {
+Word Cell::write(Word val) {
     Word temp = this->value;
-    this->value = val_;
+    this->value = val;
     return temp;
 }
 
