@@ -199,7 +199,50 @@ int Gen_State::update_state(State &state) {
         break;
 
 
-        
+    
+    case 0b0000011: // Case I-type instruction with opcode 0000011
+    
+        // Read the function3 from the memory
+        funct3 = mem_at_pc.limit(14, 12);
+
+        // Read the registers from the memory
+        rd = mem_at_pc.limit(11, 7);
+        rs1 = mem_at_pc.limit(19, 15);
+
+        switch (funct3.get_value()) {
+        case 0x0: // lb instruction
+            // Read the imm from the memory
+            imm = mem_at_pc.extend(31, 20);
+            return Gen_State::LB(rd.get_value(), rs1.get_value(), imm, state);
+            break;
+        case 0x1: // lh instruction
+            // Read the imm from the memory
+            imm = mem_at_pc.extend(31, 20);
+            return Gen_State::LH(rd.get_value(), rs1.get_value(), imm, state);
+            break;
+        case 0x2: // lw instruction
+            // Read the imm from the memory
+            imm = mem_at_pc.extend(31, 20);
+            return Gen_State::LW(rd.get_value(), rs1.get_value(), imm, state);
+            break;
+        case 0x4: // lbu instruction
+            // Read the imm from the memory
+            imm = mem_at_pc.extend(31, 20);
+            return Gen_State::LBU(rd.get_value(), rs1.get_value(), imm, state);
+            break;
+        case 0x5: // lh instruction
+            // Read the imm from the memory
+            imm = mem_at_pc.extend(31, 20);
+            return Gen_State::LHU(rd.get_value(), rs1.get_value(), imm, state);
+            break;
+        default:
+            return -1;
+            break;
+        }
+        break;
+
+
+
     default:
         return -1;
     }
@@ -546,5 +589,229 @@ int Gen_State::SLTIU(unsigned int rd, unsigned int rs1, Word imm, State &state) 
     state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
 
     return 0;
+
+}
+
+// I-type Instruction lb: rd = M[rs + imm][0 : 7]
+int Gen_State::LB(unsigned int rd, unsigned int rs1, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+
+    // Update the value in RD
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rd = Word{};
+
+    // Find the address
+    unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
+    word_address *= 4;
+    unsigned long byte_address = word_address + static_cast<unsigned long>(static_cast<int>(imm.get_value()));
+
+    // Check if the address is in range
+    if(byte_address <= 0x3ffffffff) {
+        byte_address = byte_address % 4;
+        
+        val_rd = state.get_value_in_state(MEMORY, word_address);
+
+        switch (byte_address) {
+        case 0:
+            val_rd = val_rd.extend(31, 24);
+            break;
+        case 1:
+            val_rd = val_rd.extend(23, 16);
+            break;
+        case 2:
+            val_rd = val_rd.extend(15, 8);
+            break;
+        case 3:
+            val_rd = val_rd.extend(7);
+            break;
+        default:
+            state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+            return -1000;
+            break;
+        }
+
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return 0;
+
+    } else {
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return -2;
+    }
+
+}
+
+// I-type Instruction lh: rd = M[rs + imm][0 : 15]
+int Gen_State::LH(unsigned int rd, unsigned int rs1, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+
+    // Update the value in RD
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rd = Word{};
+
+    // Find the address
+    unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
+    word_address *= 4;
+    unsigned long byte_address = word_address + (static_cast<unsigned long>(static_cast<int>(imm.get_value())) * 2);
+
+    // Check if the address is in range
+    if(byte_address <= 0x3ffffffff) {
+        byte_address = byte_address % 4;
+        
+        val_rd = state.get_value_in_state(MEMORY, word_address);
+
+        switch (byte_address) {
+        case 0:
+            val_rd = val_rd.extend(31, 16);
+            break;
+        case 2:
+            val_rd = val_rd.extend(15);
+            break;
+        default:
+            state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+            return -1000;
+            break;
+        }
+
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return 0;
+
+    } else {
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return -2;
+    }
+
+}
+
+// I-type Instruction lw: rd = M[rs + imm]
+int Gen_State::LW(unsigned int rd, unsigned int rs1, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+
+    // Update the value in RD
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rd = Word{};
+
+    // Find the address
+    unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
+    word_address *= 4;
+    unsigned long byte_address = word_address + (static_cast<unsigned long>(static_cast<int>(imm.get_value())) * 4);
+
+    // Check if the address is in range
+    if(byte_address <= 0x3ffffffff) {
+        byte_address = byte_address % 4;
+        
+        val_rd = state.get_value_in_state(MEMORY, word_address);
+
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return 0;
+
+    } else {
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return -2;
+    }
+
+}
+
+// I-type Instruction lbu: rd = M[rs + imm][0 : 7]
+int Gen_State::LBU(unsigned int rd, unsigned int rs1, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+
+    // Update the value in RD
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rd = Word{};
+
+    // Find the address
+    unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
+    word_address *= 4;
+    unsigned long byte_address = word_address + static_cast<unsigned long>(static_cast<int>(imm.get_value()));
+
+    // Check if the address is in range
+    if(byte_address <= 0x3ffffffff) {
+        byte_address = byte_address % 4;
+        
+        val_rd = state.get_value_in_state(MEMORY, word_address);
+
+        switch (byte_address) {
+        case 0:
+            val_rd = val_rd.limit(31, 24);
+            break;
+        case 1:
+            val_rd = val_rd.limit(23, 16);
+            break;
+        case 2:
+            val_rd = val_rd.limit(15, 8);
+            break;
+        case 3:
+            val_rd = val_rd.limit(7);
+            break;
+        default:
+            state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+            return -1000;
+            break;
+        }
+
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return 0;
+
+    } else {
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return -2;
+    }
+
+}
+
+// I-type Instruction lhu: rd = M[rs + imm][0 : 15]
+int Gen_State::LHU(unsigned int rd, unsigned int rs1, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+
+    // Update the value in RD
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rd = Word{};
+
+    // Find the address
+    unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
+    word_address *= 4;
+    unsigned long byte_address = word_address + (static_cast<unsigned long>(static_cast<int>(imm.get_value())) * 2);
+
+    // Check if the address is in range
+    if(byte_address <= 0x3ffffffff) {
+        byte_address = byte_address % 4;
+        
+        val_rd = state.get_value_in_state(MEMORY, word_address);
+
+        switch (byte_address) {
+        case 0:
+            val_rd = val_rd.limit(31, 16);
+            break;
+        case 2:
+            val_rd = val_rd.limit(15);
+            break;
+        default:
+            state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+            return -1000;
+            break;
+        }
+
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return 0;
+
+    } else {
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return -2;
+    }
 
 }

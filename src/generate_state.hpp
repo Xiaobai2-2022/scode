@@ -39,6 +39,12 @@ class Gen_State {
         static int SLTI(unsigned int, unsigned int, Word, State &);
         static int SLTIU(unsigned int, unsigned int, Word, State &);
 
+        static int LB(unsigned int, unsigned int, Word, State &);
+        static int LH(unsigned int, unsigned int, Word, State &);
+        static int LW(unsigned int, unsigned int, Word, State &);
+        static int LBU(unsigned int, unsigned int, Word, State &);
+        static int LHU(unsigned int, unsigned int, Word, State &);
+
 };
 
 #endif
