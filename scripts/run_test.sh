@@ -1,7 +1,7 @@
 #######################################
 # Auto Testing Software for scode     #
 # By Zhifan (Xiaobai) Li              #
-# Version 0.2.3                       #
+# Version 0.2.3b                      #
 #######################################
 
 #######################################
@@ -80,11 +80,11 @@ else
     exit 1
 fi
 
-# Wait for user input
-read -p "Press Enter to continue..."
+# # Wait for user input
+# read -p "Press Enter to continue..."
 
-# Clear the console screen
-clear
+# # Clear the console screen
+# clear
 
 # Prompt user for testing method
 echo -ne "${YELLOW}Proceed with automatic testing(y/N):${NC} " 
@@ -111,13 +111,16 @@ if [ "${test_with_auto,,}" = "y" ]; then
     count_test=0
     count_passed=0
 
-    echo -e "${GREEN}Proceed with auto testing.${NC}"
+    echo -e "${GREEN}Proceed with auto testing:${NC}"
+    echo -e ""
+    echo -e ""
+    echo -e ""
 
-    # Wait for user input
-    read -p "Press Enter to continue..."
+    # # Wait for user input
+    # read -p "Press Enter to continue..."
 
-    # Clear the console screen
-    clear
+    # # Clear the console screen
+    # clear
 
     if [ ! -n "$(find "$test_in_folder" -maxdepth 1 -type f -name '*.in')" ]; then
         echo -e "${RED}Error 921: \n${YELLOW}A test Error is found, can not find any test files that ends with \"*.in\". \n${RED}Testing terminated...${NC}"
