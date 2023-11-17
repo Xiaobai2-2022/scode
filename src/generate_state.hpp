@@ -47,6 +47,12 @@ class Gen_State {
 
         static int JALR(unsigned int, unsigned int, Word, State &);
 
+    // S Type Instructions
+    public:
+        static int SB(unsigned int, unsigned int, Word, State &);
+        static int SH(unsigned int, unsigned int, Word, State &);
+        static int SW(unsigned int, unsigned int, Word, State &);
+
 };
 
 #endif
