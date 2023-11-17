@@ -45,6 +45,8 @@ class Gen_State {
         static int LBU(unsigned int, unsigned int, Word, State &);
         static int LHU(unsigned int, unsigned int, Word, State &);
 
+        static int JALR(unsigned int, unsigned int, Word, State &);
+
 };
 
 #endif

@@ -628,6 +628,31 @@ std::pair<Word, int> Gen_Code::LHU(unsigned int rd, unsigned int rs1, Word imm) 
 
 }
 
+// I-type Instruction jalr: rd = PC + 4; PC = rs1 + imm
+std::pair<Word, int> Gen_Code::JALR(unsigned int rd, unsigned int rs1, Word imm) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return std::pair<Word, int>{Word{}, 1};
+    if(!Utility::is_in_range(rs1, 0, 31)) return std::pair<Word, int>{Word{}, 2};
+    // Check if the immediate value is in range
+    if((imm >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
+
+    // Define constant values
+    const unsigned int funct3 = 0x0;
+    const unsigned int opcode = 0b1100111;
+
+    Word result{};
+    result +=
+        (imm << 20) +
+        (Word{rs1} << 15) +
+        (Word{funct3} << 12) +
+        (Word{rd} << 7) +
+        (Word{opcode});
+    
+    return std::pair<Word, int>{result, 0};
+
+}
+
 // S-type Instruction sb: M[rs + imm][0 : 7] = rs2[0 : 7]
 std::pair<Word, int> Gen_Code::SB(unsigned int rs1, unsigned int rs2, Word imm) {
 
@@ -936,31 +961,6 @@ std::pair<Word, int> Gen_Code::JAL(unsigned int rd, Word imm) {
         (Word{rd} << 7) +
         (Word{opcode});
 
-    return std::pair<Word, int>{result, 0};
-
-}
-
-// I-type Instruction jalr: rd = PC + 4; PC = rs1 + imm
-std::pair<Word, int> Gen_Code::JALR(unsigned int rd, unsigned int rs1, Word imm) {
-
-    // Check if all registers are in range
-    if(!Utility::is_in_range(rd, 1, 31)) return std::pair<Word, int>{Word{}, 1};
-    if(!Utility::is_in_range(rs1, 0, 31)) return std::pair<Word, int>{Word{}, 2};
-    // Check if the immediate value is in range
-    if((imm >> 12) == Word{1}) return std::pair<Word, int>{Word{}, 4};
-
-    // Define constant values
-    const unsigned int funct3 = 0x0;
-    const unsigned int opcode = 0b1100111;
-
-    Word result{};
-    result +=
-        (imm << 20) +
-        (Word{rs1} << 15) +
-        (Word{funct3} << 12) +
-        (Word{rd} << 7) +
-        (Word{opcode});
-    
     return std::pair<Word, int>{result, 0};
 
 }

@@ -243,6 +243,29 @@ int Gen_State::update_state(State &state) {
 
 
 
+    case 0b1100111: // Case I-type instruction with opcode 1100111
+    
+        // Read the function3 from the memory
+        funct3 = mem_at_pc.limit(14, 12);
+
+        // Read the registers from the memory
+        rd = mem_at_pc.limit(11, 7);
+        rs1 = mem_at_pc.limit(19, 15);
+
+        switch (funct3.get_value()) {
+            case 0x0: // jalr instruction
+            // Read the imm from the memory
+            imm = mem_at_pc.extend(31, 20);
+            return Gen_State::JALR(rd.get_value(), rs1.get_value(), imm, state);
+            break;
+        default:
+            return -1;
+            break;
+        }
+        break;
+
+
+
     default:
         return -1;
     }
@@ -813,5 +836,37 @@ int Gen_State::LHU(unsigned int rd, unsigned int rs1, Word imm, State &state) {
         state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
         return -2;
     }
+
+}
+
+// I-type Instruction jalr: rd = PC + 4; PC = rs1 + imm
+int Gen_State::JALR(unsigned int rd, unsigned int rs1, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+
+    unsigned long pc;
+    unsigned long cur_pc = state.get_pc();
+    Word val_rd = Word{0};
+
+    // PC = rs1 + imm
+    pc = static_cast<unsigned long>(state.get_value_in_state(REGISTER, rs1).get_value());
+    pc += static_cast<unsigned long>(static_cast<int>(imm.get_value()));
+    pc *= 4;
+
+    if(pc <= 0x3ffffffff) {
+        state.set_pc(pc);
+    } else {
+        state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+        return -2;
+    }
+
+    // rd = PC + 4, since pc is pre-incremented, it is not required to increment it here
+    cur_pc /= 4;
+    val_rd = Word{static_cast<unsigned int>(cur_pc)};
+    state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+
+    return 0;
 
 }
