@@ -42,8 +42,12 @@ class Word {
         Word operator|(const Word &);                                               // Inclusive or operator
         Word operator&(const Word &);                                               // Inclusive or operator
         Word operator<<(const Word &);                                              // And operator
-        Word operator>>(const Word &);                                              // Shift Right operator
-        Word SRA(const Word &);                                                     // Shift Right Arithmetic
+        Word operator>>(const Word &);                                              // Shift right operator
+        Word SRA(const Word &);                                                     // Shift right arithmetic
+
+    public:
+        bool LTA(const Word &);                                                     // Less than arithmetic
+        bool GEA(const Word &);                                                     // Greater equal arithmetic
 
     public:
         Word operator%(unsigned int);                                               // Modulo operator

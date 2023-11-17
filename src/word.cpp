@@ -138,19 +138,29 @@ Word Word::operator&(const Word &other) {
     return Word{this->value & other.value};
 }
 
-// Shift Left operator
+// Shift left operator
 Word Word::operator<<(const Word &other) {
     return Word{this->value << other.value};
 }
 
-// Shift Right operator
+// Shift right operator
 Word Word::operator>>(const Word &other) {
     return Word{this->value >> other.value};
 }
 
-// Shift Right Arithemtic
-Word Word::SRA(const Word & other) {
+// Shift right arithemtic
+Word Word::SRA(const Word &other) {
     return Word{static_cast<int>(this->value) >> other.value};
+}
+
+// Less than arithmetic
+bool Word::LTA(const Word &other) {
+    return static_cast<int>(this->value) < static_cast<int>(other.value);
+}
+
+// Greater equal arithmetic
+bool Word::GEA(const Word &other) {
+    return static_cast<int>(this->value) >= static_cast<int>(other.value);
 }
 
 // Modulo operator

@@ -253,7 +253,7 @@ int Gen_State::update_state(State &state) {
         rs1 = mem_at_pc.limit(19, 15);
 
         switch (funct3.get_value()) {
-            case 0x0: // jalr instruction
+        case 0x0: // jalr instruction
             // Read the imm from the memory
             imm = mem_at_pc.extend(31, 20);
             return Gen_State::JALR(rd.get_value(), rs1.get_value(), imm, state);
@@ -276,13 +276,13 @@ int Gen_State::update_state(State &state) {
         rs2 = mem_at_pc.limit(24, 20);
 
         switch (funct3.get_value()) {
-            case 0x0: // sb instruction
+        case 0x0: // sb instruction
             // Read the imm from the memory
             imm = (mem_at_pc.limit(31, 25) << 5) + mem_at_pc.limit(11, 7);
             imm = imm.extend(11);
             return Gen_State::SB(rs1.get_value(), rs2.get_value(), imm, state);
             break;
-            case 0x1: // sh instruction
+        case 0x1: // sh instruction
             // Read the imm from the memory
             imm = (mem_at_pc.limit(31, 25) << 5) + mem_at_pc.limit(11, 7);
             imm = imm.extend(11);
@@ -300,6 +300,32 @@ int Gen_State::update_state(State &state) {
         }
         break;
 
+
+
+    case 0b1100011: // Case B-type instruction with opcode 1100011
+    
+        // Read the function3 from the memory
+        funct3 = mem_at_pc.limit(14, 12);
+
+        // Read the registers from the memory
+        rs1 = mem_at_pc.limit(19, 15);
+        rs2 = mem_at_pc.limit(24, 20);
+
+        switch (funct3.get_value()) {
+        case 0x0: // beq instruction
+            // Read the imm from the memory
+            imm = 
+                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(7, 7) << 10) +
+                (mem_at_pc.limit(30, 25) << 4) +
+                (mem_at_pc.limit(11, 8));
+            return Gen_State::BEQ(rs1.get_value(), rs2.get_value(), imm, state);
+            break;
+        default:
+            return -1;
+            break;
+        }
+        break;
 
 
     default:
@@ -1031,5 +1057,40 @@ int Gen_State::SW(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
     } else {
         return -2;
     }
+
+}
+
+// B-type Instruction beq: if(rs1 == rs2) PC += imm
+int Gen_State::BEQ(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Extract rs1 and rs2
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rs2 = state.get_value_in_state(REGISTER, rs2);
+
+    // Jump if the condition is true
+    if(val_rs1 == val_rs2) {
+
+        unsigned long address = (static_cast<unsigned long>(imm.get_value()) * 2);
+        address += state.get_pc();
+
+        // Check if the address is in range
+        if(address <= 0x3ffffffff) {
+
+            // Check if the address is valid
+            if(address % 4 != 0) {
+                return -3;
+            }
+            state.set_pc(address);
+        
+        } else {
+            return -2;
+        }
+    }
+
+    return 0;
 
 }

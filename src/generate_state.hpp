@@ -53,6 +53,15 @@ class Gen_State {
         static int SH(unsigned int, unsigned int, Word, State &);
         static int SW(unsigned int, unsigned int, Word, State &);
 
+    // B Type Instructions
+    public:
+        static int BEQ(unsigned int, unsigned int, Word, State &);
+        static int BNE(unsigned int, unsigned int, Word, State &);
+        static int BLT(unsigned int, unsigned int, Word, State &);
+        static int BGE(unsigned int, unsigned int, Word, State &);
+        static int BLTU(unsigned int, unsigned int, Word, State &);
+        static int BGEU(unsigned int, unsigned int, Word, State &);
+
 };
 
 #endif
