@@ -57,7 +57,7 @@ void State::init() {
 // Output operator
 std::ostream &operator<<(std::ostream &os, const State &s) {
 
-    os << "PC: " << s.PC << std::endl << std::endl;
+    os << "PC: " << "0x" << std::setfill('0') << std::setw(9) << std::hex << s.PC << std::endl << std::endl;
     os << "Register: " << std::endl;
     os << s.registers << std::endl;
     os << "Port: " << std::endl;

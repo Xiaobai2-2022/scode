@@ -1,6 +1,7 @@
 #ifndef _STATE_HPP_
 #define _STATE_HPP_
 
+#include <iomanip>
 #include <iostream>
 
 #include "memory_cell.hpp"
