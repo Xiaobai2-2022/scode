@@ -319,7 +319,58 @@ int Gen_State::update_state(State &state) {
                 (mem_at_pc.limit(7, 7) << 10) +
                 (mem_at_pc.limit(30, 25) << 4) +
                 (mem_at_pc.limit(11, 8));
+            imm = imm.extend(11);
             return Gen_State::BEQ(rs1.get_value(), rs2.get_value(), imm, state);
+            break;
+        case 0x1: // bne instruction
+            // Read the imm from the memory
+            imm = 
+                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(7, 7) << 10) +
+                (mem_at_pc.limit(30, 25) << 4) +
+                (mem_at_pc.limit(11, 8));
+            imm = imm.extend(11);
+            return Gen_State::BNE(rs1.get_value(), rs2.get_value(), imm, state);
+            break;
+        case 0x4: // blt instruction
+            // Read the imm from the memory
+            imm = 
+                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(7, 7) << 10) +
+                (mem_at_pc.limit(30, 25) << 4) +
+                (mem_at_pc.limit(11, 8));
+            imm = imm.extend(11);
+            return Gen_State::BLT(rs1.get_value(), rs2.get_value(), imm, state);
+            break;
+        case 0x5: // bge instruction
+            // Read the imm from the memory
+            imm = 
+                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(7, 7) << 10) +
+                (mem_at_pc.limit(30, 25) << 4) +
+                (mem_at_pc.limit(11, 8));
+            imm = imm.extend(11);
+            return Gen_State::BGE(rs1.get_value(), rs2.get_value(), imm, state);
+            break;
+        case 0x6: // bltu instruction
+            // Read the imm from the memory
+            imm = 
+                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(7, 7) << 10) +
+                (mem_at_pc.limit(30, 25) << 4) +
+                (mem_at_pc.limit(11, 8));
+            imm = imm.extend(11);
+            return Gen_State::BLTU(rs1.get_value(), rs2.get_value(), imm, state);
+            break;
+        case 0x7: // bgeu instruction
+            // Read the imm from the memory
+            imm = 
+                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(7, 7) << 10) +
+                (mem_at_pc.limit(30, 25) << 4) +
+                (mem_at_pc.limit(11, 8));
+            imm = imm.extend(11);
+            return Gen_State::BGEU(rs1.get_value(), rs2.get_value(), imm, state);
             break;
         default:
             return -1;
@@ -1073,6 +1124,181 @@ int Gen_State::BEQ(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
 
     // Jump if the condition is true
     if(val_rs1 == val_rs2) {
+
+        unsigned long address = (static_cast<unsigned long>(imm.get_value()) * 2);
+        address += state.get_pc();
+
+        // Check if the address is in range
+        if(address <= 0x3ffffffff) {
+
+            // Check if the address is valid
+            if(address % 4 != 0) {
+                return -3;
+            }
+            state.set_pc(address);
+        
+        } else {
+            return -2;
+        }
+    }
+
+    return 0;
+
+}
+
+// B-type Instruction bne: if(rs1 != rs2) PC += imm
+int Gen_State::BNE(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Extract rs1 and rs2
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rs2 = state.get_value_in_state(REGISTER, rs2);
+
+    // Jump if the condition is true
+    if(val_rs1 != val_rs2) {
+
+        unsigned long address = (static_cast<unsigned long>(imm.get_value()) * 2);
+        address += state.get_pc();
+
+        // Check if the address is in range
+        if(address <= 0x3ffffffff) {
+
+            // Check if the address is valid
+            if(address % 4 != 0) {
+                return -3;
+            }
+            state.set_pc(address);
+        
+        } else {
+            return -2;
+        }
+    }
+
+    return 0;
+
+}
+
+// B-type Instruction blt: if(rs1 < rs2) PC += imm
+int Gen_State::BLT(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Extract rs1 and rs2
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rs2 = state.get_value_in_state(REGISTER, rs2);
+
+    // Jump if the condition is true
+    if(val_rs1.LTA(val_rs2)) {
+
+        unsigned long address = (static_cast<unsigned long>(imm.get_value()) * 2);
+        address += state.get_pc();
+
+        // Check if the address is in range
+        if(address <= 0x3ffffffff) {
+
+            // Check if the address is valid
+            if(address % 4 != 0) {
+                return -3;
+            }
+            state.set_pc(address);
+        
+        } else {
+            return -2;
+        }
+    }
+
+    return 0;
+
+}
+
+// B-type Instruction bge: if(rs1 >= rs2) PC += imm
+int Gen_State::BGE(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Extract rs1 and rs2
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rs2 = state.get_value_in_state(REGISTER, rs2);
+
+    // Jump if the condition is true
+    if(val_rs1.GEA(val_rs2)) {
+
+        unsigned long address = (static_cast<unsigned long>(imm.get_value()) * 2);
+        address += state.get_pc();
+
+        // Check if the address is in range
+        if(address <= 0x3ffffffff) {
+
+            // Check if the address is valid
+            if(address % 4 != 0) {
+                return -3;
+            }
+            state.set_pc(address);
+        
+        } else {
+            return -2;
+        }
+    }
+
+    return 0;
+
+}
+
+// B-type Instruction bltu: if(rs1 < rs2) PC += imm
+int Gen_State::BLTU(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Extract rs1 and rs2
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rs2 = state.get_value_in_state(REGISTER, rs2);
+
+    // Jump if the condition is true
+    if(val_rs1 < val_rs2) {
+
+        unsigned long address = (static_cast<unsigned long>(imm.get_value()) * 2);
+        address += state.get_pc();
+
+        // Check if the address is in range
+        if(address <= 0x3ffffffff) {
+
+            // Check if the address is valid
+            if(address % 4 != 0) {
+                return -3;
+            }
+            state.set_pc(address);
+        
+        } else {
+            return -2;
+        }
+    }
+
+    return 0;
+
+}
+
+// B-type Instruction bgeu: if(rs1 >= rs2) PC += imm
+int Gen_State::BGEU(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Extract rs1 and rs2
+    Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
+    Word val_rs2 = state.get_value_in_state(REGISTER, rs2);
+
+    // Jump if the condition is true
+    if(val_rs1 >= val_rs2) {
 
         unsigned long address = (static_cast<unsigned long>(imm.get_value()) * 2);
         address += state.get_pc();
