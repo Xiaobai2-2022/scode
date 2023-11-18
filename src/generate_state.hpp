@@ -62,6 +62,10 @@ class Gen_State {
         static int BLTU(unsigned int, unsigned int, Word, State &);
         static int BGEU(unsigned int, unsigned int, Word, State &);
 
+    // J Type Instructions
+    public:
+        static int JAL(unsigned int, Word, State &);
+
 };
 
 #endif

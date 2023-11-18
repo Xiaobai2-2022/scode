@@ -315,7 +315,7 @@ int Gen_State::update_state(State &state) {
         case 0x0: // beq instruction
             // Read the imm from the memory
             imm = 
-                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(31, 31) << 11) +
                 (mem_at_pc.limit(7, 7) << 10) +
                 (mem_at_pc.limit(30, 25) << 4) +
                 (mem_at_pc.limit(11, 8));
@@ -325,7 +325,7 @@ int Gen_State::update_state(State &state) {
         case 0x1: // bne instruction
             // Read the imm from the memory
             imm = 
-                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(31, 31) << 11) +
                 (mem_at_pc.limit(7, 7) << 10) +
                 (mem_at_pc.limit(30, 25) << 4) +
                 (mem_at_pc.limit(11, 8));
@@ -335,7 +335,7 @@ int Gen_State::update_state(State &state) {
         case 0x4: // blt instruction
             // Read the imm from the memory
             imm = 
-                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(31, 31) << 11) +
                 (mem_at_pc.limit(7, 7) << 10) +
                 (mem_at_pc.limit(30, 25) << 4) +
                 (mem_at_pc.limit(11, 8));
@@ -345,7 +345,7 @@ int Gen_State::update_state(State &state) {
         case 0x5: // bge instruction
             // Read the imm from the memory
             imm = 
-                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(31, 31) << 11) +
                 (mem_at_pc.limit(7, 7) << 10) +
                 (mem_at_pc.limit(30, 25) << 4) +
                 (mem_at_pc.limit(11, 8));
@@ -355,7 +355,7 @@ int Gen_State::update_state(State &state) {
         case 0x6: // bltu instruction
             // Read the imm from the memory
             imm = 
-                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(31, 31) << 11) +
                 (mem_at_pc.limit(7, 7) << 10) +
                 (mem_at_pc.limit(30, 25) << 4) +
                 (mem_at_pc.limit(11, 8));
@@ -365,7 +365,7 @@ int Gen_State::update_state(State &state) {
         case 0x7: // bgeu instruction
             // Read the imm from the memory
             imm = 
-                (mem_at_pc.limit(31, 31) << 11) + 
+                (mem_at_pc.limit(31, 31) << 11) +
                 (mem_at_pc.limit(7, 7) << 10) +
                 (mem_at_pc.limit(30, 25) << 4) +
                 (mem_at_pc.limit(11, 8));
@@ -377,6 +377,24 @@ int Gen_State::update_state(State &state) {
             break;
         }
         break;
+
+
+
+    case 0b1101111: // Case B-type instruction with opcode 1101111
+
+        // Read the registers from the memory
+        rd = mem_at_pc.limit(11, 7);
+
+        // Read the imm from the memory
+        imm = 
+            (mem_at_pc.limit(31, 31) << 19) +
+            (mem_at_pc.limit(19, 12) << 11) +
+            (mem_at_pc.limit(20, 20) << 10) +
+            (mem_at_pc.limit(30, 21));
+            imm = imm.extend(19);
+        return Gen_State::JAL(rd.get_value(), imm, state);
+        break;
+
 
 
     default:
@@ -1316,6 +1334,35 @@ int Gen_State::BGEU(unsigned int rs1, unsigned int rs2, Word imm, State &state) 
             return -2;
         }
     }
+
+    return 0;
+
+}
+
+// J-type Instruction jal: rd = PC + 4; PC += imm
+int Gen_State::JAL(unsigned int rd, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+
+    unsigned long pc;
+    unsigned long cur_pc = state.get_pc();
+    Word val_rd = Word{0};
+
+    // PC += imm
+    pc = cur_pc;
+    pc += (static_cast<unsigned long>(static_cast<int>(imm.get_value())) * 2);
+
+    if(pc <= 0x3ffffffff) {
+        state.set_pc(pc);
+    } else {
+        return -2;
+    }
+
+    // rd = PC + 4, since pc is pre-incremented, it is not required to increment it here
+    cur_pc /= 4;
+    val_rd = Word{static_cast<unsigned int>(cur_pc)};
+    state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
 
     return 0;
 
