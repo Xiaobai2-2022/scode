@@ -755,7 +755,7 @@ int Gen_State::LB(unsigned int rd, unsigned int rs1, Word imm, State &state) {
 
     // Update the value in RD
     Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
-    Word val_rd = Word{};
+    Word val_rd{};
 
     // Find the address
     unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
@@ -805,7 +805,7 @@ int Gen_State::LH(unsigned int rd, unsigned int rs1, Word imm, State &state) {
 
     // Update the value in RD
     Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
-    Word val_rd = Word{};
+    Word val_rd{};
 
     // Find the address
     unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
@@ -849,7 +849,7 @@ int Gen_State::LW(unsigned int rd, unsigned int rs1, Word imm, State &state) {
 
     // Update the value in RD
     Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
-    Word val_rd = Word{};
+    Word val_rd{};
 
     // Find the address
     unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
@@ -881,7 +881,7 @@ int Gen_State::LBU(unsigned int rd, unsigned int rs1, Word imm, State &state) {
 
     // Update the value in RD
     Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
-    Word val_rd = Word{};
+    Word val_rd{};
 
     // Find the address
     unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
@@ -931,7 +931,7 @@ int Gen_State::LHU(unsigned int rd, unsigned int rs1, Word imm, State &state) {
 
     // Update the value in RD
     Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
-    Word val_rd = Word{};
+    Word val_rd{};
 
     // Find the address
     unsigned long word_address = static_cast<unsigned long>(val_rs1.get_value());
@@ -975,7 +975,7 @@ int Gen_State::JALR(unsigned int rd, unsigned int rs1, Word imm, State &state) {
 
     unsigned long pc;
     unsigned long cur_pc = state.get_pc();
-    Word val_rd = Word{0};
+    Word val_rd{};
 
     // PC = rs1 + imm
     pc = static_cast<unsigned long>(state.get_value_in_state(REGISTER, rs1).get_value());
@@ -1004,7 +1004,7 @@ int Gen_State::SB(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
     if(!Utility::is_in_range(rs1, 0, 31)) return 2;
     if(!Utility::is_in_range(rs2, 0, 31)) return 3;
 
-    Word val_mem = Word{};
+    Word val_mem{};
 
     // Find the address
     Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
@@ -1053,7 +1053,7 @@ int Gen_State::SH(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
     if(!Utility::is_in_range(rs1, 0, 31)) return 2;
     if(!Utility::is_in_range(rs2, 0, 31)) return 3;
 
-    Word val_mem = Word{};
+    Word val_mem{};
 
     // Find the address
     Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
@@ -1096,7 +1096,7 @@ int Gen_State::SW(unsigned int rs1, unsigned int rs2, Word imm, State &state) {
     if(!Utility::is_in_range(rs1, 0, 31)) return 2;
     if(!Utility::is_in_range(rs2, 0, 31)) return 3;
 
-    Word val_mem = Word{};
+    Word val_mem{};
 
     // Find the address
     Word val_rs1 = state.get_value_in_state(REGISTER, rs1);
@@ -1347,7 +1347,7 @@ int Gen_State::JAL(unsigned int rd, Word imm, State &state) {
 
     unsigned long pc;
     unsigned long cur_pc = state.get_pc();
-    Word val_rd = Word{0};
+    Word val_rd{0};
 
     // PC += imm
     pc = cur_pc;
@@ -1364,6 +1364,37 @@ int Gen_State::JAL(unsigned int rd, Word imm, State &state) {
     val_rd = Word{static_cast<unsigned int>(cur_pc)};
     state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
 
+    return 0;
+
+}
+
+// U-type Instruction lui: imm << 12
+int LUI(unsigned int rd, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+
+    // Update the value in RD
+    Word val_rd = imm << 12;
+
+    state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+
+    return 0;
+
+}
+
+// U-type Instruction auipc rd = PC + (imm << 12)
+int AUIPC(unsigned int rd, Word imm, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+
+    // Update the value in RD
+    Word val_rd{static_cast<unsigned int>(state.get_pc() / 4)};
+    val_rd += (imm << 12);
+
+    state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+    
     return 0;
 
 }

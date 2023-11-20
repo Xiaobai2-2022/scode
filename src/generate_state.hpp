@@ -66,6 +66,11 @@ class Gen_State {
     public:
         static int JAL(unsigned int, Word, State &);
 
+    // U Type Instructions
+    public:
+        static int LUI(unsigned int, Word, State &);
+        static int AUIPC(unsigned int, Word, State &);
+
 };
 
 #endif
