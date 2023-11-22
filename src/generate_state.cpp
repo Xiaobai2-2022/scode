@@ -397,6 +397,30 @@ int Gen_State::update_state(State &state) {
 
 
 
+    case 0b0110111: // Case U-type instruction with opcode 0110111
+        
+        // Read the registers from the memory
+        rd = mem_at_pc.limit(11, 7);
+
+        // Read the imm from the memory
+        imm = mem_at_pc.limit(31, 12);
+        return Gen_State::LUI(rd.get_value(), imm, state);
+        break;
+
+
+
+    case 0b0010111: // Case U-type instruction with opcode 0010111
+        
+        // Read the registers from the memory
+        rd = mem_at_pc.limit(11, 7);
+
+        // Read the imm from the memory
+        imm = mem_at_pc.limit(31, 12);
+        return Gen_State::AUIPC(rd.get_value(), imm, state);
+        break;
+
+
+
     default:
         return -1;
     }
@@ -1369,7 +1393,7 @@ int Gen_State::JAL(unsigned int rd, Word imm, State &state) {
 }
 
 // U-type Instruction lui: imm << 12
-int LUI(unsigned int rd, Word imm, State &state) {
+int Gen_State::LUI(unsigned int rd, Word imm, State &state) {
 
     // Check if all registers are in range
     if(!Utility::is_in_range(rd, 1, 31)) return 1;
@@ -1384,7 +1408,7 @@ int LUI(unsigned int rd, Word imm, State &state) {
 }
 
 // U-type Instruction auipc rd = PC + (imm << 12)
-int AUIPC(unsigned int rd, Word imm, State &state) {
+int Gen_State::AUIPC(unsigned int rd, Word imm, State &state) {
 
     // Check if all registers are in range
     if(!Utility::is_in_range(rd, 1, 31)) return 1;
