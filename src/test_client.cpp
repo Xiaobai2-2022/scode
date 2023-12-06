@@ -9,6 +9,7 @@ void run_mem_test();
 void run_port_test();
 void run_state_test();
 void run_ctor_state_test();
+void run_state_test(State &);
 int main();
 
 // Execute the Word tests
@@ -458,6 +459,7 @@ void run_ctor_state_test() {
      * Test Methods (Not case sensitive)
      * 
      * C - construct state from file and print
+     * P - run C and pass the state to run_state_test
      *     
      */
     switch (type) {
@@ -469,9 +471,52 @@ void run_ctor_state_test() {
             std::cout << init_state << std::endl;
         }
         break;
+    case 'p': case 'P':
+        // Read file names
+        std::cin >> s_if;
+        // Check if the operation is completed correctly
+        if(Ctor_State::sc_bin_to_state(s_if, init_state)) {
+            std::cout << init_state << std::endl;
+        }
+        // Pass the state into void run_state_test(State &)
+        run_state_test(init_state);
     
     default:
         break;
+    }
+
+}
+
+void run_state_test(State &state) {
+
+    char type{'\0'};                    // input
+
+    std::cin >> type;
+
+    /**
+     * Test Methods (Not case sensitive)
+     * 
+     * P - print the state
+     * Q - quit
+     * U - update to next state
+     *     
+     */
+    while(type != 'q') {
+
+        switch (type) {
+        case 'p': case 'P':
+            std::cout << state << std::endl;
+            break;
+        case 'u': case 'U':
+            std::cout << Gen_State::update_state(state) << std::endl;
+            break;
+        case 'q': case 'Q': default:
+            type = 'q';
+            break;
+        }
+
+        std::cin >> type;
+
     }
 
 }

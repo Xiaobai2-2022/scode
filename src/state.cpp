@@ -1,7 +1,7 @@
 #include "state.hpp"
 
 // Default constructor, set all value in register and ports to zero and initialize an empty memory
-State::State() : PC{}, registers{Reg{}}, memory{Memory{}}, ports{Port{}} {}
+State::State() : is_end{false}, PC{}, registers{Reg{}}, memory{Memory{}}, ports{Port{}} {}
 
 // Force data into state
 void State::set_value_in_to_state(Cell val) {
@@ -21,6 +21,11 @@ void State::set_pc(ulong pc_) {
     this->PC = pc_;
 }
 
+// Force state to end
+void State::force_end() {
+    this->is_end = true;
+}
+
 // Read data from state
 Word State::get_value_in_state(unsigned int type, ulong id) {
 
@@ -36,6 +41,10 @@ Word State::get_value_in_state(unsigned int type, ulong id) {
 
 ulong State::get_pc() {
     return this->PC;
+}
+
+bool State::get_is_end() {
+    return this->is_end;
 }
 
 // Increment PC by 4
@@ -68,6 +77,11 @@ std::ostream &operator<<(std::ostream &os, const State &s) {
         os << (*it);
     }
     os << std::endl;
+
+    if(s.is_end) {
+        os << std::endl;
+        os << "======= End of State =======" << std::endl;
+    }
 
     return os;
 

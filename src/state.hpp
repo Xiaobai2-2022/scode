@@ -14,6 +14,7 @@ class State;
 class State {
 
     private:
+        bool is_end;
         ulong PC;
         Reg registers;
         Memory memory;
@@ -25,10 +26,12 @@ class State {
     public:
         void set_value_in_to_state(Cell);                                   // Force data into state
         void set_pc(ulong);                                                 // Force PC value
+        void force_end();                                                   // Force state to end
 
     public:
         Word get_value_in_state(unsigned int, ulong);                       // Read data from state
         ulong get_pc();                                                     // Read PC value
+        bool get_is_end();                                                  // Read if the state is ended
 
     public:
         State &operator++();                                                // Increment PC by 4

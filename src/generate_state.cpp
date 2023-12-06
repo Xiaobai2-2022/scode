@@ -3,6 +3,10 @@
 // Interperate and update State
 int Gen_State::update_state(State &state) {
 
+    if(state.get_is_end()) {
+        return -99;
+    }
+
     // Read memory at PC
     ulong PC = state.get_pc();
     Word mem_at_pc = state.get_value_in_state(MEMORY, PC);
@@ -16,8 +20,8 @@ int Gen_State::update_state(State &state) {
     // function3 and function 7
     Word funct3, funct7;
 
-    // rd, rs1, rs2, imm
-    Word rd, rs1, rs2, imm;
+    // rd, rs1, rs2, imm, pi, po
+    Word rd, rs1, rs2, imm, pi, po;
         
 
     switch (opcode.get_value()) {
@@ -417,6 +421,55 @@ int Gen_State::update_state(State &state) {
         // Read the imm from the memory
         imm = mem_at_pc.limit(31, 12);
         return Gen_State::AUIPC(rd.get_value(), imm, state);
+        break;
+
+
+
+    case 0b1111111: // Case SCode instruction with opcode 1111111
+        return Gen_State::END(state);
+        break;
+
+
+
+    case 0b0000000: // Case SCode instruction with opcode 0000000
+        return Gen_State::NOP(state);
+        break;
+
+
+
+    case 0b1111110: // Case SCode instruction with opcode 1111110
+    
+        // Read the function3 and function 7 from the memory
+        funct3 = mem_at_pc.limit(14, 12);
+        funct7 = mem_at_pc.limit(31, 25);
+
+        switch(funct3.get_value()) {
+        case 0x0:
+            switch (funct7.get_value()) {
+            case 0x00: // input instruction
+                // Read the register and port from the memory
+                rd = mem_at_pc.limit(11, 7);
+                pi = mem_at_pc.limit(19, 15);
+
+                return Gen_State::INPUT(pi.get_value(), rd.get_value(), state);
+                break;
+            case 0x20: // output instruction
+                // Read the register and port from the memory
+                po = mem_at_pc.limit(11, 7);
+                rs1 = mem_at_pc.limit(19, 15);
+
+                return Gen_State::OUTPUT(po.get_value(), rs1.get_value(), state);
+                break;
+            default:
+                return -1;
+                break;
+            }
+            break;
+        default:
+            return -1;
+            break;
+        }
+        
         break;
 
 
@@ -1421,4 +1474,49 @@ int Gen_State::AUIPC(unsigned int rd, Word imm, State &state) {
     
     return 0;
 
+}
+
+// SCode Instruction end
+int Gen_State::END(State &state) {
+    state.force_end();
+    return 0;
+}
+
+// SCode Instruction nop
+int Gen_State::NOP(State &state) {
+    return 0;
+}
+
+// SCode Instruction input rd = pi
+int Gen_State::INPUT(unsigned int pi, unsigned int rd, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    // Check if all ports are in range
+    if(!Utility::is_in_range(pi, 0, 7)) return 6;
+
+    // Update the value in RD
+    Word val_rd = state.get_value_in_state(PORT, pi);
+
+    state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
+
+    return 0;
+    
+}
+
+// SCode Instruction output po = rs1
+int Gen_State::OUTPUT(unsigned int po, unsigned int rs1, State &state) {
+
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    // Check if all ports are in range
+    if(!Utility::is_in_range(po, 0, 7)) return 7;
+
+    // Update the value in PO
+    Word val_po = state.get_value_in_state(REGISTER, rs1);
+
+    state.set_value_in_to_state(Cell{PORT, po, val_po});
+
+    return 0;
+    
 }

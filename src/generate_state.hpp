@@ -71,6 +71,13 @@ class Gen_State {
         static int LUI(unsigned int, Word, State &);
         static int AUIPC(unsigned int, Word, State &);
 
+    // SCode Instructions
+    public:
+        static int END(State &);
+        static int NOP(State &);
+        static int INPUT(unsigned int, unsigned int, State &);
+        static int OUTPUT(unsigned int, unsigned int, State &);
+
 };
 
 #endif
