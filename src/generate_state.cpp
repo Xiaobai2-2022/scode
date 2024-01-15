@@ -42,6 +42,9 @@ int Gen_State::update_state(State &state) {
             case 0x00: // add instruction
                 return Gen_State::ADD(rd.get_value(), rs1.get_value(), rs2.get_value(), state);
                 break;
+            case 0x01: // mul instruction
+                return Gen_State::MUL(rd.get_value(), rs1.get_value(), rs2.get_value(), state);
+                break;
             case 0x20: // sub instruction
                 return Gen_State::SUB(rd.get_value(), rs1.get_value(), rs2.get_value(), state);
                 break;
@@ -81,6 +84,9 @@ int Gen_State::update_state(State &state) {
             case 0x00: // sll instruction
                 return Gen_State::SLL(rd.get_value(), rs1.get_value(), rs2.get_value(), state);
                 break;
+            case 0x01:
+                return Gen_State::MULH(rd.get_value(), rs1.get_value(), rs2.get_value(), state);
+                break;
             default:
                 return -1;
             }
@@ -102,6 +108,9 @@ int Gen_State::update_state(State &state) {
             case 0x00: // slt instruction
                 return Gen_State::SLT(rd.get_value(), rs1.get_value(), rs2.get_value(), state);
                 break;
+            case 0x01:
+                return Gen_State::MULSU(rd.get_value(), rs1.get_value(), rs2.get_value(), state);
+                break;
             default:
                 return -1;
             }
@@ -110,6 +119,9 @@ int Gen_State::update_state(State &state) {
             switch (funct7.get_value()) {
             case 0x00: // sltu instruction
                 return Gen_State::SLTU(rd.get_value(), rs1.get_value(), rs2.get_value(), state);
+                break;
+            case 0x01:
+                return Gen_State::MULU(rd.get_value(), rs1.get_value(), rs2.get_value(), state);
                 break;
             default:
                 return -1;
@@ -1472,6 +1484,98 @@ int Gen_State::AUIPC(unsigned int rd, Word imm, State &state) {
 
     state.set_value_in_to_state(Cell{REGISTER, rd, val_rd});
     
+    return 0;
+
+}
+
+// R(M)-type Instruction mul rd = (rs1 * rs2)[31 : 0]
+int Gen_State::MUL(unsigned int rd, unsigned int rs1, unsigned int rs2, State &state) {
+    
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Convert both input into long
+    long l_val_rs1{static_cast<int>(state.get_value_in_state(REGISTER, rs1).get_value())};
+    long l_val_rs2{static_cast<int>(state.get_value_in_state(REGISTER, rs2).get_value())};
+
+    // Calculate value in RD
+    unsigned long l_val_rd = static_cast<unsigned long>(l_val_rs1 * l_val_rs2);
+    l_val_rd = l_val_rd << 32 >> 32;
+    Word val_rd{static_cast<unsigned int>(l_val_rd)};
+
+    state.set_value_in_to_state(Cell(REGISTER, rd, val_rd));
+
+    return 0;
+
+}
+
+// R(M)-type Instruction mulh rd = (rs1 * rs2)[63 : 32]
+int Gen_State::MULH(unsigned int rd, unsigned int rs1, unsigned int rs2, State &state) {
+    
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Convert both input into long
+    long l_val_rs1{static_cast<int>(state.get_value_in_state(REGISTER, rs1).get_value())};
+    long l_val_rs2{static_cast<int>(state.get_value_in_state(REGISTER, rs2).get_value())};
+
+    // Calculate value in RD
+    unsigned long l_val_rd = static_cast<unsigned long>(l_val_rs1 * l_val_rs2);
+    l_val_rd = l_val_rd >> 32;
+    Word val_rd{static_cast<unsigned int>(l_val_rd)};
+
+    state.set_value_in_to_state(Cell(REGISTER, rd, val_rd));
+
+    return 0;
+
+}
+
+// R(M)-type Instruction mulsu rd = (rs1 * rs2)[63 : 32]
+int Gen_State::MULSU(unsigned int rd, unsigned int rs1, unsigned int rs2, State &state) {
+    
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Convert both input into long
+    long l_val_rs1{static_cast<int>(state.get_value_in_state(REGISTER, rs1).get_value())};
+    unsigned long l_val_rs2{state.get_value_in_state(REGISTER, rs2).get_value()};
+
+    // Calculate value in RD
+    unsigned long l_val_rd = static_cast<unsigned long>(l_val_rs1 * l_val_rs2);
+    l_val_rd = l_val_rd >> 32;
+    Word val_rd{static_cast<unsigned int>(l_val_rd)};
+
+    state.set_value_in_to_state(Cell(REGISTER, rd, val_rd));
+
+    return 0;
+
+}
+
+// R(M)-type Instruction mulu rd = (rs1 * rs2)[63 : 32]
+int Gen_State::MULU(unsigned int rd, unsigned int rs1, unsigned int rs2, State &state) {
+    
+    // Check if all registers are in range
+    if(!Utility::is_in_range(rd, 1, 31)) return 1;
+    if(!Utility::is_in_range(rs1, 0, 31)) return 2;
+    if(!Utility::is_in_range(rs2, 0, 31)) return 3;
+
+    // Convert both input into long
+    unsigned long l_val_rs1{state.get_value_in_state(REGISTER, rs1).get_value()};
+    unsigned long l_val_rs2{state.get_value_in_state(REGISTER, rs2).get_value()};
+
+    // Calculate value in RD
+    unsigned long l_val_rd = l_val_rs1 * l_val_rs2;
+    l_val_rd = l_val_rd >> 32;
+    Word val_rd{static_cast<unsigned int>(l_val_rd)};
+
+    state.set_value_in_to_state(Cell(REGISTER, rd, val_rd));
+
     return 0;
 
 }

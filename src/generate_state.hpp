@@ -71,6 +71,13 @@ class Gen_State {
         static int LUI(unsigned int, Word, State &);
         static int AUIPC(unsigned int, Word, State &);
 
+    // R (M) Type Instructions (RV32M Multiply Extension)
+    public:
+        static int MUL(unsigned int, unsigned int, unsigned int, State &);
+        static int MULH(unsigned int, unsigned int, unsigned int, State &);
+        static int MULSU(unsigned int, unsigned int, unsigned int, State &);
+        static int MULU(unsigned int, unsigned int, unsigned int, State &);
+
     // SCode Instructions
     public:
         static int END(State &);
