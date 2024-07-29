@@ -35,6 +35,7 @@ compiled="../bin"
 compiled_result="$compiled/scode_test"
 compile_err_file="$compiled/cp_res.txt"
 test_folder="../tests"
+test_file_folder="$test_folder/files"
 test_in_folder="$test_folder/inputs"
 test_out_folder="$test_folder/outputs-expected"
 test_out_act_folder="$test_folder/outputs-actual"
@@ -47,6 +48,14 @@ manual_test_out="$test_folder/manual_outputs"
 
 # Clear the console screen
 clear
+
+# Creates necessary directories if needed
+if [ ! -d "$compiled/" ]; then
+    mkdir "$compiled"
+fi
+if [ ! -d "$test_val_act_folder/" ]; then
+    mkdir "$test_val_act_folder"
+fi
 
 # If clean the compiled file if needed
 if [ -f "$compiled.*" ]; then
@@ -230,7 +239,23 @@ fi
 # Wait for user input
 read -p "Press Enter to continue..."
 
-make clean
-
 # Clear the console screen
+clear
+
+# Prompt user for cleaning the project
+echo -ne "${YELLOW}Free all testing files(y/N):${NC} "
+
+read free_files
+
+if [ "${free_files,,}" = "y" ]; then 
+
+    # Cleans the folder
+    make clean
+    rm -rf "$compiled"
+    rm -rf "$test_out_act_folder"
+    rm -rf "$test_val_act_folder"
+
+fi
+
+Clear the console screen
 clear
