@@ -146,7 +146,7 @@ This section introduces the purpose of each file that exists in the repository, 
   - [x] State Structure (`state.hpp`)
   - [x] State Generator (`construct_state.hpp`)
   - [x] State Step Interpreter (`generate_state.hpp`)
-  - [ ] State Debugger (`svm_debugger.cpp`) **_#_***NEW* [^1]
+  - [ ] State Debugger (`svm_debugger.cpp`) ***#***_NEW_ [^1]
 - [x] Error Handling
   - [x] Error Indicators (`error_output.hpp`)
 - [x] Miscellaneous
