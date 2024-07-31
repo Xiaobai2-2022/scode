@@ -259,4 +259,4 @@ if [ "${free_files,,}" = "y" ]; then
 fi
 
 # Clear the console screen
-# clear
+clear
