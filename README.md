@@ -145,7 +145,8 @@ This section introduces the purpose of each file that exists in the repository, 
 - [ ] SCode Virtual Machine
   - [x] State Structure (`state.hpp`)
   - [x] State Generator (`construct_state.hpp`)
-  - [ ] State Interpreter (`generate_state.hpp`)
+  - [x] State Step Interpreter (`generate_state.hpp`)
+  - [ ] State Debugger (`svm_debugger.cpp`) *NEW* [^1]
 - [x] Error Handling
   - [x] Error Indicators (`error_output.hpp`)
 - [x] Miscellaneous
@@ -155,16 +156,18 @@ This section introduces the purpose of each file that exists in the repository, 
 
 Note that the testing `test_client.cpp` is the only non-header file and contains main, since `test_interface.hpp` is used to include all header used in the project.
 
+[^1]: Note that the State Debugger (SVM_Debugger) is stored in the branch svm_prod_1
+
 ---
 
 ## SCode Testing (STests)
 #### STests are designed for suite testing for SCode/RISC-V/C++ development.
 ##### Prerequisites
-1. STests are shell scripts, meaning that they are designed to run under Linux environments.[^1]
+1. STests are shell scripts, meaning that they are designed to run under Linux environments.[^2]
 2. STests require Makefile; thus, Makefile must be installed in your Linux distribution.
 3. STests test for memory leaks in C++ with Valgrind; thus, Valgrind must be installed in your Linux distribution.
 
-[^1]: Note that the development of SCode is down under WSL2 (Windows Subsystem for Linux) with Ubuntu.
+[^2]: Note that the development of SCode is down under WSL2 (Windows Subsystem for Linux) with Ubuntu.
 
 ##### How to use STests
 In order to use STests, you must have your folders layout as follows:
