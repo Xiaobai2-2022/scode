@@ -25,6 +25,12 @@ flowchart TB
 
 ---
 
+## [Current Version](VERSION.md)
+
+Find detailed version information [here](VERSION.md).
+
+---
+
 ## SCode Compiler
 The compiler software, SCode is designed to compile to RISC-V code.
 
