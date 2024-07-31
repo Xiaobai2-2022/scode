@@ -254,8 +254,9 @@ if [ "${free_files,,}" = "y" ]; then
     rm -rf "$compiled"
     rm -rf "$test_out_act_folder"
     rm -rf "$test_val_act_folder"
+    rm "$test_file_folder/"*.scg
 
 fi
 
-Clear the console screen
-clear
+# Clear the console screen
+# clear
