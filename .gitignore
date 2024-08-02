@@ -1,5 +1,8 @@
 .vscode/*
 bin/*
+
+!bin/app
+
 tests/outputs-actual/*
 tests/valgrind-actual/*
 
