@@ -39,7 +39,8 @@ void Error_Out::out_error(int error_code, int line_number, std::string error_inf
         break;
     case 203:
         std::cout << "Label: " << error_information << " is used but never decleared on line " << line_number << "." << std::endl;
-    
+        break;
+
     default:
         break;
     }
