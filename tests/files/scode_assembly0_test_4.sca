@@ -1,6 +1,0 @@
-SCode Assembly 0: For test purpose only; Invalid Case addi tests
-add 1 2 3
-addi 1 2 3
-addi 1 2 -1
-addi 1 2 -2048
-addi 1 2 2047

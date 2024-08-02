@@ -1,6 +1,0 @@
-SCode Assembly 0: For test purpose only; Valid Case all I Type Instructions opcode 000 0011
-lb 1 2 16
-lh 1 2 16
-lw 1 2 16
-lbu 1 2 16
-lhu 1 2 16
