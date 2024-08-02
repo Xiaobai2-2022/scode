@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS=-std=c++11 -Wall -g -MMD
-EXEC=../bin/scode_test
+EXEC=../bin/app
 SRCDIR=../src
 BINDIR=../bin
 
