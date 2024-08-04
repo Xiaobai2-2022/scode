@@ -1,13 +1,13 @@
 #include "app_interface.hpp"
 
-void display_landpage();
+void display_landpage(unsigned int &);
 void get_terminal_size(unsigned int &, unsigned int &);
 void init();
 int main();
 
-void display_landpage() {
+void display_landpage(unsigned int &) {
 
-
+    
 
 }
 
