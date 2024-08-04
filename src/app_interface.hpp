@@ -1,10 +1,12 @@
-#ifndef _TEST_INTERFACE_
-#define _TEST_INTERFACE_
+#ifndef _APP_INTERFACE_
+#define _APP_INTERFACE_
 
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
+#include <sys/ioctl.h>
+#include <unistd.h>
 #include <vector>
 
 #include "construct_risc_v.hpp"
