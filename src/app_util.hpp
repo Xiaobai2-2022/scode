@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <sys/ioctl.h>
 #include <unistd.h>
-#include <unordered_map>
+#include <map>
 
 class App_Util;
 
@@ -22,7 +22,7 @@ class App_Util {
 
     public:
         // Find the file with a specific extension
-        static std::unordered_map<std::filesystem::path, int> find_file(const std::filesystem::path& directory, const std::string& extension);
+        static std::map<int, std::filesystem::path> find_file(const std::filesystem::path& directory, const std::string& extension);
 
 };
 
