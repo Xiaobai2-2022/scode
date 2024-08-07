@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-std=c++11 -Wall -g -MMD
+CXXFLAGS=-std=c++17 -Wall -g -MMD
 EXEC=../bin/app
 SRCDIR=../src
 BINDIR=../bin

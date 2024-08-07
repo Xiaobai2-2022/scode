@@ -1,14 +1,14 @@
 #ifndef _APP_INTERFACE_
 #define _APP_INTERFACE_
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
-#include <sys/ioctl.h>
-#include <unistd.h>
 #include <vector>
 
+#include "app_util.hpp"
 #include "construct_risc_v.hpp"
 #include "construct_state.hpp"
 #include "generate_code.hpp"

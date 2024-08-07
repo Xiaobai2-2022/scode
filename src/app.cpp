@@ -1,22 +1,32 @@
 #include "app_interface.hpp"
 
-void display_landpage(unsigned int &);
+void assemble_file();
 void get_terminal_size(unsigned int &, unsigned int &);
 void init();
 int main();
 
-void display_landpage(unsigned int &) {
+void assemble_file() {
 
-    
+    App_Util::clear_terminal();
+    App_Util::display_sc_msg(std::cout);
+
+    std::filesystem::path cur_directory{std::filesystem::current_path()};
+
+    std::unordered_map<std::filesystem::path, int> dir;
+
+    dir = App_Util::find_file(cur_directory, ".sca");
+
+    for (const auto &pair : dir) {
+        std::cout << (pair.second + 1) << ": " << pair.first.filename() << std::endl;
+    }
+
+    std::cout << "Total: " << dir.size() << " entrie(s)." << std::endl;
 
 }
 
-void get_terminal_width(unsigned int &width, unsigned int &height) {
+void display_landpage(unsigned int &width) {
 
-    struct winsize win;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &win);
-    width = win.ws_col;
-    height = win.ws_row;
+    // Currently do nothing
 
 }
 
@@ -24,9 +34,14 @@ void init() {
 
     // Get the size of the terminal
     std::pair<unsigned int, unsigned int> terminal_size;
-    get_terminal_size(terminal_size.first, terminal_size.second);
+    App_Util::get_terminal_size(terminal_size.first, terminal_size.second);
 
     // std::cout << terminal_size.first << " " << terminal_size.second << std::endl;
+
+    // Display the landpage of the app
+    display_landpage(terminal_size.first);
+
+    assemble_file();
 
 }
 
