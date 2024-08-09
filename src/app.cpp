@@ -15,11 +15,11 @@ unsigned int conversion(std::string if_name, std::string of_name) {
     // Read the first line(identifier)
     if(!fin.is_open()) {
         std::cout << SColor::red << "Internal error SVM-Prod-1-0005." << SColor::nc << std::endl;
-        SLog::log("Internal error SVM-Prod-1-0005, required file can not open, aborted.");
+        SLog::log("Internal error SVM-Prod-1-0005, required file \"" + if_name + "\" can not open, aborted.");
     }
     if(!std::getline(fin, cur_line)) {
         std::cout << SColor::red << "Internal error SVM-Prod-1-0006." << SColor::nc << std::endl;
-        SLog::log("Internal error SVM-Prod-1-0006, required file is empty, aborted.");
+        SLog::log("Internal error SVM-Prod-1-0006, required file \"" + if_name + "\" is empty, aborted.");
     }
 
     // Check if the type of file is sca1 or sca0
@@ -44,11 +44,11 @@ unsigned int conversion(std::string if_name, std::string of_name) {
             // Reread the first line(identifier)
             if(!fin.is_open()) {
                 std::cout << SColor::red << "Internal error SVM-Prod-1-0005." << SColor::nc << std::endl;
-                SLog::log("Internal error SVM-Prod-1-0005, required file can not open, aborted.");
+                SLog::log("Internal error SVM-Prod-1-0005, required file \"" + if_name + "\" can not open, aborted.");
             }
             if(!std::getline(fin, cur_line)) {
                 std::cout << SColor::red << "Internal error SVM-Prod-1-0006." << SColor::nc << std::endl;
-                SLog::log("Internal error SVM-Prod-1-0006, required file is empty, aborted.");
+                SLog::log("Internal error SVM-Prod-1-0006, required file \"" + if_name + "\" is empty, aborted.");
             }
 
         } else {
