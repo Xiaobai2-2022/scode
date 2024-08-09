@@ -440,8 +440,8 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name
     std::unordered_map<std::string, long> symbol_table;
 
     // Attempt to open input and output file
-    std::ifstream fin(if_name);
-    std::ofstream fout(of_name);
+    std::ifstream fin{if_name};
+    std::ofstream fout{of_name};
     
     // Check if the input file failed to open
     if(!fin.is_open()) {
