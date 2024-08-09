@@ -1,7 +1,7 @@
 #include "app_interface.hpp"
 
 unsigned int conversion(std::string, std::string);
-unsigned int assemble_file();
+unsigned int assemble_file(std::string);
 void init();
 int main();
 
@@ -83,7 +83,7 @@ unsigned int conversion(std::string if_name, std::string of_name) {
 
 }
 
-unsigned int assemble_file() {
+unsigned int assemble_file(std::string of_name) {
 
     std::filesystem::path cur_directory{std::filesystem::current_path()};
 
@@ -124,7 +124,6 @@ unsigned int assemble_file() {
     }
 
     std::string if_name{dir.at(file_id)};
-    std::string of_name{"sca_bin.scg"};
 
     return conversion(if_name, of_name);
 
@@ -153,8 +152,14 @@ void init() {
 
 int main() {
 
+    // Set the environment to initial state
     init();
-    if(assemble_file() != 0) {
+
+    // The name of the binary file generated
+    std::string bin_name{"sca_bin.scg"};
+
+    // Try to assemble the file
+    if(assemble_file(bin_name) != 0) {
         return -1;
     }
 
