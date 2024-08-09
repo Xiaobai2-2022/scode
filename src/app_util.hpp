@@ -13,6 +13,12 @@ class App_Util {
     public:
         // Clears the termimal
         static void clear_terminal();
+        // Cleans up repo by removing all the generated files
+        static void clean_repo();
+        // Create log file
+        static void create_log();
+
+    public:
         // Get the terminal size
         static void get_terminal_size(unsigned int &, unsigned int &);
 

@@ -4,6 +4,10 @@ void App_Util::clear_terminal() {
     std::system("clear");
 }
 
+void App_Util::clean_repo() {
+    std::system("rm *.scg");
+}
+
 void App_Util::get_terminal_size(unsigned int &width, unsigned int &height) {
 
     struct winsize win;

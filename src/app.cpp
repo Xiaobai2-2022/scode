@@ -6,9 +6,6 @@ int main();
 
 unsigned int assemble_file() {
 
-    App_Util::clear_terminal();
-    App_Util::display_sc_msg(std::cout);
-
     std::filesystem::path cur_directory{std::filesystem::current_path()};
 
     std::map<int, std::filesystem::path> dir;
@@ -19,13 +16,16 @@ unsigned int assemble_file() {
         std::cout << pair.first << ": " << pair.second.filename() << std::endl;
     }
 
-    unsigned int file_id{0};
+    // Set the ID of the file to the correct one
+    unsigned int file_id{1};
 
     if(dir.size() == 0) {
-        std::cout << "Internal error SVM-Prod-1-0001, required file does not exist, aborted." << std::endl;
+        std::cout << SColor::red << "Internal error SVM-Prod-1-0001" << SColor::nc << std::endl;
+        SLog::log("Internal error SVM-Prod-1-0001, required file does not exist, aborted.");
         return 1;
     } else if(dir.size() == 1) {
-        std::cout << "Total: 1 entry, proceed to compile..." << std::endl;
+        std::cout << SColor::green << "Successful, proceed to compile..." << SColor::nc << std::endl;
+        SLog::log("Compiling file \"" + dir.at(1).filename().string() + "\".");
     } else {
         std::cout << "Total: " << dir.size() << " entrie(s)." << std::endl;
         std::cout << "Please select the file number you wish to compile..." << std::endl;
@@ -51,6 +51,14 @@ void init() {
     App_Util::get_terminal_size(terminal_size.first, terminal_size.second);
 
     // std::cout << terminal_size.first << " " << terminal_size.second << std::endl;
+
+    App_Util::clean_repo();
+    App_Util::clear_terminal();
+
+    SLog::clean();
+
+    App_Util::display_sc_msg(std::cout);
+    SLog::set_file_name("svm_prod_1.slog");
 
 }
 
