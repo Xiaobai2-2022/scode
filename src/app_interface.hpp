@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "app_util.hpp"
+#include "color.hpp"
 #include "construct_risc_v.hpp"
 #include "construct_state.hpp"
 #include "generate_code.hpp"

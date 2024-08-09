@@ -16,6 +16,6 @@ class SColor {
         const static std::string cyan;      // Cyan
         const static std::string white;     // White
 
-};
+}; // SColor
 
 #endif
