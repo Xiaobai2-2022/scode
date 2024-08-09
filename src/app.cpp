@@ -53,6 +53,7 @@ unsigned int assemble_file() {
     } else {
         std::cout << SColor::red << "Internal error SVM-Prod-1-0004." << SColor::nc << std::endl;
         SLog::log("Internal error SVM-Prod-1-0004, failed to compile from RV Assembly 1 to RV Assembly 0, aborted.");
+        SLog::log("Please see \"svm_prod_1_t_scg_a0.scg\" for more information...");
         return 4;
     }
 

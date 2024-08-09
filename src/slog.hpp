@@ -1,6 +1,7 @@
 #ifndef _SLOG_HPP_
 #define _SLOG_HPP_
 
+#include <chrono>
 #include <ctime>
 #include <fstream>
 #include <iomanip>

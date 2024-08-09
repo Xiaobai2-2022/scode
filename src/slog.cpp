@@ -22,10 +22,14 @@ unsigned int SLog::log(std::string msg) {
         return -1;
     }
 
-    std::time_t t = std::time(nullptr);
+    std::chrono::_V2::system_clock::time_point now = std::chrono::system_clock::now();
+
+    std::time_t t = std::chrono::system_clock::to_time_t(now);
     std::tm* cur_t = std::localtime(&t);
 
-    fout << std::put_time(cur_t, "%Y-%m-%d %H:%M:%S") << " : " << msg << std::endl;
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+
+    fout << std::put_time(cur_t, "%Y-%m-%d %H:%M:%S") << "." << std::setw(3) << std::setfill('0') << ms.count() << " : " << msg << std::endl;
 
     return 0;
 
