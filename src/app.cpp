@@ -25,7 +25,7 @@ unsigned int conversion(std::string if_name, std::string of_name) {
     // Check if the type of file is sca1 or sca0
     if(Utility::is_start_with(cur_line, "SCode Assembly 1")) {
 
-        total_steps = 2;
+        total_steps += 1;
         
         std::string temp_of_name{"temp_sca1_sc0.scg"};
     
@@ -65,7 +65,7 @@ unsigned int conversion(std::string if_name, std::string of_name) {
     
         if(Ctor_RV::rv_assembly0_to_bin(if_name, of_name)) {
             std::cout << SColor::green << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SColor::nc << std::endl;
-            SLog::log("Converted from RV Assembly 0 to RV Binary.");
+            SLog::log("Assembled from RV Assembly 0 to RV Binary.");
             return 0;
         } else {
             std::cout << SColor::red << "Internal error SVM-Prod-1-0007." << SColor::nc << std::endl;
@@ -106,7 +106,7 @@ unsigned int assemble_file(std::string of_name) {
     } else if(dir.size() == 1) {
     } else {
         std::cout << "Total: " << dir.size() << " entrie(s)." << std::endl;
-        std::cout << "Please select the file number you wish to compile..." << std::endl;
+        std::cout << SColor::yellow << "Please select the file number you wish to assemble: " << SColor::nc;
         if(std::cin >> file_id) {
             if(file_id <= 0 || file_id > dir.size()) {
                 std::cout << SColor::red << "Internal error SVM-Prod-1-0003." << SColor::nc << std::endl;
@@ -119,12 +119,13 @@ unsigned int assemble_file(std::string of_name) {
             return 2;
         }
 
-        std::cout << SColor::green << "Successful, proceed to compile..." << SColor::nc << std::endl;
-        SLog::log("Compiling file \"" + dir.at(file_id).filename().string() + "\" to RV Assembly 0.");
+        std::cout << SColor::green << "Successful, proceed to assemble..." << SColor::nc << std::endl;
+        SLog::log("Assembling file \"" + dir.at(file_id).filename().string() + "\" to RV Binary.");
     }
 
     std::string if_name{dir.at(file_id)};
 
+    // Send to assemble
     return conversion(if_name, of_name);
 
 }
@@ -156,7 +157,7 @@ int main() {
     init();
 
     // The name of the binary file generated
-    std::string bin_name{"sca_bin.scg"};
+    std::string bin_name{"sca_bin_001.scg"};
 
     // Try to assemble the file
     if(assemble_file(bin_name) != 0) {
