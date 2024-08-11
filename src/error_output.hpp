@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "color.hpp"
+
 class Error_Out;
 
 class Error_Out {
