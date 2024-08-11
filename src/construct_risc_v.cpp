@@ -16,14 +16,14 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
     
     // Check if the input file failed to open
     if(!fin.is_open()) {
-        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-        std::cout << "Error opening the input file: " << if_name << "." << std::endl;
+        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
+        std::cout << SColor::red << "Error opening the input file: " << if_name << "." << SColor::nc << std::endl;
         return false;
     }
     // Check if the output file failed to open
     if(!fout.is_open()) {
-        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-        std::cout << "Error opening the output file: " << of_name << "." << std::endl;
+        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
+        std::cout << SColor::red << "Error opening the output file: " << of_name << "." << SColor::nc << std::endl;
         return false;
     }
 
@@ -32,8 +32,8 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
 
     // Check if the risc-v assembly file is of the correct type
     if(!Utility::is_start_with(cur_line, "SCode Assembly 0")) {
-        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
-        std::cout << "Input file has the wrong type: " << if_name << "." << std::endl;
+        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
+        std::cout << SColor::red << "Input file has the wrong type: " << if_name << "." << SColor::nc << std::endl;
         return false;
     }
 
@@ -106,13 +106,13 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
                         fout << generate_output.first << std::endl;
                     } else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "R Type Instruction should have format: \"cmd rd rs1 rs2\".");
                     no_error = false;
                 }
@@ -175,13 +175,13 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
                         fout << generate_output.first << std::endl;
                     } else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "I Type Instruction should have format: \"cmd rd rs1 imm\".");
                     no_error = false;
                 }
@@ -206,13 +206,13 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
                         fout << generate_output.first << std::endl;
                     } else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "S Type Instruction should have format: \"cmd rs1 rs2 imm\".");
                     no_error = false;
                 }
@@ -246,13 +246,13 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
                         fout << generate_output.first << std::endl;
                     } else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "B Type Instruction should have format: \"cmd rs1 rs2 imm\".");
                     no_error = false;
                 }
@@ -271,13 +271,13 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
                         fout << generate_output.first << std::endl;
                     } else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "J Type Instruction should have format: \"cmd rd imm\".");
                     no_error = false;
                 }
@@ -299,13 +299,13 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
                         fout << generate_output.first << std::endl;
                     } else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "J Type Instruction should have format: \"cmd rd imm\".");
                     no_error = false;
                 }
@@ -345,13 +345,13 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
                         fout << generate_output.first << std::endl;
                     } else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
                 } else {
                     fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "R (RV32M) Type Instruction should have format: \"cmd rd rs1 rs2\".");
                     no_error = false;
                 }
@@ -376,13 +376,13 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
                         fout << generate_output.first << std::endl;
                     }else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
                 }else {
                     fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "Input (SCode) Instruction should have format: \"input pi rd\".");
                     no_error = false;
                 }
@@ -397,13 +397,13 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
                         fout << generate_output.first << std::endl;
                     }else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                         Error_Out::out_error(generate_output.second, count, "");
                         no_error = false;
                     }
                 }else {
                     fout << "!!! Error line !!!" << std::endl;
-                    std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "Output (SCode) Instruction should have format: \"output po, rs1\".");
                     no_error = false;
                 }
@@ -415,7 +415,7 @@ bool Ctor_RV::rv_assembly0_to_bin(std::string if_name, std::string of_name) {
 
         } else {
             fout << "!!! Error line !!!" << std::endl;
-            std::cout << "Error constructing rv assembly 0 to binary." << std::endl;
+            std::cout << SColor::red << "Error constructing rv assembly 0 to binary." << SColor::nc << std::endl;
             Error_Out::out_error(101, count, inst);
             no_error = false;
         }
@@ -440,19 +440,19 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name
     std::unordered_map<std::string, long> symbol_table;
 
     // Attempt to open input and output file
-    std::ifstream fin(if_name);
-    std::ofstream fout(of_name);
+    std::ifstream fin{if_name};
+    std::ofstream fout{of_name};
     
     // Check if the input file failed to open
     if(!fin.is_open()) {
-        std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
-        std::cout << "Error opening the input file: " << if_name << "." << std::endl;
+        std::cout << SColor::red << "Error constructing rv assembly 1 to assembly 0." << SColor::nc << std::endl;
+        std::cout << SColor::red << "Error opening the input file: " << if_name << "." << SColor::nc << std::endl;
         return false;
     }
     // Check if the output file failed to open
     if(!fout.is_open()) {
-        std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
-        std::cout << "Error opening the output file: " << of_name << "." << std::endl;
+        std::cout << SColor::red << "Error constructing rv assembly 1 to assembly 0." << SColor::nc << std::endl;
+        std::cout << SColor::red << "Error opening the output file: " << of_name << "." << SColor::nc << std::endl;
         return false;
     }
 
@@ -461,8 +461,8 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name
 
     // Check if the risc-v assembly file is of the correct type
     if(!Utility::is_start_with(cur_line, "SCode Assembly 1")) {
-        std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
-        std::cout << "Input file has the wrong type: " << if_name << "." << std::endl;
+        std::cout << SColor::red << "Error constructing rv assembly 1 to assembly 0." << SColor::nc << std::endl;
+        std::cout << SColor::red << "Input file has the wrong type: " << if_name << "." << SColor::nc << std::endl;
         return false;
     }
 
@@ -505,14 +505,14 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name
                     // Search for the instructions in the symbol table
                     auto itr1 = symbol_table.find(symbol);
                     if(itr1 != symbol_table.end()) {
-                        std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 1 to assembly 0." << SColor::nc << std::endl;
                         Error_Out::out_error(201, count, symbol);
                         no_error = false;
                     } else {
                         // Search for the instruction in the instruction table
                         auto itr2 = Utility::inst.find(symbol);
                         if(itr2 != Utility::inst.end()) {
-                            std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+                            std::cout << SColor::red << "Error constructing rv assembly 1 to assembly 0." << SColor::nc << std::endl;
                             Error_Out::out_error(202, count, symbol);
                             no_error = false;
                         } else {
@@ -520,7 +520,7 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name
                         }
                     }
                 } else {
-                    std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+                    std::cout << SColor::red << "Error constructing rv assembly 1 to assembly 0." << SColor::nc << std::endl;
                     Error_Out::out_error(102, count, "Define Instruction should have format: \"define symbol\".");
                     no_error = false;
                 }
@@ -533,7 +533,7 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name
             fout << cur_line << std::endl;
         } else {
             fout << "!!! Error line !!!" << std::endl;
-            std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+            std::cout << SColor::red << "Error constructing rv assembly 1 to assembly 0." << SColor::nc << std::endl;
             Error_Out::out_error(101, count, inst);
             no_error = false;
         }
@@ -613,12 +613,12 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name
                             fout << it->first << " " << rs1 << " " << rs2 << " " << cur_pc << std::endl;
                         } else {
                             fout << "!!! Error line !!!" << std::endl;
-                            std::cout << "Error constructing rv assembly 1 to rv assembly 0." << std::endl;
+                            std::cout << SColor::red << "Error constructing rv assembly 1 to rv assembly 0." << SColor::nc << std::endl;
                             Error_Out::out_error(102, count, "B Type Instruction should have format: \"cmd rs1 rs2 label\".");
                         }
                     } else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 1 to rv assembly 0." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 1 to rv assembly 0." << SColor::nc << std::endl;
                         Error_Out::out_error(203, count, symbol);
                         no_error = false;
                     }
@@ -645,12 +645,12 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name
                             fout << it->first << " " << rd << " " << cur_pc << std::endl;
                         } else {
                             fout << "!!! Error line !!!" << std::endl;
-                            std::cout << "Error constructing rv assembly 1 to rv assembly 0." << std::endl;
+                            std::cout << SColor::red << "Error constructing rv assembly 1 to rv assembly 0." << SColor::nc << std::endl;
                             Error_Out::out_error(102, count, "J Type Instruction should have format: \"cmd rs1 label\".");
                         }
                     } else {
                         fout << "!!! Error line !!!" << std::endl;
-                        std::cout << "Error constructing rv assembly 1 to rv assembly 0." << std::endl;
+                        std::cout << SColor::red << "Error constructing rv assembly 1 to rv assembly 0." << SColor::nc << std::endl;
                         Error_Out::out_error(203, count, symbol);
                         no_error = false;
                     }
@@ -665,7 +665,7 @@ bool Ctor_RV::rv_assembly1_to_assembly0(std::string if_name, std::string of_name
             }
         } else {
             fout << "!!! Error line !!!" << std::endl;
-            std::cout << "Error constructing rv assembly 1 to assembly 0." << std::endl;
+            std::cout << SColor::red << "Error constructing rv assembly 1 to assembly 0." << SColor::nc << std::endl;
             Error_Out::out_error(101, count, inst);
             no_error = false;
         }

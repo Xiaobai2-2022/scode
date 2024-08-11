@@ -5,6 +5,7 @@
 #include <sstream>
 #include <unordered_map>
 
+#include "color.hpp"
 #include "error_output.hpp"
 #include "generate_code.hpp"
 #include "utility.hpp"
