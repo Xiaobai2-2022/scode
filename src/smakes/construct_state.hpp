@@ -5,12 +5,14 @@
 #include <sstream>
 #include <unordered_map>
 
-#include "color.hpp"
-#include "error_output.hpp"
 #include "generate_code.hpp"
-#include "memory_cell.hpp"
-#include "state.hpp"
-#include "utility.hpp"
+
+#include "../sdatas/memory_cell.hpp"
+#include "../sdatas/state.hpp"
+
+#include "../sutils/color.hpp"
+#include "../sutils/error_output.hpp"
+#include "../sutils/utility.hpp"
 
 class Ctor_State;
 

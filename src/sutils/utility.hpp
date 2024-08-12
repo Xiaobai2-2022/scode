@@ -6,7 +6,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "word.hpp"
+#include "../sdatas/word.hpp"
 
 class Utility;
 

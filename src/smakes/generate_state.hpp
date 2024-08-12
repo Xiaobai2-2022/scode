@@ -1,10 +1,11 @@
 #ifndef _GEN_STATE_HPP_
 #define _GEN_STATE_HPP_
 
-#include "memory_cell.hpp"
-#include "state.hpp"
-#include "word.hpp"
-#include "utility.hpp"
+#include "../sdatas/memory_cell.hpp"
+#include "../sdatas/state.hpp"
+#include "../sdatas/word.hpp"
+
+#include "../sutils/utility.hpp"
 
 class Gen_State;
 

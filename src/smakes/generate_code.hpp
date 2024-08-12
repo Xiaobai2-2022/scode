@@ -1,8 +1,9 @@
 #ifndef _GEN_CODE_HPP_
 #define _GEN_CODE_HPP_
 
-#include "word.hpp"
-#include "utility.hpp"
+#include "../sdatas/word.hpp"
+
+#include "../sutils/utility.hpp"
 
 class Gen_Code;
 

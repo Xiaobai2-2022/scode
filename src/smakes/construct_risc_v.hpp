@@ -5,10 +5,11 @@
 #include <sstream>
 #include <unordered_map>
 
-#include "color.hpp"
-#include "error_output.hpp"
 #include "generate_code.hpp"
-#include "utility.hpp"
+
+#include "../sutils/color.hpp"
+#include "../sutils/error_output.hpp"
+#include "../sutils/utility.hpp"
 
 class Ctor_RV;
 

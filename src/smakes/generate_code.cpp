@@ -1,6 +1,6 @@
 #include "generate_code.hpp"
 
-#include "utility.hpp"
+#include "../sutils/utility.hpp"
 
 // R-type Instruction add: rd = rs1 + rs2
 std::pair<Word, int> Gen_Code::ADD(unsigned int rd, unsigned int rs1, unsigned int rs2) {
