@@ -1,6 +1,8 @@
 #ifndef _CTOR_RISC_V_HPP_
 #define _CTOR_RISC_V_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <fstream>
 #include <sstream>
 #include <unordered_map>

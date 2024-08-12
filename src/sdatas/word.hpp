@@ -1,6 +1,8 @@
 #ifndef _CODE_HPP_
 #define _CODE_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <iostream>
 #include <string>
 

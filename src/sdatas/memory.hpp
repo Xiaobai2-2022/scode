@@ -1,6 +1,8 @@
 #ifndef _MEMORY_HPP_
 #define _MEMORY_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <unordered_map>
 
 #include "memory_cell.hpp"

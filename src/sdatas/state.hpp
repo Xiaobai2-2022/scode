@@ -1,6 +1,8 @@
 #ifndef _STATE_HPP_
 #define _STATE_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <iomanip>
 #include <iostream>
 

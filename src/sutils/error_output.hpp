@@ -1,6 +1,8 @@
 #ifndef _ERR_O_HPP_
 #define _ERR_O_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <iostream>
 
 #include "color.hpp"

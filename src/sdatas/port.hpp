@@ -1,6 +1,8 @@
 #ifndef _PORT_HPP_
 #define _PORT_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <iostream>
 
 #include "memory_cell.hpp"

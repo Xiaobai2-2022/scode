@@ -1,6 +1,8 @@
 #ifndef _GEN_CODE_HPP_
 #define _GEN_CODE_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include "../sdatas/word.hpp"
 
 #include "../sutils/utility.hpp"

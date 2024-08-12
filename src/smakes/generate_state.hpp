@@ -1,6 +1,8 @@
 #ifndef _GEN_STATE_HPP_
 #define _GEN_STATE_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include "../sdatas/memory_cell.hpp"
 #include "../sdatas/state.hpp"
 #include "../sdatas/word.hpp"

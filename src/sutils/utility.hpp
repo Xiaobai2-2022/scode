@@ -1,6 +1,8 @@
 #ifndef _UTILITY_HPP_
 #define _UTILITY_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <cmath>
 #include <climits>
 #include <string>

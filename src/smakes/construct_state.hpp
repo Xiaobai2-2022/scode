@@ -1,6 +1,8 @@
 #ifndef _CTOR_STATE_HPP_
 #define _CTOR_STATE_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
@@ -12,6 +14,7 @@
 
 #include "../sutils/color.hpp"
 #include "../sutils/error_output.hpp"
+#include "../sutils/slog.hpp"
 #include "../sutils/utility.hpp"
 
 class Ctor_State;

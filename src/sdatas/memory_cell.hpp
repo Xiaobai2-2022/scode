@@ -1,6 +1,8 @@
 #ifndef _MEMORY_CELL_HPP_
 #define _MEMORY_CELL_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <iomanip>
 #include <iostream>
 #include <string>

@@ -1,6 +1,8 @@
 #ifndef _COLOR_HPP_
 #define _COLOR_HPP_
 
+#include "../senv/s_env_setting.hpp"
+
 #include <string>
 
 class SColor {
