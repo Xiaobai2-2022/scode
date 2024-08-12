@@ -24,6 +24,7 @@ class Cell {
         Cell();                             // Default constructor
         Cell(unsigned int, ulong);          // bool, unsigned long constructor, set the initial state for the cell
         Cell(unsigned int, ulong, Word);    // bool, unsigned long, Word constructor, set the state for the cell
+        Cell(const Cell &);                 // Copy constructor
 
     public:
         unsigned int get_type();

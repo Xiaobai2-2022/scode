@@ -36,8 +36,10 @@ class Memory {
         std::unordered_map<ulong, Mem_Node*> mem;
 
     public:
-        Memory();                                       // Constructor, constructs a empty memory
-        ~Memory();                                      // Destructor, clear the entire memory
+        Memory();                                           // Constructor, constructs a empty memory
+        ~Memory();                                          // Destructor, clear the entire memory
+        Memory(const Memory &);                             // Copy constructor, copies the memory
+        Memory &operator=(const Memory &);                  // Copy assignment operator, copies the memory
 
     public:
         void add(Cell);                                 // Add from front (for adding in between)

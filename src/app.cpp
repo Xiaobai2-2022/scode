@@ -151,19 +151,41 @@ void init() {
 
 }
 
+// int main() {
+
+//     // Set the environment to initial state
+//     init();
+
+//     // The name of the binary file generated
+//     std::string bin_name{"sca_bin_001.scg"};
+
+//     // Try to assemble the file
+//     if(assemble_file(bin_name) != 0) {
+//         return -1;
+//     }
+
+//     return 0;
+
+// }
+
+
+/**
+ * For testing purpose only
+ */
 int main() {
 
-    // Set the environment to initial state
-    init();
+    State s;
 
-    // The name of the binary file generated
-    std::string bin_name{"sca_bin_001.scg"};
+    Ctor_State::sc_bin_to_state("sca_bin_001.scg", s);
 
-    // Try to assemble the file
-    if(assemble_file(bin_name) != 0) {
-        return -1;
-    }
+    // std::cout << s << std::endl;
 
-    return 0;
+    State s_cpy = s;
+
+    s.set_pc(0x100);
+
+    s.set_value_in_to_state(Cell{MEMORY, 100, Word{0b1111000011001010}});
+
+    std::cout << s << std::endl << s_cpy << std::endl;
 
 }

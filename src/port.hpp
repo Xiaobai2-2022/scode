@@ -13,11 +13,12 @@ class Port {
         static const ulong NUM_CELL = 8;
 
     private:
-        Cell port_cells[NUM_CELL];          // Default constructor, set all ports to zero
+        Cell port_cells[NUM_CELL];
 
     public:
-        Port();
-    
+        Port();             // Default constructor, set all ports to zero
+        Port(const Port &);       // Copy constructor, copy all ports
+
     public:
         Word read_cell(ulong);
         Word write_cell(Cell);

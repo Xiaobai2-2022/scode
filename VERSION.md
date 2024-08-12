@@ -13,4 +13,8 @@ This is the application branch for SCode Virtual Machine(SVM).
 
 ## Installation
 
-TBD
+1. Download the app file or use the make file to compile the app file.
+
+2. Place the app file in a seperate folder, with the test files in the same folder.
+
+3. cd to the folder and use ./app to run the application

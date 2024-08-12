@@ -10,6 +10,14 @@ Port::Port() {
 
 }
 
+Port::Port(const Port &other) {
+
+    for(ulong i{0}; i < NUM_CELL; ++i) {
+        port_cells[i] = other.port_cells[i];
+    }
+
+}
+
 // Returns the value in the cell
 Word Port::read_cell(ulong index) {
     return this->port_cells[index].read();

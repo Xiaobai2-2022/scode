@@ -22,6 +22,7 @@ class State {
     
     public:
         State();                // Default constructor, set all value in register and ports to zero and initialize an empty memory
+        State(const State &);   // Copy constructor, used to copy all elements in the state other
 
     public:
         void set_value_in_to_state(Cell);                                   // Force data into state

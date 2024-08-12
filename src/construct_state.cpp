@@ -12,8 +12,8 @@ bool Ctor_State::sc_bin_to_state(std::string if_name, State &initial_state) {
     
     // Check if the input file failed to open
     if(!fin.is_open()) {
-        std::cout << "Error constructing rv binary to state." << std::endl;
-        std::cout << "Error opening the input file: " << if_name << "." << std::endl;
+        std::cout << SColor::red << "Error constructing rv binary to state." << SColor::nc << std::endl;
+        std::cout << SColor::red << "Error opening the input file: " << if_name << "." << SColor::nc << std::endl;
         return false;
     }
 
@@ -22,8 +22,8 @@ bool Ctor_State::sc_bin_to_state(std::string if_name, State &initial_state) {
 
     // Check if the risc-v assembly file is of the correct type
     if(!Utility::is_start_with(cur_line, "SCode Binary")) {
-        std::cout << "Error constructing rv binary to state." << std::endl;
-        std::cout << "Input file has the wrong type: " << if_name << "." << std::endl;
+        std::cout << SColor::red << "Error constructing rv binary to state." << SColor::nc << std::endl;
+        std::cout << SColor::red << "Input file has the wrong type: " << if_name << "." << SColor::nc << std::endl;
         return false;
     }
 

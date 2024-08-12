@@ -55,6 +55,7 @@ class Reg {
 
     public:
         Reg();          // Default constructor, set all registers to zero
+        Reg(const Reg &);     // Copy constructor, copy all registers
 
     public:
         Word read_cell(ulong);

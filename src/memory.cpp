@@ -32,6 +32,35 @@ Memory::~Memory() {
 
 }
 
+Memory::Memory(const Memory &other) : head{nullptr}, tail{nullptr} {
+
+     for(auto lt{other.cbegin()}; lt != other.cend(); ++lt) {
+          Cell cpy = lt.cur->value;
+          this->add_to_back(cpy);
+     }
+
+}
+
+Memory &Memory::operator=(const Memory &other) {
+
+     if(this != &other) {
+
+          this->clear();
+
+          this->head = nullptr;
+          this->tail = nullptr;
+
+          for(auto lt{other.cbegin()}; lt != other.cend(); ++lt) {
+               Cell cpy = lt.cur->value;
+               this->add_to_back(cpy);
+          }
+
+     }
+
+     return *this;
+
+}
+
 // Add a cell into memory (in between)
 void Memory::add(Cell val) {
 

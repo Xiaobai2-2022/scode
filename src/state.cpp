@@ -3,6 +3,15 @@
 // Default constructor, set all value in register and ports to zero and initialize an empty memory
 State::State() : is_end{false}, PC{}, registers{Reg{}}, memory{Memory{}}, ports{Port{}} {}
 
+// Copy constructor, used to copy all elements in the state other
+State::State(const State &other) : is_end{other.is_end}, PC{other.PC} {
+
+    this->registers = other.registers;
+    this->memory = other.memory;
+    this->ports = other.ports;
+
+}
+
 // Force data into state
 void State::set_value_in_to_state(Cell val) {
 

@@ -9,6 +9,9 @@ Cell::Cell(unsigned int type , ulong id) : type{type}, id{id}, value{Word{}} {};
 // unsigned int, unsigned long, Word constructor, set the state for the cell
 Cell::Cell(unsigned int type, ulong id, Word val) : type{type}, id{id}, value{val} {};
 
+// Copy constructor, copies the other cell's state
+Cell::Cell(const Cell &other) : type{other.type}, id{other.id}, value{other.value} {}
+
 // Returns the type of the cell
 unsigned int Cell::get_type() { return this->type; }
 

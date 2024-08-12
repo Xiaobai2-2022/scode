@@ -13,6 +13,16 @@ Reg::Reg() {
 
 }
 
+// Copy constructor, copy all the registers
+Reg::Reg(const Reg &other) {
+
+    // Set all cell to zero
+    for(ulong i{0}; i < NUM_CELL; ++i) {
+        this->reg_cells[i] = other.reg_cells[i];
+    }
+
+}
+
 // Returns the value in the cell
 Word Reg::read_cell(ulong index) {
     return this->reg_cells[index].read();
