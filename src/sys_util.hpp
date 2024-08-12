@@ -1,5 +1,5 @@
-#ifndef _APP_UTIL_
-#define _APP_UTIL_
+#ifndef _SYS_UTIL_
+#define _SYS_UTIL_
 
 #include <algorithm>
 #include <filesystem>

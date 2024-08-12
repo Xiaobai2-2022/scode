@@ -11,7 +11,8 @@
 #include <unistd.h>
 #include <vector>
 
-#include "app_util.hpp"
+#include "svm.hpp"
+#include "sys_util.hpp"
 
 #include "smakes/construct_risc_v.hpp"
 #include "smakes/construct_state.hpp"
