@@ -3,8 +3,11 @@
 
 #include "../senv/s_env_setting.hpp"
 
+#include <chrono>
+#include <iomanip>
 #include <stack>
 #include <string>
+#include <thread>
 
 #include "../sdatas/state.hpp"
 
@@ -12,6 +15,7 @@
 
 #include "../sutils/color.hpp"
 #include "../sutils/slog.hpp"
+#include "../sutils/sys_util.hpp"
 
 class SVM {
 
@@ -19,6 +23,9 @@ class SVM {
         State cur;
         std::stack<State> history;
         unsigned int count;
+
+    private:
+        static void countdown_helper();
 
     public:
         // Constructor, takes in the file name for the binary file

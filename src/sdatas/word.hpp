@@ -62,7 +62,7 @@ class Word {
         Word &operator>>=(unsigned int);                                            // Right shift equal operator
 
     public:
-        unsigned int get_value();
+        unsigned int get_value() const;
         Word limit(unsigned int, unsigned int = 0);                                 // Limit the word in range of the two unsigned int
         Word extend(unsigned int, unsigned int = 0);                                // Extend the word to the full range
 

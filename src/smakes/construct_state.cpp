@@ -39,7 +39,6 @@ bool Ctor_State::sc_bin_to_state(std::string if_name, State &initial_state) {
         SLog::log("Error constructing RV Binary to State.");
         SLog::log("Input file has the wrong type: " + if_name + ".");
 
-
         #else
 
         std::cout << SColor::red << "Error constructing rv binary to state." << SColor::nc << std::endl;
@@ -50,8 +49,12 @@ bool Ctor_State::sc_bin_to_state(std::string if_name, State &initial_state) {
         return false;
     }
 
+    unsigned int line_count{};
+
     // Access all element of the file
     while(std::getline(fin, cur_line)) {
+
+        ++line_count;
 
         std::string word{""};
         std::string temp;
@@ -65,6 +68,20 @@ bool Ctor_State::sc_bin_to_state(std::string if_name, State &initial_state) {
         }
 
         if(word.length() > 32) {
+
+            #ifdef _SVM_PROD_LOG_
+
+            SLog::log("Error constructing RV Binary to State.");
+            SLog::log("The word on line: " + std::to_string(line_count) + " is invalid.");
+
+            #else
+
+            std::cout << SColor::red << "Error constructing rv binary to state." << SColor::nc << std::endl;
+            std::cout << SColor::red << "The word on line: " << line_count << " is invalid." << SColor::nc << std::endl;
+
+            #endif
+
+
             return false;
         }
 

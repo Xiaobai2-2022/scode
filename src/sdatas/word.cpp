@@ -209,7 +209,7 @@ Word &Word::operator>>=(unsigned int val) {
 }
 
 // Returns the value from word
-unsigned int Word::get_value() { return this->value; }
+unsigned int Word::get_value() const { return this->value; }
 
 // Limit the word in range of the two unsigned int, left is greater than right
 Word Word::limit(unsigned int left, unsigned int right) {
@@ -255,6 +255,7 @@ std::ostream &operator<<(std::ostream &os, const Word &w) {
     }
 
     os << s_val;
+
     return os;
 
 }

@@ -9,6 +9,8 @@
 
 #include "word.hpp"
 
+#include "../sutils/color.hpp"
+
 #define MEMORY 0
 #define REGISTER 1
 #define PORT 2

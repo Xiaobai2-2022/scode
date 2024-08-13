@@ -31,6 +31,17 @@ Word Cell::write(Word val) {
 // Output operator
 std::ostream &operator<<(std::ostream &os, const Cell &c) {
 
+    #ifdef _SVM_PROD_DISP_
+
+    if((c.type != MEMORY && c.id % 2 == 0) || (c.type == MEMORY && c.id % 8 == 0)) {
+        os << SColor::blue;
+    } else {
+        os << SColor::cyan;
+    }
+
+
+    #endif
+
     if(c.type == REGISTER) {
         os << "Reg(" << "0x" << std::setfill('0') << std::setw(2) << std::hex << c.id << "): ";
     } else if(c.type == MEMORY) {
@@ -39,7 +50,11 @@ std::ostream &operator<<(std::ostream &os, const Cell &c) {
         os << "Port(" << "0x" << std::setfill('0') << std::setw(1) << std::hex << c.id << "): ";
     }
 
-    os << c.value << std::endl;
+    #ifdef _SVM_PROD_DISP_
+
+    os << c.value << " <- 0x" << std::setw(8) << std::hex << c.value.get_value() << SColor::nc << std::endl;
+
+    #endif
 
     return os;
 

@@ -5,6 +5,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <string>
 #include <unordered_map>
 
 #include "generate_code.hpp"

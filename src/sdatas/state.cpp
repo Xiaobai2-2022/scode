@@ -75,21 +75,64 @@ void State::init() {
 // Output operator
 std::ostream &operator<<(std::ostream &os, const State &s) {
 
+    #ifdef _SVM_PROD_DISP_
+    os << SColor::red;
+    #endif
+
     os << "PC: " << "0x" << std::setfill('0') << std::setw(9) << std::hex << s.PC << std::endl << std::endl;
+    
+    #ifdef _SVM_PROD_DISP_
+    os << SColor::magenta;
+    #endif
+
     os << "Register: " << std::endl;
+    
+    #ifdef _SVM_PROD_DISP_
+    os << SColor::nc;
+    #endif
+
     os << s.registers << std::endl;
+
+    #ifdef _SVM_PROD_DISP_
+    os << SColor::magenta;
+    #endif
+
     os << "Port: " << std::endl;
+
+    #ifdef _SVM_PROD_DISP_
+    os << SColor::nc;
+    #endif
+
     os << s.ports << std::endl;
+
+    #ifdef _SVM_PROD_DISP_
+    os << SColor::magenta;
+    #endif
     
     os << "Memory: " << std::endl;
+
+    #ifdef _SVM_PROD_DISP_
+    os << SColor::nc;
+    #endif
+
     for(auto it{s.memory.cbegin()}; it != s.memory.cend(); ++it) {
         os << (*it);
     }
     os << std::endl;
 
     if(s.is_end) {
+        
+        #ifdef _SVM_PROD_DISP_
+        os << SColor::red;
+        #endif
+
         os << std::endl;
         os << "======= End of State =======" << std::endl;
+
+        #ifdef _SVM_PROD_DISP_
+        os << SColor::nc;
+        #endif
+
     }
 
     return os;
