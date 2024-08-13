@@ -12,6 +12,7 @@
 #include "../sdatas/state.hpp"
 
 #include "../smakes/construct_state.hpp"
+#include "../smakes/generate_state.hpp"
 
 #include "../sutils/color.hpp"
 #include "../sutils/slog.hpp"
@@ -32,10 +33,12 @@ class SVM {
         SVM(std::string);
 
     public:
+        // Print the VM
+        void print();
         // Update the State
-        bool update();
+        void update();
         // Undo the last step
-        bool undo();
+        void undo();
 
 };
 

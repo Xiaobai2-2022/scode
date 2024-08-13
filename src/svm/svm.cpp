@@ -7,8 +7,8 @@ SVM::SVM(std::string if_name) : cur{}, count{} {
         return;
     }
     
-    this->history.push(cur);
-    count++;
+    this->history.push(this->cur);
+    ++this->count;
     std::cout << SColor::green << "State successfully generated." << SColor::nc << std::endl;
     SLog::log("State Successfully Generated.");
 
@@ -31,5 +31,29 @@ void SVM::countdown_helper() {
     }
 
     Sys_Util::clear_terminal();
+
+}
+
+void SVM::update() {
+
+    Sys_Util::clear_terminal();
+
+    int res{Gen_State::update_state(this->cur)};
+
+    if(!res) {
+
+        SLog::log("State Successfully Updated.");
+
+        this->history.push(this->cur);
+        ++this->count;
+
+        Sys_Util::clear_terminal();
+        std::cout << this->cur;
+
+        return;
+
+    }
+    
+    SLog::log("An error has occured during update.");
 
 }
