@@ -9,8 +9,6 @@
 
 #include "word.hpp"
 
-#include "../sutils/color.hpp"
-
 #define MEMORY 0
 #define REGISTER 1
 #define PORT 2
@@ -33,7 +31,7 @@ class Cell {
     public:
         unsigned int get_type();
         ulong cell_id();
-        Word read();
+        Word read() const;
         Word write(Word);
 
     friend std::ostream &operator<<(std::ostream &, const Cell &);

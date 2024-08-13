@@ -25,9 +25,9 @@
 #include "smakes/generate_code.hpp"
 #include "smakes/generate_state.hpp"
 
-#include "sutils/color.hpp"
 #include "sutils/error_output.hpp"
 #include "sutils/slog.hpp"
+#include "sutils/sstyle.hpp"
 #include "sutils/sys_util.hpp"
 #include "sutils/utility.hpp"
 

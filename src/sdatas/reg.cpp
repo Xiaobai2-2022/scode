@@ -24,7 +24,7 @@ Reg::Reg(const Reg &other) {
 }
 
 // Returns the value in the cell
-Word Reg::read_cell(ulong index) {
+Word Reg::read_cell(ulong index) const {
     return this->reg_cells[index].read();
 }
 
@@ -44,7 +44,7 @@ Word Reg::write_cell(Cell val) {
 // Output operator
 std::ostream &operator<<(std::ostream &os, const Reg &r) {
     for(auto c : r.reg_cells) {
-        os << c;
+        os << c << std::endl;
     }
     return os;
 }

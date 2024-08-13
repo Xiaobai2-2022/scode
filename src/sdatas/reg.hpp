@@ -60,7 +60,7 @@ class Reg {
         Reg(const Reg &);     // Copy constructor, copy all registers
 
     public:
-        Word read_cell(ulong);
+        Word read_cell(ulong) const;
         Word write_cell(Cell);
 
     friend std::ostream &operator<<(std::ostream &, const Reg &);

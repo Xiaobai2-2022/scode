@@ -55,11 +55,11 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
 
     // Read the first line(identifier)
     if(!fin.is_open()) {
-        std::cout << SColor::red << "Internal error SVM-Prod-1-0005." << SColor::nc << std::endl;
+        std::cout << SStyle::RED << "Internal error SVM-Prod-1-0005." << SStyle::NC << std::endl;
         SLog::log("Internal error SVM-Prod-1-0005, required file \"" + if_name + "\" can not open, aborted.");
     }
     if(!std::getline(fin, cur_line)) {
-        std::cout << SColor::red << "Internal error SVM-Prod-1-0006." << SColor::nc << std::endl;
+        std::cout << SStyle::RED << "Internal error SVM-Prod-1-0006." << SStyle::NC << std::endl;
         SLog::log("Internal error SVM-Prod-1-0006, required file \"" + if_name + "\" is empty, aborted.");
     }
 
@@ -72,7 +72,7 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
     
         if(Ctor_RV::rv_assembly1_to_assembly0(if_name, temp_of_name)) {
 
-            std::cout << SColor::green << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SColor::nc << std::endl;
+            std::cout << SStyle::GREEN << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SStyle::NC << std::endl;
             SLog::log("Converted from RV Assembly 1 to RV Assembly 0.");
 
             cur_steps++;
@@ -84,16 +84,16 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
             
             // Reread the first line(identifier)
             if(!fin.is_open()) {
-                std::cout << SColor::red << "Internal error SVM-Prod-1-0005." << SColor::nc << std::endl;
+                std::cout << SStyle::RED << "Internal error SVM-Prod-1-0005." << SStyle::NC << std::endl;
                 SLog::log("Internal error SVM-Prod-1-0005, required file \"" + if_name + "\" can not open, aborted.");
             }
             if(!std::getline(fin, cur_line)) {
-                std::cout << SColor::red << "Internal error SVM-Prod-1-0006." << SColor::nc << std::endl;
+                std::cout << SStyle::RED << "Internal error SVM-Prod-1-0006." << SStyle::NC << std::endl;
                 SLog::log("Internal error SVM-Prod-1-0006, required file \"" + if_name + "\" is empty, aborted.");
             }
 
         } else {
-            std::cout << SColor::red << "Internal error SVM-Prod-1-0004." << SColor::nc << std::endl;
+            std::cout << SStyle::RED << "Internal error SVM-Prod-1-0004." << SStyle::NC << std::endl;
             SLog::log("Internal error SVM-Prod-1-0004, failed to convert from RV Assembly 1 to RV Assembly 0, aborted.");
             SLog::log("Please see \"" + temp_of_name + "\" for more information...");
             return 4;
@@ -104,11 +104,11 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
     if(Utility::is_start_with(cur_line, "SCode Assembly 0")) {
     
         if(Ctor_RV::rv_assembly0_to_bin(if_name, of_name)) {
-            std::cout << SColor::green << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SColor::nc << std::endl;
+            std::cout << SStyle::GREEN << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SStyle::NC << std::endl;
             SLog::log("Assembled from RV Assembly 0 to RV Binary.");
             return 0;
         } else {
-            std::cout << SColor::red << "Internal error SVM-Prod-1-0007." << SColor::nc << std::endl;
+            std::cout << SStyle::RED << "Internal error SVM-Prod-1-0007." << SStyle::NC << std::endl;
             SLog::log("Internal error SVM-Prod-1-0007, failed to convert from RV Assembly 0 to RV Binary, aborted.");
             SLog::log("Please see \"" + of_name + "\" for more information...");
             return 4;
@@ -116,7 +116,7 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
 
     }
     
-    std::cout << SColor::red << "Internal error SVM-Prod-1-0008." << SColor::nc << std::endl;
+    std::cout << SStyle::RED << "Internal error SVM-Prod-1-0008." << SStyle::NC << std::endl;
     SLog::log("Internal error SVM-Prod-1-0008, file format not recognized as any of the SCode assembly products, aborted.");
 
     return 0;
@@ -140,26 +140,26 @@ unsigned int Sys_Util::assemble_file(std::string of_name) {
 
     // Check if there are valid files, if there is one, select that one, if multiple, prompt user to select one, if none, returns error
     if(dir.size() == 0) {
-        std::cout << SColor::red << "Internal error SVM-Prod-1-0001." << SColor::nc << std::endl;
+        std::cout << SStyle::RED << "Internal error SVM-Prod-1-0001." << SStyle::NC << std::endl;
         SLog::log("Internal error SVM-Prod-1-0001, required file does not exist, aborted.");
         return 1;
     } else if(dir.size() == 1) {
     } else {
         std::cout << "Total: " << dir.size() << " entrie(s)." << std::endl;
-        std::cout << SColor::yellow << "Please select the file number you wish to assemble: " << SColor::nc;
+        std::cout << SStyle::YELLOW << "Please select the file number you wish to assemble: " << SStyle::NC;
         if(std::cin >> file_id) {
             if(file_id <= 0 || file_id > dir.size()) {
-                std::cout << SColor::red << "Internal error SVM-Prod-1-0003." << SColor::nc << std::endl;
+                std::cout << SStyle::RED << "Internal error SVM-Prod-1-0003." << SStyle::NC << std::endl;
                 SLog::log("Internal error SVM-Prod-1-0003, selected number is out of range, aborted.");
                 return 3;
             }
         } else {
-            std::cout << SColor::red << "Internal error SVM-Prod-1-0002." << SColor::nc << std::endl;
+            std::cout << SStyle::RED << "Internal error SVM-Prod-1-0002." << SStyle::NC << std::endl;
             SLog::log("Internal error SVM-Prod-1-0002, input should be an integer, aborted.");
             return 2;
         }
 
-        std::cout << SColor::green << "Successful, proceed to assemble..." << SColor::nc << std::endl;
+        std::cout << SStyle::GREEN << "Successful, proceed to assemble..." << SStyle::NC << std::endl;
         SLog::log("Assembling file \"" + dir.at(file_id).filename().string() + "\" to RV Binary.");
     }
 

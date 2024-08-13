@@ -9,8 +9,8 @@
 
 #include "generate_code.hpp"
 
-#include "../sutils/color.hpp"
 #include "../sutils/error_output.hpp"
+#include "../sutils/sstyle.hpp"
 #include "../sutils/utility.hpp"
 
 class Ctor_RV;

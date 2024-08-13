@@ -20,8 +20,8 @@ bool Ctor_State::sc_bin_to_state(std::string if_name, State &initial_state) {
 
         #else
 
-        std::cout << SColor::red << "Error constructing rv binary to state." << SColor::nc << std::endl;
-        std::cout << SColor::red << "Error opening the input file: " << if_name << "." << SColor::nc << std::endl;
+        std::cout << SStyle::RED << "Error constructing rv binary to state." << SStyle::NC << std::endl;
+        std::cout << SStyle::RED << "Error opening the input file: " << if_name << "." << SStyle::NC << std::endl;
 
         #endif
 
@@ -41,8 +41,8 @@ bool Ctor_State::sc_bin_to_state(std::string if_name, State &initial_state) {
 
         #else
 
-        std::cout << SColor::red << "Error constructing rv binary to state." << SColor::nc << std::endl;
-        std::cout << SColor::red << "Input file has the wrong type: " << if_name << "." << SColor::nc << std::endl;
+        std::cout << SStyle::RED << "Error constructing rv binary to state." << SStyle::NC << std::endl;
+        std::cout << SStyle::RED << "Input file has the wrong type: " << if_name << "." << SStyle::NC << std::endl;
 
         #endif
 
@@ -76,8 +76,8 @@ bool Ctor_State::sc_bin_to_state(std::string if_name, State &initial_state) {
 
             #else
 
-            std::cout << SColor::red << "Error constructing rv binary to state." << SColor::nc << std::endl;
-            std::cout << SColor::red << "The word on line: " << line_count << " is invalid." << SColor::nc << std::endl;
+            std::cout << SStyle::RED << "Error constructing rv binary to state." << SStyle::NC << std::endl;
+            std::cout << SStyle::RED << "The word on line: " << line_count << " is invalid." << SStyle::NC << std::endl;
 
             #endif
 

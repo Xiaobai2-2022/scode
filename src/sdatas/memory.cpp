@@ -187,7 +187,7 @@ void Memory::remove(ulong id) {
      
 }
 
-Cell Memory::read(ulong id) {
+Cell Memory::read(ulong id) const {
 
      // If id does not exists in the memory, return zero cell with the id
      auto it = this->mem.find(id);

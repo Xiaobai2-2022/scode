@@ -32,9 +32,10 @@ class State {
         void force_end();                                                   // Force state to end
 
     public:
-        Word get_value_in_state(unsigned int, ulong);                       // Read data from state
-        ulong get_pc();                                                     // Read PC value
-        bool get_is_end();                                                  // Read if the state is ended
+        Word get_value_in_state(unsigned int, ulong) const;                 // Read data from state
+        ulong get_pc() const;                                               // Read PC value
+        bool get_is_end() const;                                            // Read if the state is ended
+        Memory get_mem() const;                                             // Read the memory 
 
     public:
         State &operator++();                                                // Increment PC by 4

@@ -39,6 +39,9 @@ int main() {
 
     SVM s(bin_name);
 
+    s.update();
+    s.update();
+
     return 0;
 
 }

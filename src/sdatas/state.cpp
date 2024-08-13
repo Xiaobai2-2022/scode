@@ -36,7 +36,7 @@ void State::force_end() {
 }
 
 // Read data from state
-Word State::get_value_in_state(unsigned int type, ulong id) {
+Word State::get_value_in_state(unsigned int type, ulong id) const {
 
     if(type == MEMORY) {
         return this->memory.read(id).read();
@@ -48,12 +48,16 @@ Word State::get_value_in_state(unsigned int type, ulong id) {
 
 }
 
-ulong State::get_pc() {
+ulong State::get_pc() const {
     return this->PC;
 }
 
-bool State::get_is_end() {
+bool State::get_is_end() const {
     return this->is_end;
+}
+
+Memory State::get_mem() const {
+    return this->memory;
 }
 
 // Increment PC by 4
@@ -83,7 +87,7 @@ std::ostream &operator<<(std::ostream &os, const State &s) {
     
     os << "Memory: " << std::endl;
     for(auto it{s.memory.cbegin()}; it != s.memory.cend(); ++it) {
-        os << (*it);
+        os << (*it) << std::endl;
     }
     os << std::endl;
 

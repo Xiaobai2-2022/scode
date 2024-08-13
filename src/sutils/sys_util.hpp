@@ -11,8 +11,8 @@
 #include <unistd.h>
 #include <vector>
 
-#include "color.hpp"
 #include "slog.hpp"
+#include "sstyle.hpp"
 #include "utility.hpp"
 
 #include "../smakes/construct_risc_v.hpp"

@@ -19,7 +19,7 @@ Port::Port(const Port &other) {
 }
 
 // Returns the value in the cell
-Word Port::read_cell(ulong index) {
+Word Port::read_cell(ulong index) const {
     return this->port_cells[index].read();
 }
 
@@ -37,7 +37,7 @@ Word Port::write_cell(Cell val) {
 // Output operator
 std::ostream &operator<<(std::ostream &os, const Port &p) {
     for(auto c : p.port_cells) {
-        os << c;
+        os << c << std::endl;
     }
     return os;
 }

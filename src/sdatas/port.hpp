@@ -18,11 +18,11 @@ class Port {
         Cell port_cells[NUM_CELL];
 
     public:
-        Port();             // Default constructor, set all ports to zero
-        Port(const Port &);       // Copy constructor, copy all ports
+        Port();                     // Default constructor, set all ports to zero
+        Port(const Port &);         // Copy constructor, copy all ports
 
     public:
-        Word read_cell(ulong);
+        Word read_cell(ulong) const;
         Word write_cell(Cell);
     
     friend std::ostream &operator<<(std::ostream &, const Port &);

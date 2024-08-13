@@ -14,8 +14,8 @@
 #include "../smakes/construct_state.hpp"
 #include "../smakes/generate_state.hpp"
 
-#include "../sutils/color.hpp"
 #include "../sutils/slog.hpp"
+#include "../sutils/sstyle.hpp"
 #include "../sutils/sys_util.hpp"
 
 class SVM {
@@ -34,7 +34,7 @@ class SVM {
 
     public:
         // Print the VM
-        void print();
+        void print() const;
         // Update the State
         void update();
         // Undo the last step

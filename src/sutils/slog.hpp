@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 
-#include "color.hpp"
+#include "sstyle.hpp"
 
 class SLog;
 

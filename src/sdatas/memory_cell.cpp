@@ -19,7 +19,7 @@ unsigned int Cell::get_type() { return this->type; }
 ulong Cell::cell_id() { return this->id; };
 
 // Return the value
-Word Cell::read() { return this->value; }
+Word Cell::read() const { return this->value; }
 
 // Set the value to new value, return the original value
 Word Cell::write(Word val) {
@@ -39,7 +39,7 @@ std::ostream &operator<<(std::ostream &os, const Cell &c) {
         os << "Port(" << "0x" << std::setfill('0') << std::setw(1) << std::hex << c.id << "): ";
     }
 
-    os << c.value << std::endl;
+    os << c.value;
 
     return os;
 

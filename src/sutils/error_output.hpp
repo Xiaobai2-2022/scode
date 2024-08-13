@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-#include "color.hpp"
+#include "sstyle.hpp"
 
 class Error_Out;
 

@@ -13,9 +13,9 @@
 #include "../sdatas/memory_cell.hpp"
 #include "../sdatas/state.hpp"
 
-#include "../sutils/color.hpp"
 #include "../sutils/error_output.hpp"
 #include "../sutils/slog.hpp"
+#include "../sutils/sstyle.hpp"
 #include "../sutils/utility.hpp"
 
 class Ctor_State;

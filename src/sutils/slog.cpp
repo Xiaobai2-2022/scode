@@ -9,7 +9,7 @@ void SLog::clean() {
 
 void SLog::set_file_name(std::string file_name) {
     SLog::file_name = file_name;
-    std::cout << SColor::green << "Log created." << SColor::nc << std::endl;
+    std::cout << SStyle::GREEN << "Log created." << SStyle::NC << std::endl;
     SLog::log(SLog::file_name + " is successfully created.");
 }
 
@@ -19,7 +19,7 @@ unsigned int SLog::log(std::string msg) {
 
     // Check if the files is correctly opened.
     if(!fout.is_open()) {
-        std::cout << SColor::red << "Fatal, log file failed to open." << SColor::nc << std::endl;
+        std::cout << SStyle::RED << "Fatal, log file failed to open." << SStyle::NC << std::endl;
         return -1;
     }
 
