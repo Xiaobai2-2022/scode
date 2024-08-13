@@ -17,8 +17,32 @@ void Sys_Util::get_terminal_size(unsigned int &width, unsigned int &height) {
 
 }
 
-void Sys_Util::display_sc_msg(std::ostream &out) {
-    out << "SCode 2024, Fangxia Technology Ltd." << std::endl;
+void Sys_Util::flush_cin() {
+    // Clear the input buffer to ignore leftover newline characters
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+void Sys_Util::display_help_msg() {
+
+    Sys_Util::clear_terminal();
+    Sys_Util::display_sc_msg();
+
+    std::cout << SStyle::YELLOW << "Instruction List: " << std::endl
+        << "state modification" << std::endl
+        << "    update    Update the state by the instruction which address in PC" << std::endl
+        << "    undo      Undo the last instruction" << std::endl
+        << std::endl
+        << "miscellaneous" << std::endl
+        << "    help      See the help page" << std::endl
+        << "    quit      Terminates the program" << std::endl
+        << std::endl;
+
+    std::cout << SStyle::GREEN << "Press enter to continue...";
+
+}
+
+void Sys_Util::display_sc_msg() {
+    std::cout << SStyle::BOLD << SStyle::UNDERLINE << SStyle::GREEN << "SCode 2024, Fangxia Technology Ltd." << SStyle::NC << std::endl;
 }
 
 std::map<int, std::filesystem::path> Sys_Util::find_file(const std::filesystem::path& directory, const std::string& extension) {

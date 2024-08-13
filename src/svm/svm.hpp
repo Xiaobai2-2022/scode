@@ -36,9 +36,9 @@ class SVM {
         // Print the VM
         void print() const;
         // Update the State
-        void update();
+        bool update();
         // Undo the last step
-        void undo();
+        bool undo();
 
 };
 

@@ -30,12 +30,18 @@ class Sys_Util {
         static void create_log();
 
     public:
+        // Flushes the input
+        static void flush_cin();
+
+    public:
         // Get the terminal size
         static void get_terminal_size(unsigned int &, unsigned int &);
 
     public:
+        // Print the SVM help messagme
+        static void display_help_msg();
         // Print SCode message
-        static void display_sc_msg(std::ostream &);
+        static void display_sc_msg();
 
     public:
         // Find the file with a specific extension

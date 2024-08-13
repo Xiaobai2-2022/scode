@@ -19,21 +19,25 @@ SVM::SVM(std::string if_name) : cur{}, count{} {
 
 void SVM::countdown_helper() {
 
-    // int seconds{3};
+    int seconds{3};
+        
+    std::cout << std::endl << std::endl;
 
-    // while (seconds > 0) {
-    //     std::cout << SStyle::CYAN << "\rSVM will start in " << std::setw(1) << seconds << " seconds";
-    //     std::cout << std::endl << SStyle::MAGENTA << "Tip: type help for command list." << SStyle::NC << "\033[F";
-    //     std::cout.flush();  // Ensure the updated countdown is printed immediately
-    //     std::this_thread::sleep_for(std::chrono::seconds(1));
-    //     --seconds;
-    // }
+    while (seconds > 0) {
+        std::cout << SStyle::CYAN << "\033[F\033[2K\rSVM will start in " << std::setw(1) << seconds << " seconds";
+        std::cout << std::endl << SStyle::MAGENTA << "\033[2KTip: type help for instruction list." << SStyle::NC;
+        std::cout.flush();  // Ensure the updated countdown is printed immediately
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        --seconds;
+    }
 
     Sys_Util::clear_terminal();
 
 }
 
 void SVM::print() const {
+
+    Sys_Util::display_sc_msg();
 
     // Print the PC
     std::cout << SStyle::MAGENTA
@@ -125,13 +129,15 @@ void SVM::print() const {
         } else {
             std::cout << SStyle::CYAN;
         }
-        std::cout << (*it) << std::endl;
+        std::cout << (*it) 
+            << " <- 0x" << std::setfill('0') << std::setw(8) << std::hex << (*it).read().get_value()
+            << SStyle::NC << std::endl;
     }
-    std::cout << SStyle::NC << std::endl;
+    std::cout << std::endl;
 
 }
 
-void SVM::update() {
+bool SVM::update() {
     
     this->history.push(this->cur);
 
@@ -146,13 +152,40 @@ void SVM::update() {
         ++this->count;
 
         Sys_Util::clear_terminal();
-        
         this->print();
 
-        return;
+        return true;
 
     }
     
-    SLog::log("An error has occured during updating state.");
+    std::cout << SStyle::RED << "An error has occured during updating state, aborted." << SStyle::NC << std::endl;
+    SLog::log("An error has occured during updating state. Error Code: " + std::to_string(res) + ".");
 
+    return false;
+
+}
+
+bool SVM::undo() {
+
+    if(this->count == 1) {
+
+        std::cout << SStyle::RED << "\033[F\033[2K\rInternal error SVM-Prod-1-0009, nothing to undo, please enter a different instruction: " << SStyle::NC;
+        SLog::log("Internal error SVM-Prod-1-0009, cannot undo the initial state.");
+
+        return false;
+
+    }
+
+    SLog::log("State Successfully Undid.");
+
+    --this->count;
+
+    this->cur = this->history.top();
+    this->history.pop();
+
+    Sys_Util::clear_terminal();
+    this->print();
+
+    return true;
+    
 }

@@ -17,7 +17,7 @@ void init() {
     SLog::clean();
 
     // Displays message
-    Sys_Util::display_sc_msg(std::cout);
+    Sys_Util::display_sc_msg();
 
     // Sets the log file name
     SLog::set_file_name("svm_prod_1.slog");
@@ -39,8 +39,47 @@ int main() {
 
     SVM s(bin_name);
 
-    s.update();
-    s.update();
+    std::string cmd;
+    
+    std::cout << SStyle::GREEN << "Please enter an instruction: " << SStyle::NC;
+    while(std::cin >> cmd) {
+
+        if(cmd == "quit") {
+            SLog::log("Program terminated by user.");
+            Sys_Util::clear_terminal();
+            break;
+        } else if(cmd == "help") {
+
+            Sys_Util::display_help_msg();
+
+            Sys_Util::flush_cin();
+            std::cin.get();
+
+            Sys_Util::clear_terminal();
+            s.print();
+
+        }else if(cmd == "update") {
+            if(!s.update()) break;
+        } else if(cmd == "undo") {
+            if(!s.undo()) continue;
+        } else {
+
+            std::cout.flush();
+            Sys_Util::flush_cin();
+            std::cout << SStyle::RED << "\033[F\033[2K\rInternal error SVM-Prod-1-0010, \"" << cmd << "\" is not a valid instruction, please enter a valid instruction: " << SStyle::NC;
+            SLog::log("Internal error SVM-Prod-1-0010, instruction \"" + cmd + "\" is not a valid instruction.");
+            continue;
+
+        }
+
+
+        Sys_Util::flush_cin();
+        std::cout << SStyle::GREEN << "Please enter an instruction: " << SStyle::NC;
+
+    }
+
+    Sys_Util::display_sc_msg();
+    std::cout << SStyle::YELLOW << "Program terminated..." << SStyle::NC << std::endl;
 
     return 0;
 
