@@ -44,7 +44,7 @@ void SVM::print() const {
         << "PC: ";
     
     if(this->count != 1 && this->cur.get_pc() != this->history.top().get_pc()){
-        std::cout << SStyle::BOLD << SStyle::RED;
+        std::cout << SStyle::BOLD << SStyle::YELLOW;
     } else {
         std::cout << SStyle::CYAN;
     }
@@ -64,7 +64,7 @@ void SVM::print() const {
             << cur_val;
 
         if(this->count != 1 && cur_val != this->history.top().get_value_in_state(REGISTER, i)) {
-            std::cout << SStyle::BOLD << SStyle::RED;
+            std::cout << SStyle::BOLD << SStyle::YELLOW;
         }
 
         std::cout << " <- " << std::setfill(' ') << std::left << std::setw(15) << std::dec << cur_val.get_value() << SStyle::NC;
@@ -75,7 +75,7 @@ void SVM::print() const {
             << cur_val;
 
         if(this->count != 1 && cur_val != this->history.top().get_value_in_state(REGISTER, Reg::NUM_CELL / 2 + i)) {
-            std::cout << SStyle::BOLD << SStyle::RED;
+            std::cout << SStyle::BOLD << SStyle::YELLOW;
         }
 
         std::cout << " <- " << std::setfill(' ') << std::left << std::setw(10) << std::dec << cur_val.get_value() << SStyle::NC << std::endl;
@@ -96,7 +96,7 @@ void SVM::print() const {
             << cur_val;
 
         if(this->count != 1 && cur_val != this->history.top().get_value_in_state(PORT, i)) {
-            std::cout << SStyle::BOLD << SStyle::RED;
+            std::cout << SStyle::BOLD << SStyle::YELLOW;
         }
 
         std::cout << " <- " << std::setfill(' ') << std::left << std::setw(15) << std::dec << cur_val.get_value() << SStyle::NC;
@@ -107,7 +107,7 @@ void SVM::print() const {
             << cur_val;
 
         if(this->count != 1 && cur_val != this->history.top().get_value_in_state(PORT, Port::NUM_CELL / 2 + i)) {
-            std::cout << SStyle::BOLD << SStyle::RED;
+            std::cout << SStyle::BOLD << SStyle::YELLOW;
         }
 
         std::cout << " <- " << std::setfill(' ') << std::left << std::setw(10) << std::dec << cur_val.get_value() << SStyle::NC << std::endl;
@@ -167,15 +167,7 @@ bool SVM::update() {
 
 bool SVM::undo() {
 
-    if(this->count == 1) {
-
-        std::cout << SStyle::RED << "\033[F\033[2K\rInternal error SVM-Prod-1-0009, nothing to undo, please enter a different instruction: " << SStyle::NC;
-        SLog::log("Internal error SVM-Prod-1-0009, cannot undo the initial state.");
-
-        return false;
-
-    }
-
+    if(this->count == 1) return false;
     SLog::log("State Successfully Undid.");
 
     --this->count;
@@ -206,5 +198,8 @@ void SVM::display_help_msg() {
         << std::endl;
 
     std::cout << SStyle::GREEN << "Press enter to continue...";
+ 
+    std::string temp;
+    std::getline(std::cin, temp);
 
 }
