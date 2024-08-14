@@ -137,8 +137,12 @@ unsigned int Sys_Util::assemble_file(std::string of_name) {
     dir = Sys_Util::find_file(cur_directory, ".sca");
 
     for (const auto &pair : dir) {
+        if(pair.first % 2 == 1) std::cout << SStyle::BLUE;
+        else std::cout << SStyle::CYAN;
         std::cout << pair.first << ": " << pair.second.filename() << std::endl;
     }
+
+    std::cout << SStyle::NC;
 
     // Set the ID of the file to the correct one
     unsigned int file_id{1};
@@ -150,7 +154,7 @@ unsigned int Sys_Util::assemble_file(std::string of_name) {
         return 1;
     } else if(dir.size() == 1) {
     } else {
-        std::cout << "Total: " << dir.size() << " entrie(s)." << std::endl;
+        std::cout << SStyle::MAGENTA << "Total: " << dir.size() << " entrie(s)." << SStyle::NC << std::endl;
         std::cout << SStyle::YELLOW << "Please select the file number you wish to assemble: " << SStyle::NC;
         if(std::cin >> file_id) {
             if(file_id <= 0 || file_id > dir.size()) {
