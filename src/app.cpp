@@ -13,11 +13,10 @@ void init() {
 
     // Clean up the environment
     // Sys_Util::clean_repo();
-    Sys_Util::clear_terminal();
     SLog::clean();
 
     // Displays message
-    Sys_Util::display_sc_msg();
+    SVM::clear();
 
     // Sets the log file name
     SLog::set_file_name("svm_prod_1.slog");
