@@ -113,6 +113,7 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
     if(Utility::is_start_with(cur_line, "SCode Assembly 0")) {
     
         if(Ctor_RV::rv_assembly0_to_bin(if_name, of_name)) {
+            if(total_steps == 1) std::cout << std::endl;
             std::cout << SStyle::GREEN << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SStyle::NC << std::endl << std::endl;
             SLog::log("Assembled from RV Assembly 0 to RV Binary.");
             return 0;
