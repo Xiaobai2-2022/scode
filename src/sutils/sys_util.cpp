@@ -133,53 +133,53 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
 
 }
 
-unsigned int Sys_Util::assemble_file(std::string of_name) {
+// unsigned int Sys_Util::assemble_file(std::string of_name) {
 
-    std::filesystem::path cur_directory{std::filesystem::current_path()};
+//     std::filesystem::path cur_directory{std::filesystem::current_path()};
 
-    std::map<int, std::filesystem::path> dir;
+//     std::map<int, std::filesystem::path> dir;
 
-    dir = Sys_Util::find_file(cur_directory, ".sca");
+//     dir = Sys_Util::find_file(cur_directory, ".sca");
 
-    for (const auto &pair : dir) {
-        if(pair.first % 2 == 1) std::cout << SStyle::BLUE;
-        else std::cout << SStyle::CYAN;
-        std::cout << pair.first << ": " << pair.second.filename() << std::endl;
-    }
+//     for (const auto &pair : dir) {
+//         if(pair.first % 2 == 1) std::cout << SStyle::BLUE;
+//         else std::cout << SStyle::CYAN;
+//         std::cout << pair.first << ": " << pair.second.filename() << std::endl;
+//     }
 
-    std::cout << SStyle::NC;
+//     std::cout << SStyle::NC;
 
-    // Set the ID of the file to the correct one
-    unsigned int file_id{1};
+//     // Set the ID of the file to the correct one
+//     unsigned int file_id{1};
 
-    // Check if there are valid files, if there is one, select that one, if multiple, prompt user to select one, if none, returns error
-    if(dir.size() == 0) {
-        std::cout << SStyle::RED << "Internal error SVM-Prod-1-0001." << SStyle::NC << std::endl;
-        SLog::log("Internal error SVM-Prod-1-0001, required file does not exist, aborted.");
-        return 1;
-    } else if(dir.size() == 1) {
-    } else {
-        std::cout << SStyle::MAGENTA << "Total: " << dir.size() << " entrie(s)." << SStyle::NC << std::endl;
-        std::cout << SStyle::YELLOW << "Please select the file number you wish to assemble: " << SStyle::NC;
-        if(std::cin >> file_id) {
-            if(file_id <= 0 || file_id > dir.size()) {
-                std::cout << SStyle::RED << "Internal error SVM-Prod-1-0003." << SStyle::NC << std::endl;
-                SLog::log("Internal error SVM-Prod-1-0003, selected number is out of range, aborted.");
-                return 3;
-            }
-        } else {
-            std::cout << SStyle::RED << "Internal error SVM-Prod-1-0002." << SStyle::NC << std::endl;
-            SLog::log("Internal error SVM-Prod-1-0002, input should be an integer, aborted.");
-            return 2;
-        }
+//     // Check if there are valid files, if there is one, select that one, if multiple, prompt user to select one, if none, returns error
+//     if(dir.size() == 0) {
+//         std::cout << SStyle::RED << "Internal error SVM-Prod-1-0001." << SStyle::NC << std::endl;
+//         SLog::log("Internal error SVM-Prod-1-0001, required file does not exist, aborted.");
+//         return 1;
+//     } else if(dir.size() == 1) {
+//     } else {
+//         std::cout << SStyle::MAGENTA << "Total: " << dir.size() << " entrie(s)." << SStyle::NC << std::endl;
+//         std::cout << SStyle::YELLOW << "Please select the file number you wish to assemble: " << SStyle::NC;
+//         if(std::cin >> file_id) {
+//             if(file_id <= 0 || file_id > dir.size()) {
+//                 std::cout << SStyle::RED << "Internal error SVM-Prod-1-0003." << SStyle::NC << std::endl;
+//                 SLog::log("Internal error SVM-Prod-1-0003, selected number is out of range, aborted.");
+//                 return 3;
+//             }
+//         } else {
+//             std::cout << SStyle::RED << "Internal error SVM-Prod-1-0002." << SStyle::NC << std::endl;
+//             SLog::log("Internal error SVM-Prod-1-0002, input should be an integer, aborted.");
+//             return 2;
+//         }
 
-        std::cout << SStyle::GREEN << "Successful, proceed to assemble..." << SStyle::NC << std::endl;
-        SLog::log("Assembling file \"" + dir.at(file_id).filename().string() + "\" to RV Binary.");
-    }
+//         std::cout << SStyle::GREEN << "Successful, proceed to assemble..." << SStyle::NC << std::endl;
+//         SLog::log("Assembling file \"" + dir.at(file_id).filename().string() + "\" to RV Binary.");
+//     }
 
-    std::string if_name{dir.at(file_id)};
+//     std::string if_name{dir.at(file_id)};
 
-    // Send to assemble
-    return Sys_Util::conversion(if_name, of_name);
+//     // Send to assemble
+//     return Sys_Util::conversion(if_name, of_name);
 
-}
+// }

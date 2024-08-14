@@ -48,8 +48,8 @@ class Sys_Util {
     public:
         // Convert file from RV Assembly to RV Binary (Helper)
         static unsigned int conversion(std::string, std::string);
-        // Assemble files to RV Binary
-        static unsigned int assemble_file(std::string);
+        // // Assemble files to RV Binary
+        // static unsigned int assemble_file(std::string);
 
 };
 
