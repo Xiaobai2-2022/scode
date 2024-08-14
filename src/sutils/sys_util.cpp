@@ -60,12 +60,14 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
 
     // Read the first line(identifier)
     if(!fin.is_open()) {
-        std::cout << SStyle::RED << "Internal error SVM-Prod-1-0005." << SStyle::NC << std::endl;
-        SLog::log("Internal error SVM-Prod-1-0005, required file \"" + if_name + "\" can not open, aborted.");
+        // std::cout << SStyle::RED << "Internal error SVM-Prod-1-0005." << SStyle::NC << std::endl;
+        SLog::log("Internal error SVM-Prod-1-0005, required file \"" + if_name + "\" can not open.");
+        return 5;
     }
     if(!std::getline(fin, cur_line)) {
-        std::cout << SStyle::RED << "Internal error SVM-Prod-1-0006." << SStyle::NC << std::endl;
-        SLog::log("Internal error SVM-Prod-1-0006, required file \"" + if_name + "\" is empty, aborted.");
+        // std::cout << SStyle::RED << "Internal error SVM-Prod-1-0006." << SStyle::NC << std::endl;
+        SLog::log("Internal error SVM-Prod-1-0006, required file \"" + if_name + "\" is empty.");
+        return 6;
     }
 
     // Check if the type of file is sca1 or sca0
@@ -77,7 +79,7 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
     
         if(Ctor_RV::rv_assembly1_to_assembly0(if_name, temp_of_name)) {
 
-            std::cout << SStyle::GREEN << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SStyle::NC << std::endl;
+            std::cout << std::endl << SStyle::GREEN << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SStyle::NC << std::endl;
             SLog::log("Converted from RV Assembly 1 to RV Assembly 0.");
 
             cur_steps++;
@@ -89,17 +91,19 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
             
             // Reread the first line(identifier)
             if(!fin.is_open()) {
-                std::cout << SStyle::RED << "Internal error SVM-Prod-1-0005." << SStyle::NC << std::endl;
-                SLog::log("Internal error SVM-Prod-1-0005, required file \"" + if_name + "\" can not open, aborted.");
+                // std::cout << SStyle::RED << "Internal error SVM-Prod-1-0005." << SStyle::NC << std::endl;
+                SLog::log("Internal error SVM-Prod-1-0005, required file \"" + if_name + "\" can not open.");
+                return 5;
             }
             if(!std::getline(fin, cur_line)) {
-                std::cout << SStyle::RED << "Internal error SVM-Prod-1-0006." << SStyle::NC << std::endl;
-                SLog::log("Internal error SVM-Prod-1-0006, required file \"" + if_name + "\" is empty, aborted.");
+                // std::cout << SStyle::RED << "Internal error SVM-Prod-1-0006." << SStyle::NC << std::endl;
+                SLog::log("Internal error SVM-Prod-1-0006, required file \"" + if_name + "\" is empty.");
+                return 6;
             }
 
         } else {
-            std::cout << SStyle::RED << "Internal error SVM-Prod-1-0004." << SStyle::NC << std::endl;
-            SLog::log("Internal error SVM-Prod-1-0004, failed to convert from RV Assembly 1 to RV Assembly 0, aborted.");
+            // std::cout << SStyle::RED << "Internal error SVM-Prod-1-0004." << SStyle::NC << std::endl;
+            SLog::log("Internal error SVM-Prod-1-0004, failed to convert from RV Assembly 1 to RV Assembly 0.");
             SLog::log("Please see \"" + temp_of_name + "\" for more information...");
             return 4;
         }
@@ -109,22 +113,22 @@ unsigned int Sys_Util::conversion(std::string if_name, std::string of_name) {
     if(Utility::is_start_with(cur_line, "SCode Assembly 0")) {
     
         if(Ctor_RV::rv_assembly0_to_bin(if_name, of_name)) {
-            std::cout << SStyle::GREEN << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SStyle::NC << std::endl;
+            std::cout << SStyle::GREEN << "Step " << cur_steps << "/" << total_steps << " successful. Proceeding..." << SStyle::NC << std::endl << std::endl;
             SLog::log("Assembled from RV Assembly 0 to RV Binary.");
             return 0;
         } else {
-            std::cout << SStyle::RED << "Internal error SVM-Prod-1-0007." << SStyle::NC << std::endl;
-            SLog::log("Internal error SVM-Prod-1-0007, failed to convert from RV Assembly 0 to RV Binary, aborted.");
+            // std::cout << SStyle::RED << "Internal error SVM-Prod-1-0007." << SStyle::NC << std::endl;
+            SLog::log("Internal error SVM-Prod-1-0007, failed to convert from RV Assembly 0 to RV Binary.");
             SLog::log("Please see \"" + of_name + "\" for more information...");
             return 4;
         }
 
     }
     
-    std::cout << SStyle::RED << "Internal error SVM-Prod-1-0008." << SStyle::NC << std::endl;
-    SLog::log("Internal error SVM-Prod-1-0008, file format not recognized as any of the SCode assembly products, aborted.");
+    // std::cout << SStyle::RED << "Internal error SVM-Prod-1-0008." << SStyle::NC << std::endl;
+    SLog::log("Internal error SVM-Prod-1-0008, file format not recognized as any of the SCode assembly products.");
 
-    return 0;
+    return 8;
 
 }
 

@@ -15,3 +15,5 @@
 11. Internal error SVM-Prod-1-0011, cannot update the current state.
 12. Internal error SVM-Prod-1-0012, no state is detected.
 13. Internal error SVM-Prod-1-0013, too many arguments for command ${cmd}.
+14. Internal error SVM-Prod-1-0014, too few arguments for command ${cmd}.
+15. Internal error SVM-Prod-1-0015, an error has occured during state generation.

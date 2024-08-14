@@ -1,9 +1,12 @@
 #include "svm.hpp"
 
-SVM::SVM(std::string if_name) : cur{}, count{} {
+SVM::SVM() : cur{}, count{}, valid{false} {}
+
+SVM::SVM(std::string if_name) : cur{}, count{}, valid{false} {
 
     if(!Ctor_State::sc_bin_to_state(if_name, cur)) {
-        std::cout << SStyle::RED << "Error while generating state, see log file for more information." << SStyle::NC << std::endl;
+        // std::cout << SStyle::RED << "Internal error SVM-Prod-1-0015." << SStyle::NC << std::endl;
+        SLog::log("Internal error SVM-Prod-1-0015, an error has occured during state generation, see above.");
         return;
     }
     
@@ -14,6 +17,8 @@ SVM::SVM(std::string if_name) : cur{}, count{} {
     SVM::countdown_helper();
 
     this->print();
+
+    this->valid = true;
 
 }
 
@@ -31,8 +36,6 @@ void SVM::countdown_helper() {
         --seconds;
     }
 
-    Sys_Util::clear_terminal();
-
 }
 
 void SVM::clear() {
@@ -44,13 +47,44 @@ void SVM::display_files() {
 
     SVM::clear();
 
-    
+    std::filesystem::path cur_directory{std::filesystem::current_path()};
+    std::map<int, std::filesystem::path> dir;
 
+    int count{};
+
+    dir = Sys_Util::find_file(cur_directory, ".sca");
+
+    for (const auto &pair : dir) {
+        if(count % 2 == 0) std::cout << SStyle::BLUE;
+        else std::cout << SStyle::CYAN;
+        std::cout << (count + 1) << ": " << pair.second.filename() << std::endl;
+        ++count;
+    }
+    std::cout << SStyle::MAGENTA << "Total: " << dir.size() << " \".sca\" files." << SStyle::NC << std::endl;
+
+    std::cout << std::endl;
+    
+    dir = Sys_Util::find_file(cur_directory, ".scg");
+
+    for (const auto &pair : dir) {
+        if(count % 2 == 0) std::cout << SStyle::BLUE;
+        else std::cout << SStyle::CYAN;
+        std::cout << (count + 1) << ": " << pair.second.filename() << std::endl;
+        ++count;
+    }
+    std::cout << SStyle::MAGENTA << "Total: " << dir.size() << " \".scg\" files." << SStyle::NC << std::endl;
+    
+    std::cout << std::endl;
+
+}
+
+bool SVM::is_valid() const {
+    return this->valid;
 }
 
 void SVM::print() const {
 
-    Sys_Util::display_sc_msg();
+    SVM::clear();
 
     // Print the PC
     std::cout << SStyle::MAGENTA
@@ -206,6 +240,7 @@ void SVM::display_help_msg() {
 
     std::cout << SStyle::YELLOW << "Instruction List: " << std::endl
         << "assembling instructions" << std::endl
+        << "    display                 Displays the current state" << std::endl
         << "    sc ${if} ${of}          Assemble input file ${if} into output file ${of}, ${of} is optional" << std::endl
         << "state instructions" << std::endl
         << "    create ${f}             Create the state with file ${f}, ${f} is optional" << std::endl
@@ -214,7 +249,6 @@ void SVM::display_help_msg() {
         << std::endl
         << "virtual machine instructions" << std::endl
         << "    clear                   Clears the console screen" << std::endl
-        << "    display ${f}            Display the file ${f}" << std::endl
         << "    help                    Display the help page" << std::endl
         << "    list                    List .sca/.scg files" << std::endl
         << "    quit                    Terminates the program" << std::endl

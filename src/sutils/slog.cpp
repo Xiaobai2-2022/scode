@@ -9,7 +9,7 @@ void SLog::clean() {
 
 void SLog::set_file_name(std::string file_name) {
     SLog::file_name = file_name;
-    std::cout << SStyle::GREEN << "Log created." << SStyle::NC << std::endl;
+    std::cout << SStyle::GREEN << "Log created." << SStyle::NC << std::endl << std::endl;
     SLog::log(SLog::file_name + " is successfully created.");
 }
 

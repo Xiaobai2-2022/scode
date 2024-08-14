@@ -24,11 +24,14 @@ class SVM {
         State cur;
         std::stack<State> history;
         unsigned int count;
+        bool valid;
 
     private:
         static void countdown_helper();
 
     public:
+        // Default Constructor
+        SVM();
         // Constructor, takes in the file name for the binary file
         SVM(std::string);
 
@@ -37,6 +40,10 @@ class SVM {
         static void clear();
         // Displays all .sca/.scg files
         static void display_files();
+
+    public:
+        // Return if the state is valid
+        bool is_valid() const;
         // Print the VM
         void print() const;
         // Update the State

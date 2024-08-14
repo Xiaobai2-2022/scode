@@ -1,7 +1,7 @@
 # Scode
 
 ## Current Version
-**V0.1.0 release candidate 2**
+**V0.1.0 release candidate 3**
 
 This is the application branch for SCode Virtual Machine(SVM).
 
