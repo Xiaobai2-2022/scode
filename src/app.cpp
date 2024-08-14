@@ -29,6 +29,9 @@ int main() {
     // Set the environment to initial state
     init();
 
+    bool e_flag{false};
+    bool s_flag{false};
+
     // The name of the binary file generated
     std::string bin_name{"sca_bin_001.scg"};
 
@@ -37,110 +40,202 @@ int main() {
         return -1;
     }
 
-    SVM s(bin_name);
+    SVM s{bin_name};
+    s_flag = true;
 
-    std::string cmd;
+    std::string cur_line;
+    std::string scanner;
 
-    std::cout << SStyle::GREEN << std::endl << std::endl << "\033[F\033[2K\033[F\033[2K\rSVM > " << SStyle::NC;
+    std::cout << SStyle::GREEN << std::endl << std::endl << SStyle::PREV_LINE << SStyle::PREV_LINE << "\rSVM > " << SStyle::NC;
 
     Sys_Util::flush_cin();
 
-    bool e_flag{false};
+    while(std::getline(std::cin, cur_line)) {
+    
+        std::vector<std::string> args;
 
-    while(std::getline(std::cin, cmd)) {
+        std::stringstream ss_line{cur_line};
 
-        if(cmd == "") {
-            std::cout << SStyle::GREEN << "\033[F\033[2K\rSVM > " << SStyle::NC;
-        } else if(cmd == "quit") {
-            e_flag = false;
-            SLog::log("Program terminated by user.");
-            Sys_Util::clear_terminal();
-            break;
-        } else if(cmd == "help") {
-            e_flag = false;
-            SVM::display_help_msg();
-            Sys_Util::clear_terminal();
-            s.print();
-        }else if(cmd == "update") {
-            e_flag = false;
-            if(!s.update()) {
-                break;
-            }
-        } else if(cmd == "undo") {
-            if(!s.undo()) {
+        while(ss_line >> scanner) {
+            args.emplace_back(scanner);
+        }
 
+        // No instruction
+        if(args.size() == 0) {
+            std::cout << SStyle::GREEN << SStyle::PREV_LINE << "\rSVM > " << SStyle::NC;
+        } 
+    
+
+        
+        // Quit
+        else if(args.at(0) == "quit") {
+            if(args.size() > 1) {
                 if(e_flag) {
-                    std::cout << "\033[F\033[2K";
+                    std::cout << SStyle::PREV_LINE;
                 }
-
-                std::cout << SStyle::RED 
-                    << "\033[F\033[2K\rInternal error SVM-Prod-1-0009, nothing to undo, please enter a different instruction." 
+                std::cout << SStyle::RED << SStyle::PREV_LINE
+                    << "\rInternal error SVM-Prod-1-0013, too many arguments, please enter a different instruction." 
                     << SStyle::NC << std::endl;
-                SLog::log("Internal error SVM-Prod-1-0009, cannot undo the initial state.");
-
+                SLog::log("Internal error SVM-Prod-1-0013, too many arguments for command " + args.at(0) + ".");
                 e_flag = true;
             } else {
                 e_flag = false;
+                SLog::log("Program terminated by user.");
+                Sys_Util::clear_terminal();
+                break;
             }
-        } else {
+        } 
+        
+
+        
+        // Help
+        else if(args.at(0) == "help") {
+            if(args.size() > 1) {
+                if(e_flag) {
+                    std::cout << SStyle::PREV_LINE;
+                }
+                std::cout << SStyle::RED << SStyle::PREV_LINE
+                    << "\rInternal error SVM-Prod-1-0013, too many arguments, please enter a different instruction." 
+                    << SStyle::NC << std::endl;
+                SLog::log("Internal error SVM-Prod-1-0013, too many arguments for command " + args.at(0) + ".");
+                e_flag = true;
+            } else {
+                e_flag = false;
+                SVM::display_help_msg();
+                Sys_Util::clear_terminal();
+                s.print();
+            }
+        } 
+        
+        
+        
+        // Clear
+        else if(args.at(0) == "clear") {
+            if(args.size() > 1) {
+                if(e_flag) {
+                    std::cout << SStyle::PREV_LINE;
+                }
+                std::cout << SStyle::RED << SStyle::PREV_LINE
+                    << "\rInternal error SVM-Prod-1-0013, too many arguments, please enter a different instruction." 
+                    << SStyle::NC << std::endl;
+                SLog::log("Internal error SVM-Prod-1-0013, too many arguments for command " + args.at(0) + ".");
+                e_flag = true;
+            }
+            e_flag = false;
+            SVM::clear();
+            std::cout << SStyle::GREEN << "SVM > " << SStyle::NC;
+        } 
+        
+        
+        
+        // Update
+        else if(args.at(0) == "update") {
+            if(args.size() > 1) {
+                if(e_flag) {
+                    std::cout << SStyle::PREV_LINE;
+                }
+                std::cout << SStyle::RED << SStyle::PREV_LINE
+                    << "\rInternal error SVM-Prod-1-0013, too many arguments, please enter a different instruction." 
+                    << SStyle::NC << std::endl;
+                SLog::log("Internal error SVM-Prod-1-0013, too many arguments for command " + args.at(0) + ".");
+                e_flag = true;
+            } else {
+                if(!s_flag) {
+                    Sys_Util::clear_terminal();
+                    Sys_Util::display_sc_msg();
+                    std::cout << SStyle::RED
+                        << "\rInternal error SVM-Prod-1-0012, cannot update, please enter a different instruction." 
+                        << SStyle::NC << std::endl;
+                    SLog::log("Internal error SVM-Prod-1-0012, no state is detected.");
+                    e_flag = true;
+                } else {
+                    e_flag = false;
+                    int res = s.update();
+                    if(res) {
+                        if(res == -99) {
+                            s.print();
+                            std::cout << SStyle::GREEN <<
+                                "=========================== Program finished ===========================" << SStyle::NC << std::endl << std::endl;
+                        } else {
+                            if(e_flag) {
+                                std::cout << SStyle::PREV_LINE;
+                            }
+                            std::cout << SStyle::RED << SStyle::PREV_LINE
+                                << "\rInternal error SVM-Prod-1-0011, cannot update, please enter a different instruction." 
+                                << SStyle::NC << std::endl;
+                            SLog::log("Internal error SVM-Prod-1-0011, cannot update the current state.");
+                        }
+                    }
+                }
+            }
+        } 
+        
+        
+        
+        // Undo
+        else if(args.at(0) == "undo") {
+            if(args.size() > 1) {
+                if(e_flag) {
+                    std::cout << SStyle::PREV_LINE;
+                }
+                std::cout << SStyle::RED << SStyle::PREV_LINE
+                    << "\rInternal error SVM-Prod-1-0013, too many arguments, please enter a different instruction." 
+                    << SStyle::NC << std::endl;
+                SLog::log("Internal error SVM-Prod-1-0013, too many arguments for command " + args.at(0) + ".");
+                e_flag = true;
+            } else {
+                if(!s_flag) {
+                    Sys_Util::clear_terminal();
+                    Sys_Util::display_sc_msg();
+                    std::cout << SStyle::RED
+                        << "\rInternal error SVM-Prod-1-0012, cannot undo, please enter a different instruction." 
+                        << SStyle::NC << std::endl;
+                    SLog::log("Internal error SVM-Prod-1-0012, no state is detected.");
+                    e_flag = true;
+                } else {
+                    if(!s.undo()) {
+                        if(e_flag) {
+                            std::cout << SStyle::PREV_LINE;
+                        }
+                        std::cout << SStyle::RED << SStyle::PREV_LINE
+                            << "\rInternal error SVM-Prod-1-0009, nothing to undo, please enter a different instruction." 
+                            << SStyle::NC << std::endl;
+                        SLog::log("Internal error SVM-Prod-1-0009, cannot undo the initial state.");
+                        e_flag = true;
+                    } else {
+                        e_flag = false;
+                    }
+                }
+            }
+        } 
+        
+        
+        
+        // Wrong Instruction
+        else {
 
             if(e_flag) {
-                std::cout << "\033[F\033[2K";
+                std::cout  << SStyle::PREV_LINE;
             }
 
             std::cout.flush();
             // Sys_Util::flush_cin();
-            std::cout << SStyle::RED 
-                << "\033[F\033[2K\rInternal error SVM-Prod-1-0010, \"" << cmd << "\" is not a valid instruction, please enter a valid instruction." 
+            std::cout << SStyle::RED << SStyle::PREV_LINE
+                << "\rInternal error SVM-Prod-1-0010, \"" << args.at(0)  << "\" is not a valid instruction, please enter a valid instruction." 
                 << SStyle::NC << std::endl;
-            SLog::log("Internal error SVM-Prod-1-0010, instruction \"" + cmd + "\" is not a valid instruction.");
+            SLog::log("Internal error SVM-Prod-1-0010, instruction \"" + args.at(0) + "\" is not a valid instruction.");
 
             e_flag = true;
 
         }
 
         if(!e_flag) {
-            std::cout << SStyle::GREEN << std::endl << std::endl << "\033[F\033[2K\033[F\033[2K\rSVM > " << SStyle::NC;
+            std::cout << SStyle::GREEN << std::endl << std::endl << SStyle::PREV_LINE << SStyle::PREV_LINE << "\rSVM > " << SStyle::NC;
         } else {
-            std::cout << SStyle::GREEN << std::endl << "\033[F\033[2K\rSVM > " << SStyle::NC;
+            std::cout << SStyle::GREEN << std::endl << SStyle::PREV_LINE << "\rSVM > " << SStyle::NC;
         }
 
     }
-
-    // while(std::cin >> cmd) {
-
-    //     if(cmd == "quit") {
-    //         SLog::log("Program terminated by user.");
-    //         Sys_Util::clear_terminal();
-    //         break;
-    //     } else if(cmd == "help") {
-
-    //         SVM::display_help_msg();
-
-    //         Sys_Util::flush_cin();
-    //         std::cin.get();
-
-    //         Sys_Util::clear_terminal();
-    //         s.print();
-
-    //     }else if(cmd == "update") {
-    //         if(!s.update()) break;
-    //     } else if(cmd == "undo") {
-    //         if(!s.undo()) continue;
-    //     } else {
-
-    //         std::cout.flush();
-    //         Sys_Util::flush_cin();
-    //         std::cout << SStyle::RED << "\033[F\033[2K\rInternal error SVM-Prod-1-0010, \"" << cmd << "\" is not a valid instruction, please enter a valid instruction: " << SStyle::NC;
-    //         SLog::log("Internal error SVM-Prod-1-0010, instruction \"" + cmd + "\" is not a valid instruction.");
-    //         continue;
-
-    //     }
-
-    //     // Sys_Util::flush_cin();
-    //     std::cout << SStyle::GREEN << "Please enter an instruction: " << SStyle::NC;
-
-    // }
 
     Sys_Util::display_sc_msg();
     std::cout << SStyle::YELLOW << "Program terminated, press enter to continue..." << SStyle::NC;

@@ -33,10 +33,14 @@ class SVM {
         SVM(std::string);
 
     public:
+        // Clear the console screen
+        static void clear();
+        // Displays all .sca/.scg files
+        static void display_files();
         // Print the VM
         void print() const;
         // Update the State
-        bool update();
+        int update();
         // Undo the last step
         bool undo();
         // Print the SVM help messagme

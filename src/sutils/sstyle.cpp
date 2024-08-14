@@ -15,3 +15,5 @@ const std::string SStyle::BOLD = "\033[1m";
 const std::string SStyle::FAINT = "\033[2m";
 const std::string SStyle::ITALIC = "\033[3m";
 const std::string SStyle::UNDERLINE = "\033[4m";
+
+const std::string SStyle::PREV_LINE = "\033[F\033[2K";

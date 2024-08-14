@@ -24,14 +24,27 @@ void SVM::countdown_helper() {
     std::cout << std::endl << std::endl;
 
     while (seconds > 0) {
-        std::cout << SStyle::CYAN << "\033[F\033[2K\rSVM will start in " << std::setw(1) << seconds << " seconds";
-        std::cout << std::endl << SStyle::MAGENTA << "\033[2KTip: type help for instruction list." << SStyle::NC;
+        std::cout << SStyle::CYAN << SStyle::PREV_LINE << "\rSVM will start in " << std::setw(1) << seconds << " seconds" << std::endl;
+        std::cout << std::endl << SStyle::MAGENTA << SStyle::PREV_LINE << "Tip: type help for instruction list." << SStyle::NC;
         std::cout.flush();  // Ensure the updated countdown is printed immediately
         std::this_thread::sleep_for(std::chrono::seconds(1));
         --seconds;
     }
 
     Sys_Util::clear_terminal();
+
+}
+
+void SVM::clear() {
+    Sys_Util::clear_terminal();
+    Sys_Util::display_sc_msg();
+}
+
+void SVM::display_files() {
+
+    SVM::clear();
+
+    
 
 }
 
@@ -137,7 +150,7 @@ void SVM::print() const {
 
 }
 
-bool SVM::update() {
+int SVM::update() {
     
     this->history.push(this->cur);
 
@@ -154,14 +167,18 @@ bool SVM::update() {
         Sys_Util::clear_terminal();
         this->print();
 
-        return true;
+        return 0;
 
+    }
+
+    if(res == -99) {
+        return -99;
     }
     
     std::cout << SStyle::RED << "An error has occured during updating state, aborted." << SStyle::NC << std::endl;
     SLog::log("An error has occured during updating state. Error Code: " + std::to_string(res) + ".");
 
-    return false;
+    return res;
 
 }
 
@@ -188,13 +205,19 @@ void SVM::display_help_msg() {
     Sys_Util::display_sc_msg();
 
     std::cout << SStyle::YELLOW << "Instruction List: " << std::endl
-        << "state modification" << std::endl
-        << "    update    Update the state by the instruction which address in PC" << std::endl
-        << "    undo      Undo the last instruction" << std::endl
+        << "assembling instructions" << std::endl
+        << "    sc ${if} ${of}          Assemble input file ${if} into output file ${of}, ${of} is optional" << std::endl
+        << "state instructions" << std::endl
+        << "    create ${f}             Create the state with file ${f}, ${f} is optional" << std::endl
+        << "    undo                    Undo the last instruction" << std::endl
+        << "    update                  Update the state by the instruction which address in PC" << std::endl
         << std::endl
-        << "miscellaneous" << std::endl
-        << "    help      See the help page" << std::endl
-        << "    quit      Terminates the program" << std::endl
+        << "virtual machine instructions" << std::endl
+        << "    clear                   Clears the console screen" << std::endl
+        << "    display ${f}            Display the file ${f}" << std::endl
+        << "    help                    Display the help page" << std::endl
+        << "    list                    List .sca/.scg files" << std::endl
+        << "    quit                    Terminates the program" << std::endl
         << std::endl;
 
     std::cout << SStyle::GREEN << "Press enter to continue...";

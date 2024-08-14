@@ -23,7 +23,7 @@ void Sys_Util::flush_cin() {
 }
 
 void Sys_Util::display_sc_msg() {
-    std::cout << SStyle::BOLD << SStyle::UNDERLINE << SStyle::GREEN << "SCode 2024, Fangxia Technology Ltd." << SStyle::NC << std::endl;
+    std::cout << SStyle::BOLD << SStyle::UNDERLINE << SStyle::GREEN << "SCode Virtual Machine 2024, Fangxia Technology Ltd." << SStyle::NC << std::endl << std::endl;
 }
 
 std::map<int, std::filesystem::path> Sys_Util::find_file(const std::filesystem::path& directory, const std::string& extension) {

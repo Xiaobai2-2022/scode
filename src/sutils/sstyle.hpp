@@ -26,6 +26,9 @@ class SStyle {
         const static std::string ITALIC;        // Italic
         const static std::string UNDERLINE;     // Underline
 
+    public:
+        const static std::string PREV_LINE;     // Print on the previous line
+
 }; // SColor
 
 #endif
