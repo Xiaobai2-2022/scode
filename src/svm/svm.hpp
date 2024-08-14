@@ -39,6 +39,8 @@ class SVM {
         bool update();
         // Undo the last step
         bool undo();
+        // Print the SVM help messagme
+        static void display_help_msg();
 
 };
 

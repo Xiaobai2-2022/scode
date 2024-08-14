@@ -42,6 +42,7 @@ int main() {
     std::string cmd;
     
     std::cout << SStyle::GREEN << "Please enter an instruction: " << SStyle::NC;
+    
     while(std::cin >> cmd) {
 
         if(cmd == "quit") {
@@ -50,7 +51,7 @@ int main() {
             break;
         } else if(cmd == "help") {
 
-            Sys_Util::display_help_msg();
+            SVM::display_help_msg();
 
             Sys_Util::flush_cin();
             std::cin.get();
@@ -72,8 +73,7 @@ int main() {
 
         }
 
-
-        Sys_Util::flush_cin();
+        // Sys_Util::flush_cin();
         std::cout << SStyle::GREEN << "Please enter an instruction: " << SStyle::NC;
 
     }

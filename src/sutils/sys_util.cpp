@@ -22,25 +22,6 @@ void Sys_Util::flush_cin() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-void Sys_Util::display_help_msg() {
-
-    Sys_Util::clear_terminal();
-    Sys_Util::display_sc_msg();
-
-    std::cout << SStyle::YELLOW << "Instruction List: " << std::endl
-        << "state modification" << std::endl
-        << "    update    Update the state by the instruction which address in PC" << std::endl
-        << "    undo      Undo the last instruction" << std::endl
-        << std::endl
-        << "miscellaneous" << std::endl
-        << "    help      See the help page" << std::endl
-        << "    quit      Terminates the program" << std::endl
-        << std::endl;
-
-    std::cout << SStyle::GREEN << "Press enter to continue...";
-
-}
-
 void Sys_Util::display_sc_msg() {
     std::cout << SStyle::BOLD << SStyle::UNDERLINE << SStyle::GREEN << "SCode 2024, Fangxia Technology Ltd." << SStyle::NC << std::endl;
 }
